@@ -6,13 +6,13 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 19:52:17 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/20 21:43:59 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/21 20:24:09 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			put_number(char *str, t_graph **graph, t_info **info)
+int			put_number(char *str, t_graph **graph, t_info *info)
 {
 	int	number;
 	int	flag;
@@ -24,7 +24,7 @@ int			put_number(char *str, t_graph **graph, t_info **info)
 	if (*str == '-' || *str == '+')
 		flag = (*str++ == '-') ? -1 : 1;
 	if (*str == '\0')
-		error(a, NULL, NULL);
+		error("You entered nothing\n", graph, info);
 	off = flag == 1 ? INT_MAX : INT_MIN;
 	lim = flag * (off % 10);
 	off /= flag * 10;
@@ -39,7 +39,7 @@ int			put_number(char *str, t_graph **graph, t_info **info)
 	return (number);
 }
 
-void	get_ants(t_graph **graph, t_info **info)
+void	get_ants(t_graph **graph, t_info *info)
 {
 	char *line;
 
@@ -49,9 +49,9 @@ void	get_ants(t_graph **graph, t_info **info)
 			continue ;
 		else if (ft_isdigit(*line))
 		{
-			(*info)->count_ants = put_number(line);
+			info->count_ants = put_number(line, graph, info);
 			free(line);
-			if ((*info)->count_ants < 0)
+			if (info->count_ants < 0)
 				error("The number of ants can only be positive\n", graph, info);
 			return ;
 		}
@@ -61,74 +61,104 @@ void	get_ants(t_graph **graph, t_info **info)
 	}
 }
 
-t_graph		*get_room(t_graph **graph, t_info **info, int flag, char *line)
+void		get_room(t_graph **graph, t_info *info, int flag, char *line)
 {
 	char *name;
 	char *name_copy;
 	t_graph *node;
-	t_graph *graph_copy;
+	int i;
 
+	i = 0;
 	if (flag == 1)
 		error("First you need to enter all the vertices, and only then links\n", graph, info);
 	if (*line == 'L' || *line == '#')
 		error("The vertex name cannot start with characters '#' and 'L'\n", graph, info);
-	node = new_graph(NULL, NULL);
-	name = ft_strsub((const char *)(*line), ft_strrchr((const char*)(*line), ' '), ft_strlen(*line));
-	node->y = put_number(name, graph, info);
+	if (info->count_node >= info->count_max_node || info->count_node == 0)
+		*graph = new_graph(*graph, info);
+	name = ft_strsub((const char *)(line), (unsigned int)(ft_strrchr((const char*)(line), ' ') + 1 - line) , line + ft_strlen(line) - ft_strrchr((const char*)(line), ' ') - 1);
+	graph[info->count_node]->y = put_number(name, graph, info);
 	free(name);
-	name = ft_strsub((const char *)(*line), 0, ft_strrchr((const char*)(*line), ' '));
-	name_copy = ft_strsub((const char *)(*name), ft_strrchr((const char*)(*name), ' '), ft_strlen(*name));
+	name = ft_strsub((const char *)(line), 0, ft_strrchr((const char*)(line), ' ') - line);
+	name_copy = ft_strsub((const char *)(name), (unsigned int)(ft_strrchr((const char*)(name), ' ') + 1 - name), name + ft_strlen(name) - ft_strrchr((const char*)(name), ' ') - 1);
+	graph[info->count_node]->x = put_number(name_copy, graph, info);
 	free(name_copy);
-	node->x = put_number(name_copy, graph, info);
-	name_copy = ft_strsub((const char *)(*name), 0,  ft_strrchr((const char*)(*name), ' '));
-	node->name = name_copy;
+	name_copy = ft_strsub((const char *)(name), 0,  ft_strrchr((const char*)(name), ' ') - name);
+	graph[info->count_node]->name = name_copy;
 	free(name);
-	graph_copy = *graph;
-	while (graph_copy)
+	while (i < info->count_node)
 	{
-		if (!ft_strcmp(graph_copy->name, node))
-		{
-			free_graph(&node);
+		if (!ft_strcmp(graph[i]->name, graph[info->count_node]->name))
 			error("A vertex with this name already exists\n", graph, info);
-		}
-		graph_copy = graph_copy->next;
+		i++;
 	}
-	return (node);
+	info->count_node++;
 }
 
-void	get_rooms_links(t_graph **graph, t_info **info)
+void	get_rooms_links(t_graph **graph, t_info *info)
 {
 	int flag;
 	char *line;
 	char *name;
+	int i;
+	int j;
 
 	flag = 0;
+	i = 0;
 	while (get_next_line(0, &line, 0) > 0)
 	{
-		if (*line == '#' && *(line + 1) == '#')
+		if (*line == '#')
 		{
 			if (!ft_strcpy("##start\n", line))
 			{
 				free(line);
 				get_next_line(0, &line, 0);
 				get_room(graph, info, flag, line);
+				info->ind_start = info->count_node;
 			}
 			else if (!ft_strcpy("##end\n", line))
 			{
 				free(line);
 				get_next_line(0, &line, 0);
 				get_room(graph, info, flag, line);
+				info->ind_end = info->count_node;
 			}
 		}
-		else if (ft_strchr((const char*)(*line), ' ') != NULL)
+		else if (ft_strchr((const char*)(line), ' ') != NULL)
 			get_room(graph, info, flag, line);
-		else if (ft_strchr((const char*)(*line), '-') != NULL)
+		else if (ft_strchr((const char*)(line), '-') != NULL)
 		{
 			flag = 1;
-			name = ft_strsub((const char *)(*line), 0, ft_strrchr((const char*)(*line), '-'));
-
-			name = ft_strsub((const char *)(*line), ft_strrchr((const char*)(*line), '-'), ft_strlen(*line));
+			name = ft_strsub((const char *)(line), 0, ft_strrchr((const char*)(line), '-') - line);
+			i = 0;
+			while (i < info->count_node)
+			{
+				if (!ft_strcmp(name, graph[i]->name))
+					break ;
+				i++;
+			}
+			if (i == info->count_node)
+				error("Such a room does not exist in the graph. Unable to create path\n", graph, info);
+			free(name);
+			if (graph[i]->link == NULL)
+				graph[i]->link = new_links(*graph, info);
+			name = ft_strsub((const char *)(line), (unsigned int)(ft_strrchr((const char*)(line), '-') + 1), ft_strlen(line));
+			j = 0;
+			while (j < info->count_node)
+			{
+				if (!ft_strcmp(name, graph[j]->name))
+					break ;
+				j++;
+			}
+			if (j == info->count_node)
+				error("Such a room does not exist in the graph. Unable to create path\n", graph, info);
+			free(name);
+			if (graph[j]->link == NULL)
+				graph[j]->link = new_links(*graph, info);
+			graph[i]->link[j / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
+			graph[j]->link[i / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
 		}
+		else
+			error("Incorrect input\n", graph, info);
 		free(line);
 	}
 }

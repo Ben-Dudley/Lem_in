@@ -6,36 +6,42 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/20 17:18:18 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/21 20:03:01 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	error(char *str, t_graph **graph, t_info **info)
+void	error(char *str, t_graph **graph, t_info *info)
 {
-	free(*info);
-	free_graph(graph);
-		ft_putstr(str);
+	int i;
+
+	i = 0;
+	while (i < info->count_node)
+		if (graph[i]->link)
+			free(graph[i++]->link);
+	free(*graph);
+	ft_putstr_fd(str, 2);
 	exit(3);
 }
 
-void	init(t_graph **graph, t_info **info)
+void	init(t_graph **graph, t_info *info)
 {
 	*graph = NULL;
-	*info = (t_info *)malloc(sizeof(**info));
-	(*info)->count_ants = 0;
+	info->count_ants = 0;
+	info->count_node = 0;
+	info->count_max_node = SIZE;
 }
 
 int main()
 {
 	t_graph *graph;
-	t_info	*info;
+	t_info	info;
 
 	init(&graph, &info);
 	get_ants(&graph, &info);
 	get_rooms_links(&graph, &info);
-	printf("Count of ants %d\n", info->count_ants);
+	printf("Count of ants %d\n", info.count_ants);
 	error("OK! =^_^=\n", &graph, &info);
 	return (0);
 }

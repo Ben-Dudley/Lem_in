@@ -1,47 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   graphs_operations.c                                :+:      :+:    :+:   */
+/*   graph_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 15:27:17 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/19 18:28:12 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/21 20:24:09 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_graph	*new_graph(char *name, t_link **link)
+t_graph	*new_graph(t_graph *prev_graph, t_info *info)
 {
-	t_graph *new;
+	t_graph *new_graph;
+	int i;
 
-	new = (t_graph *)malloc(sizeof(*new));
-	new->name = name;
-	new->link = link;
-	new->next = NULL;
-	return (new);
-}
-
-void add_graph(t_graph **graph, t_graph *new)
-{
-	new->next = *graph;
-	*graph = new;
-}
-
-void	free_graph(t_graph **graph)
-{
-	t_graph *ptr;
-
-	while (*graph)
+	i = 0;
+	info->count_max_node *= 2;
+	new_graph = (t_graph *)malloc(sizeof(*new_graph) * info->count_max_node);
+	while (info->count_node != 0 && prev_graph + i)
 	{
-		free((*graph)->name);
-		(*graph)->name = NULL;
-		if ((*graph)->link)
-			free_link((*graph)->link);
-		ptr = *graph;
-		*graph = (*graph)->next;
-		free(ptr);
-		ptr = NULL;
+		new_graph[i].name = prev_graph[i].name;
+		new_graph[i].x = prev_graph[i].x;
+		new_graph[i].y = prev_graph[i].y;
+		new_graph[i].visited = prev_graph[i].visited;
+		new_graph[i].link = prev_graph[i].link;
+		i++;
 	}
+	while (i < info->count_max_node)
+	{
+		new_graph[i].name = NULL;
+		new_graph[i].x = 0;
+		new_graph[i].y = 0;
+		new_graph[i].visited = 0;
+		new_graph[i].link = NULL;
+		i++;
+	}
+	if (prev_graph !=  NULL)
+	{
+		free(prev_graph);
+		prev_graph = NULL;
+	}
+	return (new_graph);
+}
+
+
+size_t	*new_links(t_graph *graph, t_info *info)
+{
+	size_t *links;
+
+	links = (size_t *)malloc(sizeof(*links) * (info->count_node / (8 * sizeof(*links)) + 1));
+	return (links);
 }

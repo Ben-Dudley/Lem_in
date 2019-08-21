@@ -6,7 +6,7 @@
 #    By: bdudley <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 23:17:28 by bdudley           #+#    #+#              #
-#    Updated: 2019/08/19 21:10:58 by bdudley          ###   ########.fr        #
+#    Updated: 2019/08/21 18:14:03 by bdudley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = lem_in
 #FLAGS = -Wall -Wextra -Werror
 INC = ./include
 INC_2 = ./libft
-SRCS = ./source/main.c ./source/link_operations.c ./source/graph_operations.c ./source/get_ants_rooms_links.c
+SRCS = ./source/main.c ./source/graph_operations.c ./source/get_ants_rooms_links.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 
