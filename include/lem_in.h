@@ -32,7 +32,7 @@ typedef struct			s_graph
 	int					x;
 	int					y;
 	int					visited;
-	size_t				*link;
+	t_link				*link;
 
 }						t_graph;
 
@@ -44,6 +44,10 @@ typedef struct			s_info
 	int					ind_start;
 	int					ind_end;
 }						t_info;
+
+t_link					*new_link(t_graph **graph, t_info *info);
+void					add_link(t_link **link, t_link *new);
+void					free_link(t_link **link);
 
 t_graph					*new_graph(t_graph *prev_graph, t_info *info);
 size_t					*new_links(t_graph *graph, t_info *info);
