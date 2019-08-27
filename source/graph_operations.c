@@ -53,11 +53,34 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 	return (new_graph);
 }
 
-size_t		*new_links(t_graph *graph, t_info *info)
+t_link		*new_link(t_graph **graph, t_info *info)
 {
-	size_t *links;
+	t_link *new;
 
-	links = (size_t *)malloc(sizeof(*links) *
-			(info->count_node / (8 * sizeof(*links)) + 1));
-	return (links);
+	if (!(new = (t_link *)malloc(sizeof(*new))))
+		error("Memory allocation error\n", graph, info);
+	new->node = -1;
+	new->status = 1;
+	new->next = NULL;
+	new->reverse = NULL;
+	return (new);
+}
+
+void		add_link(t_link **link, t_link *new)
+{
+	new->next = *link;
+	*link = new;
+}
+
+void		free_link(t_link **link)
+{
+	t_link *ptr;
+
+	while (*link)
+	{
+		ptr = *link;
+		*link = (*link)->next;
+		free(ptr);
+		ptr = NULL;
+	}
 }
