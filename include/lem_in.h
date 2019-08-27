@@ -58,5 +58,9 @@ int						put_number(char *str, t_graph **graph, t_info *info);
 
 void					get_ants(t_graph **graph, t_info *info);
 void					get_rooms_links(t_graph **graph, t_info *info);
-void					get_room(t_graph **graph, t_info *info, int flag, char *line);
+void					get_room(t_graph **graph, t_info *info, int *flag,
+																char *line);
+void					ft_print_massiv(t_graph **graph, t_info *info);
+int						ft_help_rooms(t_graph **graph, t_info *info, int flag,
+																char *line);
 #endif

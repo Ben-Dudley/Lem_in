@@ -60,13 +60,13 @@ static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,
 	free(name);
 }
 
-void			get_room(t_graph **graph, t_info *info, int flag, char *line)
+void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 {
 	t_graph		*node;
 	int			i;
 
 	i = 0;
-	if (flag == 1)
+	if (*flag == 1)
 		error("First you need to enter all the vertices, and only then links\n",
 																graph, info);
 	if (*line == 'L')
@@ -74,12 +74,16 @@ void			get_room(t_graph **graph, t_info *info, int flag, char *line)
 																graph, info);
 	if (info->count_node >= info->count_max_node || info->count_node == 0)
 		graph[0] = new_graph(graph[0], info);
-	ft_help_get_room(graph, info, flag, line);
+	ft_help_get_room(graph, info, *flag, line);
 	while (i < info->count_node)
 	{
 		if (!ft_strcmp(graph[0][i].name, graph[0][info->count_node].name))
 			error("A vertex with this name already exists\n", graph, info);
 		++i;
 	}
+//	printf("flag in get_room before %d\n", *flag);
+	if (*flag > 1)
+		*flag = ft_help_rooms(graph, info, *flag, "");
+//	printf("flag in get_room after %d\n", *flag);
 	info->count_node++;
 }
