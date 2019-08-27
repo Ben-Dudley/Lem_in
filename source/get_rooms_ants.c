@@ -47,6 +47,8 @@ static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,
 	free(name);
 	name = ft_strsub((const char *)(line), 0,
 	ft_strrchr((const char*)(line), ' ') - line);
+	if (!(ft_strrchr((const char*)(name), ' ')))
+		error("Invalid input\n", graph, info);
 	name_copy = ft_strsub((const char *)(name),
 	(unsigned int)(ft_strrchr((const char*)(name), ' ') + 1 - name),
 	name + ft_strlen(name) - ft_strrchr((const char*)(name), ' ') - 1);

@@ -18,6 +18,14 @@
 # include <stdio.h>
 # define SIZE 16
 
+typedef struct			s_link
+{
+	int					status;
+	int					node;
+	struct s_link		*reverse;
+	struct s_link		*next;
+}						t_link;
+
 typedef struct			s_graph
 {
 	char				*name;

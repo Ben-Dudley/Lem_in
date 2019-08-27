@@ -32,7 +32,9 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 
 	i = 0;
 	info->count_max_node *= 2;
-	new_graph = (t_graph *)malloc(sizeof(*new_graph) * info->count_max_node);
+	if (!(new_graph = (t_graph *)malloc(sizeof(*new_graph) *
+			info->count_max_node)))
+		error("Memory allocation error\n", prev_graph, info);
 	while (info->count_node != 0 && prev_graph + i)
 	{
 		new_graph[i].name = prev_graph[i].name;
@@ -43,14 +45,13 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 		i++;
 	}
 	init_graph(&new_graph, info, i);
-	if (prev_graph !=  NULL)
+	if (prev_graph != NULL)
 	{
 		free(prev_graph);
 		prev_graph = NULL;
 	}
 	return (new_graph);
 }
-
 
 size_t		*new_links(t_graph *graph, t_info *info)
 {
