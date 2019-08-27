@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void		init_graph(t_graph **graph, t_info *info, i)
+void		init_graph(t_graph **graph, t_info *info, int i)
 {
 	while (i < info->count_max_node)
 	{
@@ -27,8 +27,8 @@ void		init_graph(t_graph **graph, t_info *info, i)
 
 t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 {
-	t_graph *new_graph;
-	int i;
+	t_graph	*new_graph;
+	int		i;
 
 	i = 0;
 	info->count_max_node *= 2;
@@ -42,7 +42,7 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 		new_graph[i].link = prev_graph[i].link;
 		i++;
 	}
-	init_graph(&new_graph, info);
+	init_graph(&new_graph, info, i);
 	if (prev_graph !=  NULL)
 	{
 		free(prev_graph);
@@ -56,6 +56,7 @@ size_t		*new_links(t_graph *graph, t_info *info)
 {
 	size_t *links;
 
-	links = (size_t *)malloc(sizeof(*links) * (info->count_node / (8 * sizeof(*links)) + 1));
+	links = (size_t *)malloc(sizeof(*links) *
+			(info->count_node / (8 * sizeof(*links)) + 1));
 	return (links);
 }
