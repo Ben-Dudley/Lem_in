@@ -12,6 +12,19 @@
 
 #include "lem_in.h"
 
+void		init_graph(t_graph **graph, t_info *info, i)
+{
+	while (i < info->count_max_node)
+	{
+		graph[0][i].name = NULL;
+		graph[0][i].x = 0;
+		graph[0][i].y = 0;
+		graph[0][i].visited = 0;
+		graph[0][i].link = NULL;
+		i++;
+	}
+}
+
 t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 {
 	t_graph *new_graph;
@@ -29,15 +42,7 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 		new_graph[i].link = prev_graph[i].link;
 		i++;
 	}
-	while (i < info->count_max_node)
-	{
-		new_graph[i].name = NULL;
-		new_graph[i].x = 0;
-		new_graph[i].y = 0;
-		new_graph[i].visited = 0;
-		new_graph[i].link = NULL;
-		i++;
-	}
+	init_graph(&new_graph, info);
 	if (prev_graph !=  NULL)
 	{
 		free(prev_graph);
