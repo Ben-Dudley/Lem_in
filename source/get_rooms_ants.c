@@ -81,9 +81,7 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 			error("A vertex with this name already exists\n", graph, info);
 		++i;
 	}
-//	printf("flag in get_room before %d\n", *flag);
 	if (*flag > 1)
 		*flag = ft_help_rooms(graph, info, *flag, "");
-//	printf("flag in get_room after %d\n", *flag);
 	info->count_node++;
 }

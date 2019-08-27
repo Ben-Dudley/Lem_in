@@ -16,7 +16,7 @@ INC = ./include
 INC_2 = ./libft
 SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/get_rooms_links.c ./source/put_number.c \
-		./source/get_rooms_ants.c ./source/print_graph.c
+		./source/get_rooms_ants.c ./source/print_graph.c ./source/solution.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 

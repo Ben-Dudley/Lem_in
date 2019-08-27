@@ -34,7 +34,7 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 	info->count_max_node *= 2;
 	if (!(new_graph = (t_graph *)malloc(sizeof(*new_graph) *
 			info->count_max_node)))
-		error("Memory allocation error\n", prev_graph, info);
+		error("Memory allocation error\n", &prev_graph, info);
 	while (info->count_node != 0 && prev_graph + i)
 	{
 		new_graph[i].name = prev_graph[i].name;

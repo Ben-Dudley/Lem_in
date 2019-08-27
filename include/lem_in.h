@@ -63,4 +63,5 @@ void					get_room(t_graph **graph, t_info *info, int *flag,
 void					ft_print_massiv(t_graph **graph, t_info *info);
 int						ft_help_rooms(t_graph **graph, t_info *info, int flag,
 																char *line);
+int						solution(t_graph **graph, t_info *info);
 #endif

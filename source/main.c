@@ -17,7 +17,7 @@ void	error(char *str, t_graph **graph, t_info *info)
 	int i;
 
 	i = 0;
-	ft_print_massiv(graph, info);
+	ft_print_massiv(graph, info); // потом удалить
 //	while (i < info->count_node)
 //		if (graph[0][i].link)
 //			free(graph[0][i++].link);
@@ -44,7 +44,9 @@ int		main(void)
 	init(&graph, &info);
 	get_ants(&graph, &info);
 	get_rooms_links(&graph, &info);
-//	ft_print_massiv(&graph, &info);
+	ft_print_massiv(&graph, &info);
+	if (!solution(&graph, &info))
+		ft_putstr("GGWP");
 //	printf("Count of ants %d\n", info.count_ants);
 	error("OK! =^_^=\n", &graph, &info);
 	return (0);
