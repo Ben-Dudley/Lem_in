@@ -42,8 +42,9 @@ size_t					*new_links(t_graph *graph, t_info *info);
 
 void					init(t_graph **graph, t_info *info);
 void					error(char *str, t_graph **graph, t_info *info);
+int						put_number(char *str, t_graph **graph, t_info *info);
 
 void					get_ants(t_graph **graph, t_info *info);
 void					get_rooms_links(t_graph **graph, t_info *info);
-
+void					get_room(t_graph **graph, t_info *info, int flag, char *line);
 #endif

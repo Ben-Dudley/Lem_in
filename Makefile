@@ -14,7 +14,9 @@ NAME = lem_in
 #FLAGS = -Wall -Wextra -Werror
 INC = ./include
 INC_2 = ./libft
-SRCS = ./source/main.c ./source/graph_operations.c ./source/get_ants_rooms_links.c
+SRCS = ./source/main.c ./source/graph_operations.c \
+		./source/get_rooms_links.c ./source/put_number.c \
+		./source/get_rooms_ants.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 
