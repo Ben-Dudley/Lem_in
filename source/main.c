@@ -17,10 +17,10 @@ void	error(char *str, t_graph **graph, t_info *info)
 	int i;
 
 	i = 0;
-	while (i < info->count_node)
-		if (graph[i]->link)
-			free(graph[i++]->link);
-	free(*graph);
+//	while (i < info->count_node)
+//		if (graph[0][i].link)
+//			free(graph[0][i++].link);
+//	free(graph[0]);
 	ft_putstr_fd(str, 2);
 	exit(3);
 }
@@ -33,7 +33,7 @@ void	init(t_graph **graph, t_info *info)
 	info->count_max_node = SIZE;
 }
 
-int main()
+int		main(void)
 {
 	t_graph *graph;
 	t_info	info;

@@ -43,7 +43,7 @@ void	get_ants(t_graph **graph, t_info *info)
 {
 	char *line;
 
-	while (get_next_line(0, &line, 0) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (*line == '#' && *(line + 1) != '#')
 			continue ;
@@ -74,26 +74,32 @@ void		get_room(t_graph **graph, t_info *info, int flag, char *line)
 	if (*line == 'L' || *line == '#')
 		error("The vertex name cannot start with characters '#' and 'L'\n", graph, info);
 	if (info->count_node >= info->count_max_node || info->count_node == 0)
-		*graph = new_graph(*graph, info);
+		graph[0] = new_graph(graph[0], info);
 	name = ft_strsub((const char *)(line), (unsigned int)(ft_strrchr((const char*)(line), ' ') + 1 - line) , line + ft_strlen(line) - ft_strrchr((const char*)(line), ' ') - 1);
-	graph[info->count_node]->y = put_number(name, graph, info);
+	graph[0][info->count_node].y = put_number(name, graph, info);
 	free(name);
 	name = ft_strsub((const char *)(line), 0, ft_strrchr((const char*)(line), ' ') - line);
 	name_copy = ft_strsub((const char *)(name), (unsigned int)(ft_strrchr((const char*)(name), ' ') + 1 - name), name + ft_strlen(name) - ft_strrchr((const char*)(name), ' ') - 1);
-	graph[info->count_node]->x = put_number(name_copy, graph, info);
+	graph[0][info->count_node].x = put_number(name_copy, graph, info);
 	free(name_copy);
 	name_copy = ft_strsub((const char *)(name), 0,  ft_strrchr((const char*)(name), ' ') - name);
-	graph[info->count_node]->name = name_copy;
+	graph[0][info->count_node].name = name_copy;
 	free(name);
 	while (i < info->count_node)
 	{
-		if (!ft_strcmp(graph[i]->name, graph[info->count_node]->name))
+		if (!ft_strcmp(graph[0][i].name, graph[0][info->count_node].name))
 			error("A vertex with this name already exists\n", graph, info);
-		i++;
+		++i;
 	}
 	info->count_node++;
 }
 
+/**
+ *  Обработать вхождение левых строк
+ * 	То, что введен старт и энд
+ *	Переписать листы
+ *	Разделить
+ */
 void	get_rooms_links(t_graph **graph, t_info *info)
 {
 	int flag;
@@ -104,21 +110,21 @@ void	get_rooms_links(t_graph **graph, t_info *info)
 
 	flag = 0;
 	i = 0;
-	while (get_next_line(0, &line, 0) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (*line == '#')
 		{
-			if (!ft_strcpy("##start\n", line))
+			if (!ft_strcmp("##start\n", line))
 			{
 				free(line);
-				get_next_line(0, &line, 0);
+				get_next_line(0, &line);
 				get_room(graph, info, flag, line);
 				info->ind_start = info->count_node;
 			}
-			else if (!ft_strcpy("##end\n", line))
+			else if (!ft_strcmp("##end\n", line))
 			{
 				free(line);
-				get_next_line(0, &line, 0);
+				get_next_line(0, &line);
 				get_room(graph, info, flag, line);
 				info->ind_end = info->count_node;
 			}
@@ -127,38 +133,41 @@ void	get_rooms_links(t_graph **graph, t_info *info)
 			get_room(graph, info, flag, line);
 		else if (ft_strchr((const char*)(line), '-') != NULL)
 		{
+		//	printf("1\n");
 			flag = 1;
 			name = ft_strsub((const char *)(line), 0, ft_strrchr((const char*)(line), '-') - line);
 			i = 0;
 			while (i < info->count_node)
 			{
-				if (!ft_strcmp(name, graph[i]->name))
+				if (!ft_strcmp(name, graph[0][i].name))
 					break ;
 				i++;
 			}
 			if (i == info->count_node)
 				error("Such a room does not exist in the graph. Unable to create path\n", graph, info);
 			free(name);
-			if (graph[i]->link == NULL)
-				graph[i]->link = new_links(*graph, info);
-			name = ft_strsub((const char *)(line), (unsigned int)(ft_strrchr((const char*)(line), '-') + 1), ft_strlen(line));
+			printf("|%s|\n", graph[0][i].name);
+			if (graph[0][i].link == NULL)
+				graph[0][i].link = new_links(graph[0], info);
+			name = ft_strsub((const char *)(line), (unsigned int)(ft_strrchr((const char*)(line), '-') + 1 - line), line + ft_strlen(line) - ft_strrchr((const char*)(line), '-') - 1);
 			j = 0;
 			while (j < info->count_node)
 			{
-				if (!ft_strcmp(name, graph[j]->name))
+				if (!ft_strcmp(name, graph[0][j].name))
 					break ;
 				j++;
 			}
 			if (j == info->count_node)
 				error("Such a room does not exist in the graph. Unable to create path\n", graph, info);
 			free(name);
-			if (graph[j]->link == NULL)
-				graph[j]->link = new_links(*graph, info);
-			graph[i]->link[j / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
-			graph[j]->link[i / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
+			if (graph[0][j].link == NULL)
+				graph[0][j].link = new_links(graph[0], info);
+			graph[0][i].link[j / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
+			graph[0][j].link[i / sizeof(size_t) * 8] = 1 << (j % sizeof(size_t) * 8);
 		}
 		else
-			error("Incorrect input\n", graph, info);
+			return ; // проверить всё ли зафришино
+			//error("Otpravka dal'we\n", graph, info);
 		free(line);
 	}
 }

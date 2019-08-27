@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_graph	*new_graph(t_graph *prev_graph, t_info *info)
+t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 {
 	t_graph *new_graph;
 	int i;
@@ -47,7 +47,7 @@ t_graph	*new_graph(t_graph *prev_graph, t_info *info)
 }
 
 
-size_t	*new_links(t_graph *graph, t_info *info)
+size_t		*new_links(t_graph *graph, t_info *info)
 {
 	size_t *links;
 
