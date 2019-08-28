@@ -37,10 +37,8 @@ typedef struct			s_link
 	int					node;
 	struct s_link		*reverse;
 	struct s_link		*next;
-//	int 				score;
 }						t_link;
-//while (t_list->next)
-////	score++; ft_strjoin(*int reversa* int)
+
 
 typedef struct			s_graph
 {
