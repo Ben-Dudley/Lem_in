@@ -24,7 +24,7 @@ static int		ft_search_index(char *name, t_graph **graph, t_info *info)
 		++i;
 	}
 	if (i == info->count_node)
-		error("Such a room does not exist in the graph. Unable
+		error("Such a room does not exist in the graph. Unable\
 		to create path\n", graph, info);
 	return (i);
 }

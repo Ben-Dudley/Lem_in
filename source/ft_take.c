@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "lem_in.h.h"
 
 static char			*ft_copyread(const int fd)
 {

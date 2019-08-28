@@ -44,7 +44,7 @@ int		main(void)
 	init(&graph, &info);
 	get_ants(&graph, &info);
 	get_rooms_links(&graph, &info);
-	ft_print_massiv(&graph, &info);
+//	ft_print_massiv(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP");
 //	printf("Count of ants %d\n", info.count_ants);

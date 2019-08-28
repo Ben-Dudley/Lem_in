@@ -17,6 +17,19 @@
 # include <limits.h>
 # include <stdio.h>
 # define SIZE 16
+typedef struct 			s_node
+{
+	int 				node;
+	struct s_node		*next;
+}						t_node;
+
+typedef struct 			s_path
+{
+	int 				length;
+	int 				stack;
+	t_node				*node;
+	struct s_path		*next;
+}						t_path;
 
 typedef struct			s_link
 {
@@ -24,7 +37,10 @@ typedef struct			s_link
 	int					node;
 	struct s_link		*reverse;
 	struct s_link		*next;
+//	int 				score;
 }						t_link;
+//while (t_list->next)
+////	score++; ft_strjoin(*int reversa* int)
 
 typedef struct			s_graph
 {
