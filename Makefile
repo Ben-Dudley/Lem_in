@@ -6,7 +6,7 @@
 #    By: bdudley <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/17 23:17:28 by bdudley           #+#    #+#              #
-#    Updated: 2019/08/21 18:14:03 by bdudley          ###   ########.fr        #
+#    Updated: 2019/08/30 18:17:27 by bdudley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INC = ./include
 INC_2 = ./libft
 SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/get_rooms_links.c ./source/put_number.c \
-		./source/get_rooms_ants.c ./source/print_graph.c ./source/solution.c
+		./source/get_rooms_ants.c ./source/print_graph.c ./source/solution.c \
+		./source/search_path.c ./source/path_operations.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/21 20:03:01 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:15:43 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	error(char *str, t_graph **graph, t_info *info)
 	int i;
 
 	i = 0;
-	ft_print_massiv(graph, info); // потом удалить
+//	ft_print_massiv(graph, info); // потом удалить
 //	while (i < info->count_node)
 //		if (graph[0][i].link)
 //			free(graph[0][i++].link);
@@ -31,6 +31,7 @@ void	init(t_graph **graph, t_info *info)
 	*graph = NULL;
 	info->count_ants = 0;
 	info->count_node = 0;
+	info->max_flow = 0;
 	info->count_max_node = SIZE;
 	info->ind_start = -1;
 	info->ind_end = -1;
@@ -46,7 +47,8 @@ int		main(void)
 	get_rooms_links(&graph, &info);
 //	ft_print_massiv(&graph, &info);
 	if (!solution(&graph, &info))
-		ft_putstr("GGWP");
+		ft_putstr("GGWP\n");
+
 //	printf("Count of ants %d\n", info.count_ants);
 	error("OK! =^_^=\n", &graph, &info);
 	return (0);

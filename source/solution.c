@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/27 19:11:18 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/08/30 20:36:40 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,18 @@ void			print(t_graph **graph, t_info *info, int i)
 
 		temp = temp->next;
 	}
-	printf("\n\n\n");
-//	temp = graph[0][i].link;
-//	while (temp)
-//	{
-//		printf("!!!!!%d\n", temp->node);
-//		temp = temp->next;
-//	}
 }
 
-void				print_queue(int *queue, int count)
+void				print_queue(t_graph **graph, int *queue, int count)
 {
 	int i;
 
 	i = 0;
-	printf("%d", queue[i++]);
 	while (i <= count)
-		printf(" %d", queue[i++]);
+	{
+		printf(" %d(%s) ", queue[i], graph[0][queue[i]].name);
+		++i;
+	}
 	printf("\n");
 }
 
@@ -52,7 +47,7 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 	i = info->ind_end;
 	while (i != info->ind_start)
 	{
-		print(graph, info, i);
+		//print(graph, info, i);
 		temp = 	graph[0][traces[i]].link;
 		while (temp)
 		{
@@ -65,66 +60,84 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 		}
 		i = traces[i];
 	}
+	print_massiv(graph, info);
 }
 
-int					find_path(t_graph **graph, t_info *info, int *queue, int *traces)
+int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG)
 {
 	int			i;
 	int 		j;
 	t_link		*ptr;
 
 	i = 0;
+	while (i <= info->count_node)
+		queue[i++] = -1;
+	i = 0;
+	while (i <= info->count_node)
+		traces[i++] = -1;
+	i = 0;
 	queue[i] = info->ind_start;
-//	print_queue(queue, i);
-	//printf("after cycle\n");
+	printf("TYT\n");
 	while (queue[i] != -1)
 	{
-
-		//printf("queue[i] = %d\n", queue[i]);
+		printf("Bul\n");
+		print_queue(graph, queue, info->count_node);
+		printf("Zenya\n");
+		print_queue(graph, traces, info->count_node);
+		printf("Zenya2\n");
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
-			if (ptr->status != 0)
+			printf("PYPA\n");
+			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)//&& (ptr-> node == info->ind_start || graph[0][ptr->node].visited == 0))
 			{
-				//print(graph, info, i);
 				j = 0;
-				while (j < i)
+				while (j <= info->count_node)
 				{
 					if (queue[j] == ptr->node)
 						break;
 					j++;
+				//	printf("a\n");
 				}
-				if (j == i)
+				if (j == info->count_node + 1)
 				{
+					printf("TYT1\n");
 					j = i;
-					j++;
+					while (queue[j] != -1)
+						++j;
 					queue[j] = ptr->node;
 					traces[ptr->node] = queue[i];
 					if (ptr->node == info->ind_end)
 					{
-						restoration_path(graph, info, traces);
+						printf("LYPA\n");
+						if (GG)//(graph[0][info->ind_start].visited)
+							save_path(graph, info, traces);
+						else
+							restoration_path(graph, info, traces);
 						return (1);
 					}
 				}
 			}
+			printf("KEK\n");
 			ptr = ptr->next;
 		}
-	//	print_queue(queue, i);
 		i++;
 	}
+
+	printf("4ebyrek\n");
+//	if (i > info->count_node)
+//		return (1);
 	return (0);
 }
 
 int					solution(t_graph **graph, t_info *info)
 {
-	int max_flow;
 	int add_path;
 	int *queue;
 	int *traces;
 	int i;
 
 	i = 0;
-	max_flow = 0;
 	if (!(queue = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error("Memory allocation error\n", graph, info);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
@@ -135,15 +148,22 @@ int					solution(t_graph **graph, t_info *info)
 	while (i <= info->count_node)
 		traces[i++] = -1;
 	//printf("I exist!!\n");
-	add_path = find_path(graph, info, queue, traces);
+	i = search_stack_path(graph, info, queue, traces);
+	add_path = find_path(graph, info, queue, traces, 0);
+	printf("i = %d add- %d\n", i , add_path);
 	while (add_path > 0)
 	{
-		max_flow += add_path;
-		add_path = find_path(graph, info, queue, traces);
+
+		info->max_flow += add_path;
+		add_path = find_path(graph, info, queue, traces, 0);
 	}
+	clear_graph(graph, info);
+	if (i < info->max_flow)
+		i = search_stack_path(graph, info, queue, traces);
 	free(queue);
-	printf("max flow %d\n", max_flow);
-	if (max_flow == 0)
+	ft_print_pyti(graph, info);
+	printf("max flow %d and count %d\n", info->max_flow, i);
+	if (info->max_flow == 0)
 		error("It is impossible to translate ants\n", graph, info);
 	return (1);
 }
