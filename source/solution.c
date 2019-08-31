@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <zconf.h>
 #include "lem_in.h"
 
 void			print(t_graph **graph, t_info *info, int i)
@@ -21,7 +20,6 @@ void			print(t_graph **graph, t_info *info, int i)
 	while (temp)
 	{
 		printf("%s-%s i = %d; temp->node = %d;\n", graph[0][i].name, graph[0][temp->node].name, i, temp->node);
-
 		temp = temp->next;
 	}
 }
@@ -33,7 +31,10 @@ void				print_queue(t_graph **graph, int *queue, int count)
 	i = 0;
 	while (i <= count)
 	{
-		printf(" %d(%s) ", queue[i], graph[0][queue[i]].name);
+		if (queue[i] == -1)
+			printf(" %d ", queue[i]);
+		else
+			printf(" %d(%s) ", queue[i], graph[0][queue[i]].name);
 		++i;
 	}
 	printf("\n");
@@ -60,7 +61,7 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 		}
 		i = traces[i];
 	}
-	print_massiv(graph, info);
+	//print_massiv(graph, info);
 }
 
 int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG)
@@ -77,18 +78,18 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 		traces[i++] = -1;
 	i = 0;
 	queue[i] = info->ind_start;
-	printf("TYT\n");
+	//printf("TYT\n");
 	while (queue[i] != -1)
 	{
-		printf("Bul\n");
-		print_queue(graph, queue, info->count_node);
-		printf("Zenya\n");
+		printf("Print queue before cycle\n");
+		print_queue(graph, queue, i);
+		printf("Print traces before cycle\n");
 		print_queue(graph, traces, info->count_node);
-		printf("Zenya2\n");
+		//printf("Zenya2\n");
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
-			printf("PYPA\n");
+			//printf("PYPA\n");
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)//&& (ptr-> node == info->ind_start || graph[0][ptr->node].visited == 0))
 			{
 				j = 0;
@@ -101,7 +102,7 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 				}
 				if (j == info->count_node + 1)
 				{
-					printf("TYT1\n");
+					//printf("TYT1\n");
 					j = i;
 					while (queue[j] != -1)
 						++j;
@@ -109,7 +110,7 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 					traces[ptr->node] = queue[i];
 					if (ptr->node == info->ind_end)
 					{
-						printf("LYPA\n");
+						//printf("LYPA\n");
 						if (GG)//(graph[0][info->ind_start].visited)
 							save_path(graph, info, traces);
 						else
@@ -118,15 +119,11 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 					}
 				}
 			}
-			printf("KEK\n");
+			//printf("KEK\n");
 			ptr = ptr->next;
 		}
 		i++;
 	}
-
-	printf("4ebyrek\n");
-//	if (i > info->count_node)
-//		return (1);
 	return (0);
 }
 
@@ -150,13 +147,14 @@ int					solution(t_graph **graph, t_info *info)
 	//printf("I exist!!\n");
 	i = search_stack_path(graph, info, queue, traces);
 	add_path = find_path(graph, info, queue, traces, 0);
-	printf("i = %d add- %d\n", i , add_path);
+	//printf("i = %d add = %d\n", i , add_path);
 	while (add_path > 0)
 	{
 
 		info->max_flow += add_path;
 		add_path = find_path(graph, info, queue, traces, 0);
 	}
+	printf("max flow %d and count %d\n", info->max_flow, i);
 	clear_graph(graph, info);
 	if (i < info->max_flow)
 		i = search_stack_path(graph, info, queue, traces);

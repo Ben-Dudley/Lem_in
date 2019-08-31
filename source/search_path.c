@@ -72,7 +72,7 @@ void		clear_graph(t_graph **graph, t_info *info)
 		}
 		++i;
 	}
-	printf("DDDDD\n");
+	printf("Print massiv after clear\n");
 	print_massiv(graph, info);
 }
 
