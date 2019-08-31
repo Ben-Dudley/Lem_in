@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/30 19:13:31 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/31 19:09:13 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ int						search_stack_path(t_graph **graph, t_info *info, int *queue,
 void					ft_print_pyti(t_graph **graph, t_info *info);
 void					clear_graph(t_graph **graph, t_info *info);
 void					print_massiv(t_graph **graph, t_info *info);
+void					score_ants(t_graph **graph, t_info *info, int count);
+int 					score_ways(t_graph **graph, t_info *info);
 #endif

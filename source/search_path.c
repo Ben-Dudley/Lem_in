@@ -72,8 +72,8 @@ void		clear_graph(t_graph **graph, t_info *info)
 		}
 		++i;
 	}
-	printf("Print massiv after clear\n");
-	print_massiv(graph, info);
+//	printf("Print massiv after clear\n");
+//	print_massiv(graph, info);
 }
 
 int			search_stack_path(t_graph **graph, t_info *info,

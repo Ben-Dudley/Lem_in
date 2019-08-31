@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/30 20:36:40 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/31 19:11:53 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 	//printf("TYT\n");
 	while (queue[i] != -1)
 	{
-		printf("Print queue before cycle\n");
-		print_queue(graph, queue, info->count_node);
-		printf("Print traces before cycle\n");
-		print_queue(graph, traces, info->count_node);
+//		printf("Print queue before cycle\n");
+//		print_queue(graph, queue, info->count_node);
+//		printf("Print traces before cycle\n");
+	//	print_queue(graph, traces, info->count_node);
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
-			printf("Links %d(%s)-%d(%s)\n", queue[i], graph[0][queue[i]].name, ptr->node, graph[0][ptr->node].name);
+			//printf("Links %d(%s)-%d(%s)\n", queue[i], graph[0][queue[i]].name, ptr->node, graph[0][ptr->node].name);
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)//&& (ptr-> node == info->ind_start || graph[0][ptr->node].visited == 0))
 			{
 				j = 0;
@@ -156,7 +156,10 @@ int					solution(t_graph **graph, t_info *info)
 	printf("max flow %d and count %d\n", info->max_flow, i);
 	clear_graph(graph, info);
 	if (i < info->max_flow)
+	{
 		i = search_stack_path(graph, info, queue, traces);
+		score_ants(graph, info, i);
+	}
 	free(queue);
 	ft_print_pyti(graph, info);
 	printf("max flow %d and count %d\n", info->max_flow, i);

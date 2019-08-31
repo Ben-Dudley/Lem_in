@@ -17,7 +17,7 @@ INC_2 = ./libft
 SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/get_rooms_links.c ./source/put_number.c \
 		./source/get_rooms_ants.c ./source/print_graph.c ./source/solution.c \
-		./source/search_path.c ./source/path_operations.c
+		./source/search_path.c ./source/path_operations.c ./source/score_ants.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 

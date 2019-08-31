@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 17:24:18 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/30 19:20:06 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/31 18:18:11 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 {
 	t_path		*temp;
 	t_node		*nodo4ka;
-
 	temp = info->path;
 	while (temp)
 	{
