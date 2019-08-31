@@ -82,14 +82,13 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 	while (queue[i] != -1)
 	{
 		printf("Print queue before cycle\n");
-		print_queue(graph, queue, i);
+		print_queue(graph, queue, info->count_node);
 		printf("Print traces before cycle\n");
 		print_queue(graph, traces, info->count_node);
-		//printf("Zenya2\n");
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
-			//printf("PYPA\n");
+			printf("Links %d(%s)-%d(%s)\n", queue[i], graph[0][queue[i]].name, ptr->node, graph[0][ptr->node].name);
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)//&& (ptr-> node == info->ind_start || graph[0][ptr->node].visited == 0))
 			{
 				j = 0;
