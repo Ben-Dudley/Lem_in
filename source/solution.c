@@ -161,9 +161,10 @@ int					solution(t_graph **graph, t_info *info)
 		score_ants(graph, info, i);
 	}
 	free(queue);
-	ft_print_pyti(graph, info);
+	score_ways(graph, info);
 	printf("max flow %d and count %d\n", info->max_flow, i);
 	if (info->max_flow == 0)
 		error("It is impossible to translate ants\n", graph, info);
+
 	return (1);
 }

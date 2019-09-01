@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static int		ft_search_index(char *name, t_graph **graph, t_info *info)
+static int		search_index(char *name, t_graph **graph, t_info *info)
 {
 	int		i;
 
@@ -29,7 +29,7 @@ static int		ft_search_index(char *name, t_graph **graph, t_info *info)
 	return (i);
 }
 
-static int		ft_help_link(t_graph **graph, t_info *info, char *line)
+static int		help_link(t_graph **graph, t_info *info, char *line)
 {
 	char			*name;
 	int				i;
@@ -37,13 +37,13 @@ static int		ft_help_link(t_graph **graph, t_info *info, char *line)
 
 	name = ft_strsub((const char *)(line), 0,
 							ft_strrchr((const char*)(line), '-') - line);
-	i = ft_search_index(name, graph, info);
+	i = search_index(name, graph, info);
 	free(name);
 	add_link(&graph[0][i].link, new_link(graph, info));
 	name = ft_strsub((const char *)(line),
 			(unsigned int)(ft_strrchr((const char*)(line), '-') + 1 - line),
 			line + ft_strlen(line) - ft_strrchr((const char*)(line), '-') - 1);
-	j = ft_search_index(name, graph, info);
+	j = search_index(name, graph, info);
 	add_link(&graph[0][j].link, new_link(graph, info));
 	free(name);
 	(graph[0][j].link)->node = i;
@@ -53,16 +53,16 @@ static int		ft_help_link(t_graph **graph, t_info *info, char *line)
 	return (1);
 }
 
-int				ft_help_rooms(t_graph **graph, t_info *info, int flag,
+int				help_rooms(t_graph **graph, t_info *info, int flag,
 																	char *line)
 {
-	if (!ft_strcmp("##start", line))
+	if (!ft_strcmp("##start", line) && flag != 1)
 	{
 		if (flag > 1)
 			error("Insufficient data for processing\n", graph, info);
 		return (2);
 	}
-	else if (!ft_strcmp("##end", line))
+	else if (!ft_strcmp("##end", line) && flag != 1)
 	{
 		if (flag > 1)
 			error("Insufficient data for processing\n", graph, info);
@@ -78,6 +78,8 @@ int				ft_help_rooms(t_graph **graph, t_info *info, int flag,
 		info->ind_end = info->count_node;
 		return (0);
 	}
+	if (flag == 1)
+		return (1);
 	return (0);
 }
 
@@ -90,14 +92,14 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 	while (get_next_line(0, &line) > 0)
 	{
 		if (*line == '#')
-			flag = ft_help_rooms(graph, info, flag, line);
-		else if (ft_strchr((const char*)(line), ' ') != NULL)
+			flag = help_rooms(graph, info, flag, line);
+		else if (ft_strchr((const char*)(line), ' ') != NULL && flag != 1)
 			get_room(graph, info, &flag, line);
 		else if (ft_strchr((const char*)(line), '-') != NULL)
 		{
 			if (flag > 1 || info->ind_start == -1 || info->ind_end == -1)
 				error("Insufficient data for processing\n", graph, info);
-			flag = ft_help_link(graph, info, line);
+			flag = help_link(graph, info, line);
 		}
 		else
 		{

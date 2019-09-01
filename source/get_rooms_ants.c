@@ -82,6 +82,6 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 		++i;
 	}
 	if (*flag > 1)
-		*flag = ft_help_rooms(graph, info, *flag, "");
+		*flag = help_rooms(graph, info, *flag, "");
 	info->count_node++;
 }

@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 17:15:40 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/30 17:31:26 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/31 21:14:43 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_node		*new_node(t_graph **graph, t_info *info, int node)
 	if (!(new = ((t_node *)malloc(sizeof(*new)))))
 		error("Memory allocation error\n", graph, info);
 	new->node = node;
+	new->ant = 0;
 	new->next = NULL;
 	
 	return (new);

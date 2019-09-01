@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/31 19:09:13 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/08/31 19:10:12 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 # include "libft.h"
 # include <limits.h>
 # include <stdio.h>
-# define SIZE 16
+# define SIZE 2000
 typedef struct 			s_node
 {
 	int 				node;
+	int 				ant;
 	struct s_node		*next;
 }						t_node;
 
@@ -83,7 +84,7 @@ void					get_rooms_links(t_graph **graph, t_info *info);
 void					get_room(t_graph **graph, t_info *info, int *flag,
 																char *line);
 void					ft_print_massiv(t_graph **graph, t_info *info);
-int						ft_help_rooms(t_graph **graph, t_info *info, int flag,
+int						help_rooms(t_graph **graph, t_info *info, int flag,
 																char *line);
 int						solution(t_graph **graph, t_info *info);
 int						find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG);
@@ -93,6 +94,10 @@ int						search_stack_path(t_graph **graph, t_info *info, int *queue,
 void					ft_print_pyti(t_graph **graph, t_info *info);
 void					clear_graph(t_graph **graph, t_info *info);
 void					print_massiv(t_graph **graph, t_info *info);
+void					print_ways(t_info *info, int *ways, int count);
 void					score_ants(t_graph **graph, t_info *info, int count);
-int 					score_ways(t_graph **graph, t_info *info);
+void 					score_ways(t_graph **graph, t_info *info);
+void					reverse_list(t_graph **graph, t_info *info);
+void					steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways);
+void					reverse_path(t_graph **graph, t_info *info);
 #endif
