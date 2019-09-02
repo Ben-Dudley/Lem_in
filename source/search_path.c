@@ -12,6 +12,28 @@
 
 #include "lem_in.h"
 
+void				restoration_path(t_graph **graph, t_info *info, int *traces)
+{
+	int			i;
+	t_link		*temp;
+
+	i = info->ind_end;
+	while (i != info->ind_start)
+	{
+		temp = graph[0][traces[i]].link;
+		while (temp)
+		{
+			if (temp->node == i)
+			{
+				temp->status = 0;
+				break ;
+			}
+			temp = temp->next;
+		}
+		i = traces[i];
+	}
+}
+
 void		save_path(t_graph **graph, t_info *info, int *traces)
 {
 	int i;
@@ -19,8 +41,8 @@ void		save_path(t_graph **graph, t_info *info, int *traces)
 	t_path *path;
 
 	i = info->ind_end;
-	printf("VREDNII ZEN~YA POKERMAN\n");
-	print_queue(graph,traces,info->count_node);
+	//printf("VREDNII ZEN~YA POKERMAN\n");
+	//print_queue(graph,traces,info->count_node);
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
@@ -46,9 +68,7 @@ void		save_path(t_graph **graph, t_info *info, int *traces)
 	//printf("length %d\n", path->length);
 	--path->length;
 	if (path->length == -1)
-	{
 		free(path);
-	}
 	else
 	{
 		path->stack = info->max_flow;
@@ -77,24 +97,4 @@ void		clear_graph(t_graph **graph, t_info *info)
 	}
 //	printf("Print massiv after clear\n");
 //	print_massiv(graph, info);
-}
-
-int			search_stack_path(t_graph **graph, t_info *info,
-											int *queue, int *traces)
-{
-	int add_path;
-	int count;
-
-	count = 0;
-	//graph[0][info->ind_start].visited = 1;
-	add_path = find_path(graph, info, queue, traces, 1);
-	while (add_path > 0)
-	{
-		count += add_path;
-		add_path = find_path(graph, info, queue, traces, 1);
-		print_massiv(graph, info);
-	}
-	clear_graph(graph, info);
-	//graph[0][info->ind_start].visited = 0;
-	return (count);
 }

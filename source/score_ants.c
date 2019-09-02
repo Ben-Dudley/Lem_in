@@ -155,7 +155,6 @@ void 				score_ways(t_graph **graph, t_info *info)
 			}
 			++i;
 			ptr = ptr->next;
-		//	printf("I exist!3!\n");
 		}
 		j = 0;
 		i =  score_ants / count_ways;
@@ -164,7 +163,6 @@ void 				score_ways(t_graph **graph, t_info *info)
 			ways[j] += i;
 			score_ants -= i;
 			++j;
-		//	printf("I exist!3!\n");
 		}
 		j = 0;
 		while (j < count_ways && score_ants > 0)
@@ -172,12 +170,10 @@ void 				score_ways(t_graph **graph, t_info *info)
 			ways[j] += 1;
 			score_ants -= 1;
 			++j;
-		//	printf("I exist!3!\n");
 		}
 	}
 	else
 		ways[0] = info->count_ants;
-	//ft_print_massiv(graph, info);
 		steps_ants(graph, info, ways, count_ways);
 }
 
@@ -202,7 +198,6 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 		else
 			steps -= ptr->length;
 		ptr = ptr->next;
-	//	printf("I exist!3!\n");
 	}
 	if (steps <= 0)
 		error("WHAT?????", graph, info);

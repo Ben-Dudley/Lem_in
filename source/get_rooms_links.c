@@ -91,7 +91,6 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 	flag = 0;
 	while (get_next_line(0, &line) > 0)
 	{
-		//printf("POPOPO\n");
 		if (*line == '#')
 			flag = help_rooms(graph, info, flag, line);
 		else if (ft_strchr((const char*)(line), ' ') != NULL && flag != 1)

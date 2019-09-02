@@ -22,7 +22,6 @@ void	error(char *str, t_graph **graph, t_info *info)
 //			free_link(&graph[0][i++].link);
 //	free(graph[0]);
 	ft_putstr_fd(str, 2);
-	//sleep(3);
 	exit(3);
 }
 
@@ -47,7 +46,6 @@ int		main(void)
 	get_rooms_links(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
-	//sleep(3);
 	error("", &graph, &info);
 	return (0);
 }

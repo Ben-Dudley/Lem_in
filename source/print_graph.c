@@ -117,7 +117,7 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 	while (temp)
 	{
 		nodo4ka =  temp->node;
-	//	printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
+		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
 		while (nodo4ka)
 		{
 			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
@@ -154,39 +154,4 @@ void			ft_print_massiv(t_graph **graph, t_info *info)
 		++i;
 	}
 	printf("\n");
-//	if (info->ind_start != -1)
-//		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
-//	if (info->ind_end != -1)
-//		printf("end %s\n", graph[0][info->ind_end].name); /*удалить*/
-}
-
-void			print_massiv(t_graph **graph, t_info *info)
-{
-	int			i;
-	t_link		*temp;
-
-	i = 0;
-	while (i < info->count_node)
-	{
-		printf(" %d ", graph[0][i++].visited);// удалить заменить
-	}
-	i = 0;
-	printf("\n");
-	while (i <= info->count_node)
-	{
-		temp = graph[0][i].link;
-		while (temp)
-		{
-			printf("(%s-%s - ", graph[0][i].name, graph[0][temp->node].name);
-			printf("%d) ", temp->status);
-/*удалить заменитть*/
-			temp = temp->next; // убрать двойной вывод или как то так
-		}
-		++i;
-	}
-	printf("\n");
-//	if (info->ind_start != -1)
-//		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
-//	if (info->ind_end != -1)
-//		printf("end %s\n", graph[0][info->ind_end].name); /*удалить*/
 }

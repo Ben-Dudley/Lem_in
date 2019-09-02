@@ -87,7 +87,7 @@ void					ft_print_massiv(t_graph **graph, t_info *info);
 int						help_rooms(t_graph **graph, t_info *info, int flag,
 																char *line);
 int						solution(t_graph **graph, t_info *info);
-int						find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG);
+int						find_path(t_graph **graph, t_info *info, int *queue, int *traces);
 void					save_path(t_graph **graph, t_info *info, int *traces);
 int						search_stack_path(t_graph **graph, t_info *info, int *queue,
 																				int *traces);
@@ -101,4 +101,7 @@ void 					score_ways(t_graph **graph, t_info *info);
 void					reverse_list(t_graph **graph, t_info *info);
 void					steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways);
 void					reverse_path(t_graph **graph, t_info *info);
+void				restoration_path(t_graph **graph, t_info *info, int *traces);
+int 			score_stack_path(t_graph **graph, t_info *info,
+								int *queue, int *traces);
 #endif

@@ -62,7 +62,6 @@ static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,
 
 void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 {
-	t_graph		*node;
 	int			i;
 
 	i = 0;
