@@ -94,6 +94,7 @@ int						search_stack_path(t_graph **graph, t_info *info, int *queue,
 void					ft_print_pyti(t_graph **graph, t_info *info);
 void					clear_graph(t_graph **graph, t_info *info);
 void					print_massiv(t_graph **graph, t_info *info);
+void				print_queue(t_graph **graph, int *queue, int count);
 void					print_ways(t_info *info, int *ways, int count);
 void					score_ants(t_graph **graph, t_info *info, int count);
 void 					score_ways(t_graph **graph, t_info *info);

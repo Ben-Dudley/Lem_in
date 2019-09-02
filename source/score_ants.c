@@ -177,7 +177,7 @@ void 				score_ways(t_graph **graph, t_info *info)
 	}
 	else
 		ways[0] = info->count_ants;
-	ft_print_massiv(graph, info);
+	//ft_print_massiv(graph, info);
 		steps_ants(graph, info, ways, count_ways);
 }
 
@@ -191,6 +191,7 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;
+	ft_print_pyti(graph, info);
 	while (ptr)
 	{
 		if (ptr->stack == info->max_flow)

@@ -79,12 +79,13 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 	i = 0;
 	queue[i] = info->ind_start;
 	//printf("TYT\n");
+
 	while (queue[i] != -1)
 	{
-//		printf("Print queue before cycle\n");
-//		print_queue(graph, queue, info->count_node);
-//		printf("Print traces before cycle\n");
-//		print_queue(graph, traces, info->count_node);
+		printf("Print queue before cycle\n");
+		print_queue(graph, queue, info->count_node);
+		printf("Print traces before cycle\n");
+		print_queue(graph, traces, info->count_node);
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
@@ -128,6 +129,7 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 		}
 		i++;
 	}
+
 	return (0);
 }
 
@@ -159,7 +161,7 @@ int					solution(t_graph **graph, t_info *info)
 		info->max_flow += add_path;
 		add_path = find_path(graph, info, queue, traces, 0);
 	}
-	//printf("max flow %d and count %d\n", info->max_flow, i);
+	printf("max flow %d and count %d\n", info->max_flow, i);
 	clear_graph(graph, info);
 	if (i < info->max_flow)
 	{
@@ -167,7 +169,7 @@ int					solution(t_graph **graph, t_info *info)
 		score_ants(graph, info, i);
 	}
 	free(queue);
-	//printf("max flow %d and count %d\n", info->max_flow, i);
+	printf("max flow %d and count %d\n", info->max_flow, i);
 	score_ways(graph, info);
 	//printf("max flow %d and count %d\n", info->max_flow, i);
 	if (info->max_flow == 0)

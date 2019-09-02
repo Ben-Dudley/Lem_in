@@ -19,6 +19,8 @@ void		save_path(t_graph **graph, t_info *info, int *traces)
 	t_path *path;
 
 	i = info->ind_end;
+	printf("VREDNII ZEN~YA POKERMAN\n");
+	print_queue(graph,traces,info->count_node);
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
@@ -90,6 +92,7 @@ int			search_stack_path(t_graph **graph, t_info *info,
 	{
 		count += add_path;
 		add_path = find_path(graph, info, queue, traces, 1);
+		print_massiv(graph, info);
 	}
 	clear_graph(graph, info);
 	//graph[0][info->ind_start].visited = 0;
