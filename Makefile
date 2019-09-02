@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 #FLAGS = -Wall -Wextra -Werror
 INC = ./include
 INC_2 = ./libft

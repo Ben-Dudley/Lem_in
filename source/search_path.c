@@ -41,8 +41,9 @@ void		save_path(t_graph **graph, t_info *info, int *traces)
 		i = traces[i];
 	}
 	add_node(&path->node, new_node(graph, info, i));
+	//printf("length %d\n", path->length);
 	--path->length;
-	if (path->length == 0)
+	if (path->length == -1)
 	{
 		free(path);
 	}

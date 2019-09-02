@@ -84,7 +84,7 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 //		printf("Print queue before cycle\n");
 //		print_queue(graph, queue, info->count_node);
 //		printf("Print traces before cycle\n");
-	//	print_queue(graph, traces, info->count_node);
+//		print_queue(graph, traces, info->count_node);
 		ptr = graph[0][queue[i]].link;
 		while (ptr)
 		{
@@ -107,6 +107,11 @@ int					find_path(t_graph **graph, t_info *info, int *queue, int *traces, int GG
 						++j;
 					queue[j] = ptr->node;
 					traces[ptr->node] = queue[i];
+//					printf("Zenya\n");
+//					printf("Print queue before cycle\n");
+//					print_queue(graph, queue, info->count_node);
+//					printf("Print traces before cycle\n");
+				//	print_queue(graph, traces, info->count_node);
 					if (ptr->node == info->ind_end)
 					{
 						//printf("LYPA\n");
@@ -134,6 +139,7 @@ int					solution(t_graph **graph, t_info *info)
 	int i;
 
 	i = 0;
+	//printf("I exist!!\n");
 	if (!(queue = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error("Memory allocation error\n", graph, info);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
@@ -153,7 +159,7 @@ int					solution(t_graph **graph, t_info *info)
 		info->max_flow += add_path;
 		add_path = find_path(graph, info, queue, traces, 0);
 	}
-	printf("max flow %d and count %d\n", info->max_flow, i);
+	//printf("max flow %d and count %d\n", info->max_flow, i);
 	clear_graph(graph, info);
 	if (i < info->max_flow)
 	{
@@ -161,8 +167,9 @@ int					solution(t_graph **graph, t_info *info)
 		score_ants(graph, info, i);
 	}
 	free(queue);
+	//printf("max flow %d and count %d\n", info->max_flow, i);
 	score_ways(graph, info);
-	printf("max flow %d and count %d\n", info->max_flow, i);
+	//printf("max flow %d and count %d\n", info->max_flow, i);
 	if (info->max_flow == 0)
 		error("It is impossible to translate ants\n", graph, info);
 

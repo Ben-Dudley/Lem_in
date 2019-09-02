@@ -55,11 +55,13 @@ void			reverse_list(t_graph **graph, t_info *info)
 {
 	t_path		*ptr;
 	t_path		*temp;
-
+	//printf("3\n");
+	//ft_print_pyti(graph, info);
 	temp = info->path;
 	ptr = NULL;
 	while (temp->next && temp->next->next)
 	{
+	//	printf("1\n");
 		temp = temp->next->next;
 		(info->path)->next->next = info->path;
 		(info->path) = (info->path)->next;
@@ -69,6 +71,7 @@ void			reverse_list(t_graph **graph, t_info *info)
 	}
 	if (info->path->next)
 	{
+	//	printf("2\n");
 		temp = temp->next;
 		temp->next = info->path;
 		temp->next->next = ptr;
@@ -104,43 +107,9 @@ void			del_flow(t_graph **graph, t_info *info, int count)
 			temp = ptr;
 			ptr = ptr->next;
 		}
+	//	printf("I exist!3!\n");
 	}
 }
-
-//void			del_flow(t_graph **graph, t_info *info, int count)
-//{
-//	t_path		*ptr;
-//	t_path		*temp;
-//	t_path		*temp1;
-//	int 		i;
-//
-//	i = 0;
-//	//count = info->max_flow;
-//	//ft_print_pyti(graph, info);
-//	ptr = info->path;
-//	while (ptr)
-//	{
-//		if (ptr->stack != count)
-//		{
-//			temp = ptr->next;
-//			free(ptr);
-//			ptr = temp;
-//		}
-//		else if (i == 0 && count != info->max_flow)
-//		{
-//			info->path = ptr;
-//			i = 1;
-//		}
-//		else if (i == 0 && count == info->max_flow)
-//			temp1 = ptr;
-//		if (ptr)
-//			ptr = ptr->next;
-//	}
-//	if (count == info->max_flow)
-//		temp1->next = NULL;
-//	ft_print_pyti(graph, info);
-//
-//}
 
 void 				score_ways(t_graph **graph, t_info *info)
 {
@@ -150,41 +119,43 @@ void 				score_ways(t_graph **graph, t_info *info)
 	int 		i;
 	int 		j;
 	int 		score_ants;
-	//ft_print_pyti(graph, info);
+	//printf("I exist!1!\n");
 	reverse_list(graph, info);
-	ft_print_pyti(graph, info);
+//	printf("I exist!2!\n");
 	reverse_path(graph, info);
-	ft_print_pyti(graph, info);
-	printf("\nbefore count_ants - %d\n", info->count_ants);
-
+//	printf("I exist!3!\n");
 	ptr = info->path;
 	count_ways = 0;
 	score_ants = info->count_ants;
+	//printf("I exist!4!\n");
 	while (ptr)
 	{
 		ptr = ptr->next;
 		++count_ways;
+	//	printf("I exist!3!\n");
 	}
-
-		if (!(ways = (int *) malloc(sizeof(int) * count_ways)))
-			error("MEMEEEE\n", graph, info);
-		i = 0;
-		while (i < count_ways)
-			ways[i++] = 0;
+//	printf("I exist!!\n");
+	if (!(ways = (int *) malloc(sizeof(int) * count_ways)))
+		error("MEMEEEE\n", graph, info);
+	i = 0;
+	while (i < count_ways)
+		ways[i++] = 0;
 	if (count_ways > 1)
 	{
 		ptr = info->path;
 		i = 0;
-		while (score_ants > 0 && i < count_ways - 1)
+		while (score_ants > 0 && ptr->next)
 		{
 			j = 0;
 			while (j <= i)
 			{
 				ways[j] += ptr->next->length - ptr->length;
-				score_ants -= ways[j];
+				score_ants -= ptr->next->length - ptr->length;
 				++j;
 			}
 			++i;
+			ptr = ptr->next;
+		//	printf("I exist!3!\n");
 		}
 		j = 0;
 		i =  score_ants / count_ways;
@@ -193,6 +164,7 @@ void 				score_ways(t_graph **graph, t_info *info)
 			ways[j] += i;
 			score_ants -= i;
 			++j;
+		//	printf("I exist!3!\n");
 		}
 		j = 0;
 		while (j < count_ways && score_ants > 0)
@@ -200,12 +172,12 @@ void 				score_ways(t_graph **graph, t_info *info)
 			ways[j] += 1;
 			score_ants -= 1;
 			++j;
+		//	printf("I exist!3!\n");
 		}
-		print_ways(info, ways, count_ways);
 	}
 	else
 		ways[0] = info->count_ants;
-
+	ft_print_massiv(graph, info);
 		steps_ants(graph, info, ways, count_ways);
 }
 
@@ -216,8 +188,6 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 	int 		count_ants;
 	t_path		*ptr;
 
-
-//	ft_print_pyti(graph, info);
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;
@@ -231,22 +201,14 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 		else
 			steps -= ptr->length;
 		ptr = ptr->next;
+	//	printf("I exist!3!\n");
 	}
 	if (steps <= 0)
 		error("WHAT?????", graph, info);
 	count_ants = steps * info->max_flow - length_mf;
-	printf("count ants %d and info ants %d mf %d steps %d\n",count_ants, info->count_ants, length_mf, steps);
 	if (info->count_ants > count_ants)
-	{
-		printf("ifs)\n");
 		del_flow(graph, info, info->max_flow);
-	}
-
 	else
-	{
-		printf("else)\n");
-		//сразу удалить множество макс флов
 		del_flow(graph, info, 0);
-	}
 }
 

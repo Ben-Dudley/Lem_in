@@ -12,20 +12,21 @@
 
 #include "lem_in.h"
 
-void        print_room(t_graph **graph, t_info *info, int count, int score_ways)
+void        print_room(t_graph **graph, t_info *info, int count, int score_ants)
 {
 	t_path *temp;
 	t_node *temp_node;
 	int 	i;
 	int 	ZV;
 
-	i = score_ways;
+	i = 0;
 	while (i < count)
 	{
 		ZV = i;
 		temp = info->path;
 		while (temp)
 		{
+			//printf("Zenya\n");
 			temp_node = temp->node;
 			while (temp_node)
 			{
@@ -56,23 +57,26 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 
 	j = 1;
 	score_ants = 0;
+	//print_ways(info, ways, count_ways);
 	while (score_ants < info->count_ants)
 	{
-
 		i = 0;
 		ptr_path = info->path;
 		while (ptr_path)
 		{
 			//printf("L1\n");
 			ptr_node = ptr_path->node;
+			if (ptr_node->node && !ptr_node->next->node)
+				score_ants += 1;
 			while (ptr_node->next->node != info->ind_start)
-			{
-				//printf("L2\n");
-				ptr_node->ant = ptr_node->next->ant;
-				if (ptr_node->node == info->ind_end && ptr_node->next->ant != 0)
-					score_ants += 1;
-				ptr_node = ptr_node->next;
-			}
+				{
+					//printf("L2\n");
+					ptr_node->ant = ptr_node->next->ant;
+					if (ptr_node->node == info->ind_end && ptr_node->next->ant != 0)
+						score_ants += 1;
+					ptr_node = ptr_node->next;
+				}
+			//printf("ways[i] %d - %d\n", ways[i], i);
 			if (ways[i] > 0)
 			{
 				//printf("L3\n");
@@ -86,7 +90,7 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 			//printf("L4\n");
 			ptr_path = ptr_path->next;
 		}
-		printf("L %d j %d     %d\n ", score_ants, j,  info->count_ants);
+		//printf("L score_ants - %d j-%d    info->count_ants- %d\n ", score_ants, j,  info->count_ants);
 		print_room(graph, info, j, score_ants);
 	}
 }
@@ -96,7 +100,7 @@ void			print_ways(t_info *info, int *ways, int count)
 	int i;
 
 	i = 0;
-	printf("after count_ants - %d\n", info->count_ants);
+	//printf("after count_ants - %d\n", info->count_ants);
 	while (i < count)
 	{
 		printf(" %d ", ways[i]);
@@ -113,7 +117,7 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 	while (temp)
 	{
 		nodo4ka =  temp->node;
-		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
+	//	printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
 		while (nodo4ka)
 		{
 			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
@@ -131,10 +135,11 @@ void			ft_print_massiv(t_graph **graph, t_info *info)
 	t_link		*temp;
 
 	i = 0;
-	printf("ants - %d\n", info->count_ants); /*удалить*/
+	printf("%d\n", info->count_ants); /*удалить*/
 	while (i < info->count_node)
 	{
-		printf("%s\n", graph[0][i++].name);// удалить заменить
+		printf("%s %d %d\n", graph[0][i].name, graph[0][i].x, graph[0][i].y);// удалить заменить
+		i++;
 	}
 	i = 0;
 	while (i < info->count_node)
@@ -148,10 +153,11 @@ void			ft_print_massiv(t_graph **graph, t_info *info)
 		}
 		++i;
 	}
-	if (info->ind_start != -1)
-		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
-	if (info->ind_end != -1)
-		printf("end %s\n", graph[0][info->ind_end].name); /*удалить*/
+	printf("\n");
+//	if (info->ind_start != -1)
+//		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
+//	if (info->ind_end != -1)
+//		printf("end %s\n", graph[0][info->ind_end].name); /*удалить*/
 }
 
 void			print_massiv(t_graph **graph, t_info *info)
