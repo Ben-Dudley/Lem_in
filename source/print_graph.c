@@ -60,25 +60,31 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 	//print_ways(info, ways, count_ways);
 	while (score_ants < info->count_ants)
 	{
+
 		i = 0;
 		ptr_path = info->path;
 		while (ptr_path)
 		{
+
 			//printf("L1\n");
 			ptr_node = ptr_path->node;
 			if (ptr_node->node && !ptr_node->next->node)
 				score_ants += 1;
-			while (ptr_node->next->node != info->ind_start)
+			while (ptr_node->next && ptr_node->next->node != info->ind_start)
 				{
-					//printf("L2\n");
-					ptr_node->ant = ptr_node->next->ant;
+					//printf("3s2eptember\n");
+					printf("L2ptr_node->next->node %d\n", ptr_node->next->node);
+
+						ptr_node->ant = ptr_node->next->ant;
 					if (ptr_node->node == info->ind_end && ptr_node->next->ant != 0)
 						score_ants += 1;
 					ptr_node = ptr_node->next;
 				}
+		//	printf("3september\n");
 			//printf("ways[i] %d - %d\n", ways[i], i);
 			if (ways[i] > 0)
 			{
+
 				//printf("L3\n");
 				ptr_node->ant = j;
 				j++;
@@ -90,7 +96,7 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 			//printf("L4\n");
 			ptr_path = ptr_path->next;
 		}
-		//printf("L score_ants - %d j-%d    info->count_ants- %d\n ", score_ants, j,  info->count_ants);
+		printf("L score_ants - %d j-%d    info->count_ants- %d\n ", score_ants, j,  info->count_ants);
 		print_room(graph, info, j, score_ants);
 	}
 }

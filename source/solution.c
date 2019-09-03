@@ -45,10 +45,9 @@ int				find_link_node(t_graph **graph, t_info *info, int node)
 
 void				get_path_numbers(t_graph **graph, t_info *info)
 {
-	t_link        *temp;
-	t_path        *path;
-
-	int            i;
+	t_link		*temp;
+	t_path		*path;
+	int			i;
 
 	i = 1;
 
@@ -57,16 +56,20 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 		temp = graph[0][info->ind_start].link;
 		path = new_path(graph, info);
 		add_path(&info->path, path);
+		add_node(&path->node, new_node(graph, info, info->ind_start));
 		path->stack = info->max_flow;
 		while (temp)
 		{
 			if (graph[0][temp->node].visited == i)
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
+				++info->path->length;
 				temp = graph[0][temp->node].link;
 			}
 			else
 				temp = temp->next;
+			if (temp->node == info->ind_end)
+				break ;
 		}
 		add_node(&path->node, new_node(graph, info, info->ind_end));
 		++i;
@@ -90,7 +93,7 @@ int				stack_max_flow(t_graph **graph, t_info *info, int index, int flow)
 			{
 				if (find_link_node(graph, info, temp->node))
 				{
-					printf("3september\n");
+
 					graph[0][temp->node].visited = flow;
 					if (stack_max_flow(graph, info, info->ind_start, flow + 1))
 						return (1);
@@ -132,10 +135,10 @@ int				solution(t_graph **graph, t_info *info)
 	printf("ЪУЪ max_flow %d\n", info->max_flow);
 	if (stack < info->max_flow)
 	{
-		print_massiv(graph, info);
+
 		stack_max_flow(graph, info, info->ind_start, 1);
 
-		print_massiv(graph, info);
+
 		get_path_numbers(graph, info);
 		//stack = score_stack_path(graph, info, queue, traces);
 		score_ants(graph, info, stack);

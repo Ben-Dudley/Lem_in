@@ -120,9 +120,11 @@ void 				score_ways(t_graph **graph, t_info *info)
 	int 		j;
 	int 		score_ants;
 	//printf("I exist!1!\n");
+	ft_print_pyti(graph, info);
 	reverse_list(graph, info);
 //	printf("I exist!2!\n");
 	reverse_path(graph, info);
+	ft_print_pyti(graph, info);
 //	printf("I exist!3!\n");
 	ptr = info->path;
 	count_ways = 0;
@@ -142,10 +144,12 @@ void 				score_ways(t_graph **graph, t_info *info)
 		ways[i++] = 0;
 	if (count_ways > 1)
 	{
+
 		ptr = info->path;
 		i = 0;
 		while (score_ants > 0 && ptr->next)
 		{
+
 			j = 0;
 			while (j <= i)
 			{
@@ -160,13 +164,16 @@ void 				score_ways(t_graph **graph, t_info *info)
 		i =  score_ants / count_ways;
 		while (j < count_ways && score_ants > 0)
 		{
+
 			ways[j] += i;
 			score_ants -= i;
 			++j;
 		}
 		j = 0;
+
 		while (j < count_ways && score_ants > 0)
 		{
+
 			ways[j] += 1;
 			score_ants -= 1;
 			++j;
@@ -187,7 +194,7 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;
-	ft_print_pyti(graph, info);
+
 	while (ptr)
 	{
 		if (ptr->stack == info->max_flow)
