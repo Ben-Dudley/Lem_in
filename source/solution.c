@@ -18,6 +18,7 @@ int				score_stack_path(t_graph **graph, t_info *info,
 	int	count;
 	int add_path;
 
+	count = 0;
 	add_path = find_path(graph, info, queue, traces);
 	while (add_path > 0)
 	{
@@ -51,16 +52,15 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 
 	i = 1;
 
-
 	while (i <= info->max_flow)
 	{
 		temp = graph[0][info->ind_start].link;
-
 		path = new_path(graph, info);
 		add_path(&info->path, path);
+		path->stack = info->max_flow;
 		while (temp)
 		{
-			if ( graph[0][temp->node].visited == i)
+			if (graph[0][temp->node].visited == i)
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
 				temp = graph[0][temp->node].link;
@@ -79,24 +79,39 @@ int				stack_max_flow(t_graph **graph, t_info *info, int index, int flow)
 
 	while (flow <= info->max_flow)
 	{
+		printf(" {[f]%d (%s)}", flow, graph[0][index].name);
 		temp = graph[0][index].link;
 		while (temp)
 		{
-			if (find_link_node(graph, info, temp->node))
+		//	printf("[fin%d]", flow);
+			printf(" [%s] ", graph[0][temp->node].name);
+
+			if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start) // проверить ребра
 			{
-				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
-					return (1);
-			}
-			else if (graph[0][temp->node].visited == 0)
-			{
-				graph[0][temp->node].visited = flow;
-				if (stack_max_flow(graph, info, temp->node, flow) == 0)
+				if (find_link_node(graph, info, temp->node))
+				{
+					printf("3september\n");
+					graph[0][temp->node].visited = flow;
+					if (stack_max_flow(graph, info, info->ind_start, flow + 1))
+						return (1);
+				}
+				else
+				{
+					graph[0][temp->node].visited = flow;
+					//	printf("[%s- %d]",graph[0][temp->node].name, graph[0][temp->node].visited);
+					if (stack_max_flow(graph, info, temp->node, flow))
+						return (1);
 					graph[0][temp->node].visited = 0;
+				}
 			}
+			printf("!!%s\n",graph[0][temp->node].name);
+			if (temp->next)
+				printf("%s!!\n", graph[0][temp->next->node].name);
 			temp = temp->next;
 		}
 		return (0);
 	}
+	printf("KOOOO\n");
 	return (1);
 }
 
@@ -106,7 +121,7 @@ int				solution(t_graph **graph, t_info *info)
 	int *traces;
 	int stack;
 
-	if (!(queue = (int *)malloc(sizeof(int) * (info->count_node + 1))))
+	if (!(queue = (int *)malloc(+sizeof(int) * (info->count_node + 1))))
 		error("Memory allocation error\n", graph, info);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error("Memory allocation error\n", graph, info);
@@ -114,10 +129,14 @@ int				solution(t_graph **graph, t_info *info)
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
-	printf("ЪУЪ %d\n", info->count_ants);
+	printf("ЪУЪ max_flow %d\n", info->max_flow);
 	if (stack < info->max_flow)
 	{
+		print_massiv(graph, info);
 		stack_max_flow(graph, info, info->ind_start, 1);
+
+		print_massiv(graph, info);
+		get_path_numbers(graph, info);
 		//stack = score_stack_path(graph, info, queue, traces);
 		score_ants(graph, info, stack);
 	}

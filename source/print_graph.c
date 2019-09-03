@@ -155,3 +155,35 @@ void			ft_print_massiv(t_graph **graph, t_info *info)
 	}
 	printf("\n");
 }
+
+void			print_massiv(t_graph **graph, t_info *info)
+{
+	int			i;
+	t_link		*temp;
+
+	i = 0;
+	while (i < info->count_node)
+	{
+		printf(" %d(%s) ", graph[0][i].visited, graph[0][i].name);// удалить заменить
+		i++;
+	}
+	i = 0;
+	printf("\n");
+	while (i <= info->count_node)
+	{
+		temp = graph[0][i].link;
+		while (temp)
+		{
+			printf("(%s-%s - ", graph[0][i].name, graph[0][temp->node].name);
+			printf("%d) ", temp->status);
+/*удалить заменитть*/
+			temp = temp->next; // убрать двойной вывод или как то так
+		}
+		++i;
+	}
+	printf("\n");
+//	if (info->ind_start != -1)
+//		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
+//	if (info->ind_end != -1)
+//		printf("end %s\n", graph[0][info->ind_end].name); /*удалить*/
+}

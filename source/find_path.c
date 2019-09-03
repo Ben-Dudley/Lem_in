@@ -62,6 +62,7 @@ int					find_path(t_graph **graph, t_info *info,
 						return (get_path(graph, info, traces,
 								(info->count_ants > 0) ? 1 : 0));
 				}
+
 			ptr = ptr->next;
 		}
 	}
