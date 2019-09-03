@@ -28,6 +28,78 @@ int				score_stack_path(t_graph **graph, t_info *info,
 	return (count);
 }
 
+int				find_link_node(t_graph **graph, t_info *info, int node)
+{
+	t_link  *temp;
+
+	temp = graph[0][info->ind_end].link;
+	while (temp)
+	{
+		if (temp->node == node)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+void				get_path_numbers(t_graph **graph, t_info *info)
+{
+	t_link        *temp;
+	t_path        *path;
+
+	int            i;
+
+	i = 1;
+
+
+	while (i <= info->max_flow)
+	{
+		temp = graph[0][info->ind_start].link;
+
+		path = new_path(graph, info);
+		add_path(&info->path, path);
+		while (temp)
+		{
+			if ( graph[0][temp->node].visited == i)
+			{
+				add_node(&path->node, new_node(graph, info, temp->node));
+				temp = graph[0][temp->node].link;
+			}
+			else
+				temp = temp->next;
+		}
+		add_node(&path->node, new_node(graph, info, info->ind_end));
+		++i;
+	}
+}
+
+int				stack_max_flow(t_graph **graph, t_info *info, int index, int flow)
+{
+	t_link	*temp;
+
+	while (flow <= info->max_flow)
+	{
+		temp = graph[0][index].link;
+		while (temp)
+		{
+			if (find_link_node(graph, info, temp->node))
+			{
+				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
+					return (1);
+			}
+			else if (graph[0][temp->node].visited == 0)
+			{
+				graph[0][temp->node].visited = flow;
+				if (stack_max_flow(graph, info, temp->node, flow) == 0)
+					graph[0][temp->node].visited = 0;
+			}
+			temp = temp->next;
+		}
+		return (0);
+	}
+	return (1);
+}
+
 int				solution(t_graph **graph, t_info *info)
 {
 	int *queue;
@@ -45,7 +117,8 @@ int				solution(t_graph **graph, t_info *info)
 	printf("ЪУЪ %d\n", info->count_ants);
 	if (stack < info->max_flow)
 	{
-		stack = score_stack_path(graph, info, queue, traces);
+		stack_max_flow(graph, info, info->ind_start, 1);
+		//stack = score_stack_path(graph, info, queue, traces);
 		score_ants(graph, info, stack);
 	}
 	free(queue);
