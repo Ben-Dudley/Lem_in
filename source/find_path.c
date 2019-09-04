@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_path.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/04 16:09:50 by bdudley           #+#    #+#             */
+/*   Updated: 2019/09/04 16:10:20 by bdudley          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lem_in.h"
 
@@ -30,7 +41,7 @@ static int			find_index(t_info *info, int *queue, int node)
 }
 
 static int			get_path(t_graph **graph, t_info *info, int *traces,
-							   int flag)
+						int flag)
 {
 	if (flag)
 		save_path(graph, info, traces);
@@ -40,7 +51,7 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 }
 
 int					find_path(t_graph **graph, t_info *info,
-								 int *queue, int *traces)
+						int *queue, int *traces)
 {
 	int			i;
 	int			j;
@@ -62,7 +73,6 @@ int					find_path(t_graph **graph, t_info *info,
 						return (get_path(graph, info, traces,
 								(info->count_ants > 0) ? 1 : 0));
 				}
-
 			ptr = ptr->next;
 		}
 	}

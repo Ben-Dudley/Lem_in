@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 17:15:40 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/31 21:14:43 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/04 16:20:44 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,23 @@ void		add_node(t_node **node, t_node *new)
 {
 	new->next = *node;
 	*node = new;
-//    t_node     *temp;
-//
-//    temp = *node;
-//    while (temp && temp->next)
-//    {
-//        temp = temp->next;
-//    }
-//	temp->next = *node;
 }
 
 t_node		*new_node(t_graph **graph, t_info *info, int node)
 {
-	t_node      *new;
+	t_node		*new;
 
 	if (!(new = ((t_node *)malloc(sizeof(*new)))))
 		error("Memory allocation error\n", graph, info);
 	new->node = node;
 	new->ant = 0;
 	new->next = NULL;
-	
 	return (new);
 }
 
 t_path		*new_path(t_graph **graph, t_info *info)
 {
-	t_path      *new;
+	t_path		*new;
 
 	if (!(new = ((t_path *)malloc(sizeof(*new)))))
 		error("Memory allocation error\n", graph, info);
@@ -49,7 +40,6 @@ t_path		*new_path(t_graph **graph, t_info *info)
 	new->stack = 0;
 	new->node = NULL;
 	new->next = NULL;
-	
 	return (new);
 }
 

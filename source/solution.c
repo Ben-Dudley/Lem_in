@@ -79,20 +79,7 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 	}
 	//ft_print_pyti(graph, info);
 }
-int 			fsdf(t_graph **graph, t_info *info)
-{
-//	printf("\n");
-	//print_massiv(graph, info);
-//	printf("\n");
-	return(0);
-}
-int 			fsdf1(t_graph **graph, t_info *info)
-{
-//	printf("\n");
-//	print_massiv(graph, info);
-//	printf("\n");
-	return(1);
-}
+
 int				stack_max_flow(t_graph **graph, t_info *info, int index, int flow)
 {
 	t_link	*temp;
