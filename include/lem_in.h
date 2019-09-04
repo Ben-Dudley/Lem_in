@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Create and init structure */
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
@@ -63,42 +62,64 @@ typedef struct			s_info
 	t_path				*path;
 }						t_info;
 
-void					init(t_graph **graph, t_info *info);
-void					error(char *str, t_graph **graph, t_info *info);
-int						put_number(char *str, t_graph **graph, t_info *info);
+/*
+ ** delete help function
+*/
+int						search_stack_path(t_graph **graph, t_info *info,
+							int *queue, int *traces);
+int						error_message(t_graph **graph, t_info *info,
+							int code_error);
+void					reverse_path(t_graph **graph, t_info *info);
+void					print_queue(t_graph **graph, int *queue, int count);
+void					print_ways(t_info *info, int *ways, int count);
+void					ft_print_pyti(t_graph **graph, t_info *info);
+void					print_massiv(t_graph **graph, t_info *info);
 
-void					get_ants(t_graph **graph, t_info *info);
-void					get_rooms_links(t_graph **graph, t_info *info);
-void					get_room(t_graph **graph, t_info *info, int *flag,
-																char *line);
-void					ft_print_massiv(t_graph **graph, t_info *info);
-int						help_rooms(t_graph **graph, t_info *info, int flag,
-																char *line);
+/*
+ ** print graph
+*/
+void					reverse_list(t_graph **graph, t_info *info);
+void					reverse_node(t_path **path);
+void					ft_print_massiv(t_graph **graph, t_info *info); //rename function
+void					print_room(t_graph **graph, t_info *info,
+							int count, int score_ants);
+/*
+ ** find path for ants
+*/
 int						solution(t_graph **graph, t_info *info);
+void					score_ants(t_graph **graph, t_info *info, int count);
+void					steps_ants(t_graph **graph, t_info *info,
+							int *ways, int count_ways);
+void					score_ways(t_graph **graph, t_info *info);
+
+/*
+ ** find max flow and stack with shortest path
+*/
+int						score_stack_path(t_graph **graph, t_info *info,
+							int *queue, int *traces);
 int						find_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
 void					save_path(t_graph **graph, t_info *info, int *traces);
-int						search_stack_path(t_graph **graph, t_info *info,
-							int *queue, int *traces);
-void					ft_print_pyti(t_graph **graph, t_info *info);
-void					clear_graph(t_graph **graph, t_info *info);
-void					print_massiv(t_graph **graph, t_info *info);
-void					print_queue(t_graph **graph, int *queue, int count);
-void					print_ways(t_info *info, int *ways, int count);
-void					score_ants(t_graph **graph, t_info *info, int count);
-void					score_ways(t_graph **graph, t_info *info);
-void					reverse_list(t_graph **graph, t_info *info);
-void					steps_ants(t_graph **graph, t_info *info,
-							int *ways, int count_ways);
-void					reverse_path(t_graph **graph, t_info *info);
 void					restoration_path(t_graph **graph, t_info *info,
 							int *traces);
-int						score_stack_path(t_graph **graph, t_info *info,
-							int *queue, int *traces);
-void					reverse_node(t_path **path);
-int                error_message(t_graph **graph, t_info *info, int code_error);
+void					clear_graph(t_graph **graph, t_info *info);
 
+/*
+ ** parse input data
+*/
+void					init(t_graph **graph, t_info *info);
+void					error(char *str, t_graph **graph, t_info *info);
+int						put_number(char *str, t_graph **graph, t_info *info);
+void					get_ants(t_graph **graph, t_info *info);
+void					get_rooms_links(t_graph **graph, t_info *info);
+void					get_room(t_graph **graph, t_info *info, int *flag,
+							char *line);
+int						help_rooms(t_graph **graph, t_info *info, int flag,
+							char *line); //rename this function
 
+/*
+ ** Create and init structure
+*/
 t_link					*new_link(t_graph **graph, t_info *info);
 void					add_link(t_link **link, t_link *new);
 void					free_link(t_link **link);
