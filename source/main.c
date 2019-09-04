@@ -48,6 +48,6 @@ int		main(void)
 
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
-	error("", &graph, &info);
+	error(&graph, &info, -1); // просто фришит
 	return (0);
 }

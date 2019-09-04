@@ -84,7 +84,7 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 	while (i < info->count_node)
 	{
 		if (!ft_strcmp(graph[0][i].name, graph[0][info->count_node].name))
-			error("A vertex with this name already exists\n", graph, info);
+			error_message(graph, info, 11);
 		++i;
 	}
 	if (*flag > 1)
