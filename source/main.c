@@ -43,7 +43,7 @@ int		main(void)
 
 	init(&graph, &info);
 	if (!get_ants(&graph, &info))
-
+		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
 
 	if (!solution(&graph, &info))

@@ -28,12 +28,11 @@ while ((i = get_next_line(0, &line)) > 0)
 			info->count_ants = put_number(line, graph, info);
 			free(line);
 			if (info->count_ants < 0)
-				error("The number of ants can only be positive\n", graph, info);
+				error_message(graph, info, 6);
 			return (1);
 		}
 		else
-			error("First you need to enter the number of ants\n", graph, info);
-
+			error_message(graph, info, 7);
 		free(line);
 	}
 	return (0);
@@ -53,7 +52,7 @@ static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,
 	name = ft_strsub((const char *)(line), 0,
 	ft_strrchr((const char*)(line), ' ') - line);
 	if (!(ft_strrchr((const char*)(name), ' ')))
-		error("Invalid input\n", graph, info);
+		error_message(graph, info, 10);
 	name_copy = ft_strsub((const char *)(name),
 	(unsigned int)(ft_strrchr((const char*)(name), ' ') + 1 - name),
 	name + ft_strlen(name) - ft_strrchr((const char*)(name), ' ') - 1);
@@ -69,14 +68,16 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 {
 	int			i;
 
-	printf("zanyda %d\n", info->count_node);
+//	printf("zanyda %d\n", info->count_node);
 	i = 0;
 	if (*flag == 1)
-		error("First you need to enter all the vertices, and only then links\n",
-																graph, info);
+//		error("First you need to enter all the vertices, and only then links\n",
+//																graph, info);
+	return ;
 	if (*line == 'L')
-		error("The vertex name cannot start with character 'L'\n",
-																graph, info);
+//		error("The vertex name cannot start with character 'L'\n",
+//																graph, info);
+	return ;
 	if (info->count_node >= info->count_max_node || info->count_node == 0)
 		graph[0] = new_graph(graph[0], info);
 	ft_help_get_room(graph, info, *flag, line);

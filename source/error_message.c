@@ -66,12 +66,22 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 		to create path\n");
 	else if (code_error == 4)
 		ft_putstr("Empty File\n");
+	else if (code_error == 5)
+		ft_putstr("It is impossible to translate ants\n");
 	else if (code_error == 6)
 		ft_putstr("The number of ants can only be positive\n");
 	else if (code_error == 7)
-		ft_putstr("The number of ants can only be positive\n");
-	else if (code_error == 5)
-		ft_putstr("It is impossible to translate ants\n");
+		ft_putstr("First you need to enter the number of ants\n");
+	else if (code_error == 8)
+		ft_putstr("You want to enter a number of type integer\n");
+	else if (code_error == 9)
+		ft_putstr("You entered nothing\n");
+	else if (code_error == 10)
+		ft_putstr("Invalid input\n");
+	else if (code_error == 10)
+		ft_putstr("Invalid input\n");
+	else if (code_error == 10)
+		ft_putstr("Invalid input\n");
 	free_graph(graph, info);
 	exit (0);
 }

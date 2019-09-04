@@ -149,7 +149,7 @@ int				solution(t_graph **graph, t_info *info)
 	int *queue;
 	int *traces;
 	int stack;
-	check(graph, info);
+	//check(graph, info);
 	printf("kokO\n");
 	if (!(queue = (int *)malloc(+sizeof(int) * (info->count_node + 1))))
 		error("Memory allocation error\n", graph, info);

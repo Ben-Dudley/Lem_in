@@ -24,7 +24,7 @@ int			put_number(char *str, t_graph **graph, t_info *info)
 	if (*str == '-' || *str == '+')
 		flag = (*str++ == '-') ? -1 : 1;
 	if (*str == '\0')
-		error("You entered nothing\n", graph, info);
+		error_message(graph, info, 9);
 	off = flag == 1 ? 2147483647 : -2147483648;
 	lim = flag * (off % 10);
 	off /= flag * 10;
@@ -32,7 +32,7 @@ int			put_number(char *str, t_graph **graph, t_info *info)
 	{
 		if (*str > '9' || *str < '0' || number * flag > off
 			|| (flag * number == off && (*str - '0') > lim))
-			error("You want to enter a number of type integer\n", graph, info);
+			error_message(graph, info, 8);
 		number = number * 10 + flag * (*str - '0');
 		str++;
 	}
