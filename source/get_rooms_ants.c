@@ -12,11 +12,14 @@
 
 #include "lem_in.h"
 
-void			get_ants(t_graph **graph, t_info *info)
+int			get_ants(t_graph **graph, t_info *info)
 {
 	char *line;
+	int	i;
 
-	while (get_next_line(0, &line) > 0)
+	i = 0;
+
+while ((i = get_next_line(0, &line)) > 0)
 	{
 		if (*line == '#' && *(line + 1) != '#')
 			continue ;
@@ -26,12 +29,14 @@ void			get_ants(t_graph **graph, t_info *info)
 			free(line);
 			if (info->count_ants < 0)
 				error("The number of ants can only be positive\n", graph, info);
-			return ;
+			return (1);
 		}
 		else
 			error("First you need to enter the number of ants\n", graph, info);
+
 		free(line);
 	}
+	return (0);
 }
 
 static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,

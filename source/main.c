@@ -42,7 +42,8 @@ int		main(void)
 	t_info	info;
 
 	init(&graph, &info);
-	get_ants(&graph, &info);
+	if (!get_ants(&graph, &info))
+
 	get_rooms_links(&graph, &info);
 
 	if (!solution(&graph, &info))
