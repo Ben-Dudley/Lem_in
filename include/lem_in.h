@@ -108,7 +108,6 @@ size_t					*new_links(t_graph *graph, t_info *info);
 
 t_path					*new_path(t_graph **graph, t_info *info);
 void					add_path(t_path **path, t_path *new);
-void					free_path(t_path **path);
 
 t_node					*new_node(t_graph **graph, t_info *info, int node);
 void					add_node(t_node **node, t_node *new);
