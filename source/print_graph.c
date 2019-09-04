@@ -70,10 +70,10 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 			ptr_node = ptr_path->node;
 			if (ptr_node->node && !ptr_node->next->node)
 				score_ants += 1;
-			while (ptr_node->next && ptr_node->next->node != info->ind_start)
+			while (ptr_node->next->node != info->ind_start)
 				{
 					//printf("3s2eptember\n");
-					printf("L2ptr_node->next->node %d\n", ptr_node->next->node);
+				//	printf("L2ptr_node->next->node %d\n", ptr_node->next->node);
 
 						ptr_node->ant = ptr_node->next->ant;
 					if (ptr_node->node == info->ind_end && ptr_node->next->ant != 0)
@@ -96,7 +96,7 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 			//printf("L4\n");
 			ptr_path = ptr_path->next;
 		}
-		printf("L score_ants - %d j-%d    info->count_ants- %d\n ", score_ants, j,  info->count_ants);
+		//printf("L score_ants - %d j-%d    info->count_ants- %d\n ", score_ants, j,  info->count_ants);
 		print_room(graph, info, j, score_ants);
 	}
 }
@@ -175,19 +175,19 @@ void			print_massiv(t_graph **graph, t_info *info)
 	}
 	i = 0;
 	printf("\n");
-	while (i <= info->count_node)
-	{
-		temp = graph[0][i].link;
-		while (temp)
-		{
-			printf("(%s-%s - ", graph[0][i].name, graph[0][temp->node].name);
-			printf("%d) ", temp->status);
-/*удалить заменитть*/
-			temp = temp->next; // убрать двойной вывод или как то так
-		}
-		++i;
-	}
-	printf("\n");
+//	while (i <= info->count_node)
+//	{
+//		temp = graph[0][i].link;
+//		while (temp)
+//		{
+//			printf("(%s-%s - ", graph[0][i].name, graph[0][temp->node].name);
+//			printf("%d) ", temp->status);
+///*удалить заменитть*/
+//			temp = temp->next; // убрать двойной вывод или как то так
+//		}
+//		++i;
+//	}
+//	printf("\n");
 //	if (info->ind_start != -1)
 //		printf("start %s\n", graph[0][info->ind_start].name); /*удалить*/
 //	if (info->ind_end != -1)

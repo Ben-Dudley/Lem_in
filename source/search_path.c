@@ -72,6 +72,7 @@ void		save_path(t_graph **graph, t_info *info, int *traces)
 	else
 	{
 		path->stack = info->max_flow;
+		reverse_node(&path);
 		add_path(&info->path, path); // poka tak
 	}
 

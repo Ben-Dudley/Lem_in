@@ -107,7 +107,7 @@ void			del_flow(t_graph **graph, t_info *info, int count)
 			temp = ptr;
 			ptr = ptr->next;
 		}
-	//	printf("I exist!3!\n");
+		//printf("I exist!3!\n");
 	}
 }
 
@@ -119,17 +119,17 @@ void 				score_ways(t_graph **graph, t_info *info)
 	int 		i;
 	int 		j;
 	int 		score_ants;
-	//printf("I exist!1!\n");
+	printf("I exist!1!\n");
 	ft_print_pyti(graph, info);
 	reverse_list(graph, info);
-//	printf("I exist!2!\n");
-	reverse_path(graph, info);
+	printf("I exist!2!\n");
+	//reverse_path(graph, info);
 	ft_print_pyti(graph, info);
-//	printf("I exist!3!\n");
+	printf("I exist!3!\n");
 	ptr = info->path;
 	count_ways = 0;
 	score_ants = info->count_ants;
-	//printf("I exist!4!\n");
+	printf("I exist!4!\n");
 	while (ptr)
 	{
 		ptr = ptr->next;

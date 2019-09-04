@@ -44,6 +44,7 @@ int		main(void)
 	init(&graph, &info);
 	get_ants(&graph, &info);
 	get_rooms_links(&graph, &info);
+
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
 	error("", &graph, &info);

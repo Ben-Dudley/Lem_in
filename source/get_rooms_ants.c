@@ -64,6 +64,7 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 {
 	int			i;
 
+	printf("zanyda %d\n", info->count_node);
 	i = 0;
 	if (*flag == 1)
 		error("First you need to enter all the vertices, and only then links\n",

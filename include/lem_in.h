@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <limits.h>
 # include <stdio.h>
-# define SIZE 2000
+# define SIZE 5001
 typedef struct 			s_node
 {
 	int 				node;
@@ -104,4 +104,5 @@ void					reverse_path(t_graph **graph, t_info *info);
 void				restoration_path(t_graph **graph, t_info *info, int *traces);
 int 			score_stack_path(t_graph **graph, t_info *info,
 								int *queue, int *traces);
+void			reverse_node(t_path **path);
 #endif
