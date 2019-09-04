@@ -25,6 +25,16 @@ void	error(char *str, t_graph **graph, t_info *info)
 	exit(3);
 }
 
+void				check(t_graph **graph, t_info *info)
+{
+//	if(info->count_ants <= 0)
+//		error_message(graph, info, 6);
+	if(!*graph)
+		error_message(graph, info, 2);
+	else if(!graph[0][0].link)
+		error_message(graph, info, 2);
+}
+
 void	init(t_graph **graph, t_info *info)
 {
 	*graph = NULL;
@@ -45,9 +55,9 @@ int		main(void)
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
-
+	check(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
-	error(&graph, &info, -1); // просто фришит
+	error_message(&graph, &info, -1); // просто фришит
 	return (0);
 }

@@ -134,46 +134,34 @@ int				stack_max_flow(t_graph **graph, t_info *info, int index, int flow)
 //	print_massiv(graph, info);
 	return (1);
 }
-void				check(t_graph **graph, t_info *info)
-{
-//	if(info->count_ants <= 0)
-//		error_message(graph, info, 6);
-	if(!*graph)
-		error_message(graph, info, 2);
-	else if(!graph[0][0].link)
-		error_message(graph, info, 2);
-}
+
 
 int				solution(t_graph **graph, t_info *info)
 {
 	int *queue;
 	int *traces;
 	int stack;
-	//check(graph, info);
-	printf("kokO\n");
+
 	if (!(queue = (int *)malloc(+sizeof(int) * (info->count_node + 1))))
-		error("Memory allocation error\n", graph, info);
+		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
-		error("Memory allocation error\n", graph, info);
+		error_message(graph, info, 0);
 	stack = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
-	printf("ЪУЪ max_flow %d\n", info->max_flow);
+	//printf("ЪУЪ max_flow %d\n", info->max_flow);
 	if (stack < info->max_flow)
 	{
-
 		stack_max_flow(graph, info, info->ind_start, 1);
-		printf("POOOO\n");
 		get_path_numbers(graph, info);
 		//stack = score_stack_path(graph, info, queue, traces);
-		printf("POPOPOPO\n");
 		score_ants(graph, info, stack);
 	}
 	free(queue);
 	free(traces);
 	score_ways(graph, info);
 	if (info->max_flow == 0)
-		error("It is impossible to translate ants\n", graph, info);
+		error_message(graph, info, 1);
 	return (1);
 }

@@ -24,8 +24,7 @@ static int		search_index(char *name, t_graph **graph, t_info *info)
 		++i;
 	}
 	if (i == info->count_node)
-		error("Such a room does not exist in the graph. Unable\
-		to create path\n", graph, info);
+		error_message(graph, info, 3); // а надо?
 	return (i);
 }
 
@@ -59,13 +58,13 @@ int				help_rooms(t_graph **graph, t_info *info, int flag,
 	if (!ft_strcmp("##start", line) && flag != 1)
 	{
 		if (flag > 1)
-			error("Insufficient data for processing\n", graph, info);
+			error_message(graph, info, 2);
 		return (2);
 	}
 	else if (!ft_strcmp("##end", line) && flag != 1)
 	{
 		if (flag > 1)
-			error("Insufficient data for processing\n", graph, info);
+			error_message(graph, info, 2);
 		return (3);
 	}
 	else if (flag == 2)
@@ -98,7 +97,7 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 		else if (ft_strchr((const char*)(line), '-') != NULL)
 		{
 			if (flag > 1 || info->ind_start == -1 || info->ind_end == -1)
-				error("Insufficient data for processing\n", graph, info);
+				error_message(graph, info, 2);
 			flag = help_link(graph, info, line);
 		}
 		else

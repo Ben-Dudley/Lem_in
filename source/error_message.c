@@ -39,18 +39,16 @@ static void		free_graph(t_graph **graph, t_info *info)
     i = 0;
     while (i < info->count_node) // (ну типо колличество графов)
 	{
-		temp = graph[0][i].link;
-		while (temp)
+		while (graph[0][i].link)
 		{
-			temp = graph[0][i].link->next;
-			free (graph[0][i].link);
-			graph[0][i].link = temp->next;
-		}	
-	//	free (graph[0][i]); // фришится или нет надо ли
+			temp = graph[0][i].link;
+			graph[0][i].link = (graph[0][i].link)->next;
+			free (temp);
+			temp = NULL;
+		}
 		++i;
 	}
 	free_path(info->path);
-	//free (info);  // надо ли фришится или нет
 }
 
 int				error_message(t_graph **graph, t_info *info, int code_error)
