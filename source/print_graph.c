@@ -6,23 +6,23 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 17:24:18 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/04 16:54:07 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/04 18:15:27 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void        print_move(t_graph **graph, t_info *info, int count)
+void				print_move(t_graph **graph, t_info *info, int count)
 {
-	t_path *temp;
-	t_node *temp_node;
-	int 	i;
-	int 	ZV;
+	t_path		*temp;
+	t_node		*temp_node;
+	int			i;
+	int			counter;
 
 	i = 0;
 	while (i < count)
 	{
-		ZV = i;
+		counter = i;
 		temp = info->path;
 		while (temp)
 		{
@@ -32,32 +32,31 @@ void        print_move(t_graph **graph, t_info *info, int count)
 				if (i == temp_node->ant)
 				{
 					if (temp_node->ant)
-					printf("L%d-%s ", temp_node->ant, graph[0][temp_node->node].name); //delete and space
+					printf("L%d-%s ", temp_node->ant, graph[0][temp_node->node].name); //space
 					++i;
 				}
 				temp_node = temp_node->next;
 			}
 			temp = temp->next;
 		}
-		if (ZV == i)
+		if (counter == i)
 			i++;
 	}
 	printf("\n");
 }
 
-void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
+void				steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 {
-	t_node *ptr_node;
-	t_path *ptr_path;
-	int j;
-	int i;
-	int score_ants;
+	t_node		*ptr_node;
+	t_path		*ptr_path;
+	int			j;
+	int			i;
+	int			score_ants;
 
 	j = 1;
 	score_ants = 0;
 	while (score_ants < info->count_ants)
 	{
-
 		i = 0;
 		ptr_path = info->path;
 		while (ptr_path)
@@ -87,16 +86,16 @@ void			steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 	}
 }
 
-void			print_graph(t_graph **graph, t_info *info)
+void				print_graph(t_graph **graph, t_info *info)
 {
 	int			i;
 	t_link		*temp;
 
 	i = 0;
-	printf("%d\n", info->count_ants); /*удалить*/
+	printf("%d\n", info->count_ants);
 	while (i < info->count_node)
 	{
-		printf("%s %d %d\n", graph[0][i].name, graph[0][i].x, graph[0][i].y);// удалить заменить
+		printf("%s %d %d\n", graph[0][i].name, graph[0][i].x, graph[0][i].y);
 		i++;
 	}
 	i = 0;
@@ -105,12 +104,10 @@ void			print_graph(t_graph **graph, t_info *info)
 		temp = graph[0][i].link;
 		while (temp)
 		{
-			printf("%s-%s\n", graph[0][i].name, graph[0][temp->node].name);
-/*удалить заменитть*/ 
-			temp = temp->next; // убрать двойной вывод или как то так
+			printf("%s-%s\n", graph[0][i].name, graph[0][temp->node].name); //two print link
+			temp = temp->next;
 		}
 		++i;
 	}
 	printf("\n");
 }
-

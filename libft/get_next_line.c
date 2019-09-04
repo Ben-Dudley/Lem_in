@@ -96,7 +96,7 @@ int			get_next_line(const int fd, char **line)
 	{
 		result = get_line(&line, &(copy->content), '\0');
 		ft_delete(&my_list, &copy);
-		return (result == 1 ? -1 : 0);
+		return (result);
 	}
 	return (-1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_ants_rooms_links.c                             :+:      :+:    :+:   */
+/*   get_rooms_links.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 19:52:17 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/21 20:24:09 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/04 18:08:08 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		search_index(char *name, t_graph **graph, t_info *info)
 		++i;
 	}
 	if (i == info->count_node)
-		error_message(graph, info, 3); // а надо?
+		return (-1) ;//error_message(graph, info, 3); // а надо?
 	return (i);
 }
 
@@ -37,6 +37,8 @@ static int		help_link(t_graph **graph, t_info *info, char *line)
 	name = ft_strsub((const char *)(line), 0,
 							ft_strrchr((const char*)(line), '-') - line);
 	i = search_index(name, graph, info);
+	if (-1 == i)
+		return (-1);
 	free(name);
 	add_link(&graph[0][i].link, new_link(graph, info));
 	name = ft_strsub((const char *)(line),
@@ -99,13 +101,18 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 			if (flag > 1 || info->ind_start == -1 || info->ind_end == -1)
 				error_message(graph, info, 2);
 			flag = help_link(graph, info, line);
+			if (flag == -1)
+			{
+				free(line);
+				return ;
+			}
 		}
 		else
 		{
 			if (line)
 				free(line); // почистить гнл
 			ft_putstr("Otpravka dal'we\n"); // удалим
-			break ;
+			return ;
 		}
 		free(line);
 	}

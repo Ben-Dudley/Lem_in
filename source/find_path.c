@@ -6,11 +6,16 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 16:09:50 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/04 16:10:20 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/04 19:25:02 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** Here is search shortest paths stack.
+** Here is also counts the numbers max flow.
+*/
 
 static int			init_mass(t_info *info, int *queue, int *traces)
 {
