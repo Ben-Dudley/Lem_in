@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/31 19:10:12 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/04 16:54:46 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void					print_massiv(t_graph **graph, t_info *info);
 */
 void					reverse_list(t_graph **graph, t_info *info);
 void					reverse_node(t_path **path);
-void					ft_print_massiv(t_graph **graph, t_info *info); //rename function
-void					print_room(t_graph **graph, t_info *info,
-							int count, int score_ants);
+void					print_graph(t_graph **graph, t_info *info); //rename function
+void					print_move(t_graph **graph, t_info *info,
+							int count);
 /*
  ** find path for ants
 */
