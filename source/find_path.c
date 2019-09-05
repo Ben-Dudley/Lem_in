@@ -49,10 +49,7 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
 {
 	if (flag)
-	{
 		save_path(graph, info, traces);
-
-	}
 	else
 		restoration_path(graph, info, traces);
 	return (1);

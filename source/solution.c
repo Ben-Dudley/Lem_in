@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/05 20:01:31 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 20:32:35 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int					solution(t_graph **graph, t_info *info)
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
-
 	if (stack < info->max_flow)
 	{
 		stack_max_flow(graph, info, info->ind_start, 1);

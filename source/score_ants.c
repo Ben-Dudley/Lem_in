@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 19:26:49 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 20:33:06 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void					score_ways(t_graph **graph, t_info *info,
 	if (count_ways > 1)
 	{
 		score_ants = difference_length_path(info, &ways);
-		distribution_ants(&ways, score_ants, count_ways,
+		score_ants = distribution_ants(&ways, score_ants, count_ways,
 							score_ants / count_ways);
 		distribution_ants(&ways, score_ants, count_ways, 1);
 	}
@@ -160,7 +160,7 @@ void					score_ways(t_graph **graph, t_info *info,
 	steps_ants(graph, info, ways, count_ways);
 }
 
-int						score_ants(t_graph **graph, t_info *info, int count)
+int						score_ants(t_graph **graph, t_info *info, int count) //rename score_stack
 {
 	int					steps;
 	int					length_mf;
@@ -184,6 +184,6 @@ int						score_ants(t_graph **graph, t_info *info, int count)
 	if (steps <= 0)
 		error_message(graph, info, 69);
 	count_ants = steps * info->max_flow - length_mf;
-	del_flow(graph, info, (info->max_flow > count_ants) ? info->max_flow : 0);
-	return ((info->max_flow > count_ants) ? info->max_flow : count);
+	del_flow(graph, info, (info->max_flow > count_ants) ? 0 : info->max_flow);
+	return ((info->max_flow > count_ants) ? count : info->max_flow);
 }

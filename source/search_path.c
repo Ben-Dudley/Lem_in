@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 14:14:51 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 19:43:27 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 19:59:59 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,15 @@ void				save_path(t_graph **graph, t_info *info, int *traces)
 	}
 	add_node(&path->node, new_node(graph, info, i));
 	--path->length;
-	path->stack = info->max_flow;
-	reverse_node(&path);
-	add_path(&info->path, path);
+	if (path->length == -1)
+		free(path);
+	else
+	{
+		path->stack = info->max_flow;
+		reverse_node(&path);
+		add_path(&info->path, path);
+	}
+
 }
 
 void				clear_graph(t_graph **graph, t_info *info)
