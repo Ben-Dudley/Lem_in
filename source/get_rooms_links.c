@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 19:52:17 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/04 18:08:08 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 18:04:14 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		search_index(char *name, t_graph **graph, t_info *info)
 		++i;
 	}
 	if (i == info->count_node)
-		return (-1) ;//error_message(graph, info, 3); // а надо?
+		return (-1);//error_message(graph, info, 3); // а надо?
 	return (i);
 }
 
@@ -101,17 +101,12 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 			if (flag > 1 || info->ind_start == -1 || info->ind_end == -1)
 				error_message(graph, info, 2);
 			flag = help_link(graph, info, line);
-			if (flag == -1)
-			{
-				free(line);
-				return ;
-			}
 		}
 		else
+			flag = -1;
+		if (flag == -1)
 		{
-			if (line)
-				free(line); // почистить гнл
-			ft_putstr("Otpravka dal'we\n"); // удалим
+			free(line);
 			return ;
 		}
 		free(line);

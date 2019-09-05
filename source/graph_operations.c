@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 15:27:17 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/21 20:24:09 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 17:30:03 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 	info->count_max_node *= 2;
 	if (!(new_graph = (t_graph *)malloc(sizeof(*new_graph) *
 			info->count_max_node)))
-		error("Memory allocation error\n", &prev_graph, info);
+		error_message(&prev_graph, info, 0);
 	while (info->count_node != 0 && prev_graph + i)
 	{
 		new_graph[i].name = prev_graph[i].name;
@@ -58,7 +58,7 @@ t_link		*new_link(t_graph **graph, t_info *info)
 	t_link *new;
 
 	if (!(new = (t_link *)malloc(sizeof(*new))))
-		error("Memory allocation error\n", graph, info);
+		error_message(graph, info, 0);
 	new->node = -1;
 	new->status = 1;
 	new->next = NULL;
@@ -70,17 +70,4 @@ void		add_link(t_link **link, t_link *new)
 {
 	new->next = *link;
 	*link = new;
-}
-
-void		free_link(t_link **link)
-{
-	t_link *ptr;
-
-	while (*link)
-	{
-		ptr = *link;
-		*link = (*link)->next;
-		free(ptr);
-		ptr = NULL;
-	}
 }

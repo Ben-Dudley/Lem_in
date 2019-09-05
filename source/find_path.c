@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 16:09:50 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/04 19:25:02 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 19:42:16 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
 {
 	if (flag)
+	{
 		save_path(graph, info, traces);
+
+	}
 	else
 		restoration_path(graph, info, traces);
 	return (1);

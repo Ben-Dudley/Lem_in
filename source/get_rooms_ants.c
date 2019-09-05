@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_rooms_ants.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 15:21:20 by hharrold          #+#    #+#             */
-/*   Updated: 2019/08/27 15:21:26 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/09/05 18:16:10 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			get_ants(t_graph **graph, t_info *info)
+int				get_ants(t_graph **graph, t_info *info)
 {
-	char *line;
-	int	i;
+	char	*line;
 
-	i = 0;
-
-while ((i = get_next_line(0, &line)) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (*line == '#' && *(line + 1) != '#')
 			continue ;
@@ -68,16 +65,9 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 {
 	int			i;
 
-//	printf("zanyda %d\n", info->count_node);
 	i = 0;
-	if (*flag == 1)
-//		error("First you need to enter all the vertices, and only then links\n",
-//																graph, info);
-	return ;
 	if (*line == 'L')
-//		error("The vertex name cannot start with character 'L'\n",
-//																graph, info);
-	return ;
+		error_message(graph, info, 77);
 	if (info->count_node >= info->count_max_node || info->count_node == 0)
 		graph[0] = new_graph(graph[0], info);
 	ft_help_get_room(graph, info, *flag, line);

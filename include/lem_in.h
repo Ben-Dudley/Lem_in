@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/04 16:54:46 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 18:36:19 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ void					print_move(t_graph **graph, t_info *info,
  ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-void					score_ants(t_graph **graph, t_info *info, int count);
+int 					score_ants(t_graph **graph, t_info *info, int count);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
-void					score_ways(t_graph **graph, t_info *info);
+void					score_ways(t_graph **graph, t_info *info, int stack);
 
 /*
  ** find max flow and stack with shortest path

@@ -46,8 +46,8 @@ void		print(t_graph **graph, t_info *info)
 	ft_putchar('\n'); // нафига
 }
 
-void		print_ant_in_room(int ant, char *name_room) // и данные 
-{ //о последнем муравье чтобы не ставить пробел
+void		print_ant_in_room(int ant, char *name_room)// и данные
+{//о последнем муравье чтобы не ставить пробел
 	ft_putchar('L');
 	ft_putnbr(ant);
 	ft_putchar('-');

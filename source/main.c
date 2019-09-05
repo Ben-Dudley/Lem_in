@@ -6,36 +6,21 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/30 18:15:43 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 17:05:22 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	error(char *str, t_graph **graph, t_info *info)
+void			check(t_graph **graph, t_info *info)
 {
-	int i;
-
-	i = 0;
-//	while (i < info->count_node)
-//		if (graph[0][i].link)
-//			free_link(&graph[0][i++].link);
-//	free(graph[0]);
-	ft_putstr_fd(str, 2);
-	exit(3);
-}
-
-void				check(t_graph **graph, t_info *info)
-{
-//	if(info->count_ants <= 0)
-//		error_message(graph, info, 6);
-	if(!*graph)
+	if (!*graph)
 		error_message(graph, info, 2);
-	else if(!graph[0][0].link)
+	else if (!graph[0][0].link)
 		error_message(graph, info, 2);
 }
 
-void	init(t_graph **graph, t_info *info)
+void			init(t_graph **graph, t_info *info)
 {
 	*graph = NULL;
 	info->count_ants = 0;
@@ -46,7 +31,7 @@ void	init(t_graph **graph, t_info *info)
 	info->ind_end = -1;
 }
 
-int		main(void)
+int				main(void)
 {
 	t_graph *graph;
 	t_info	info;

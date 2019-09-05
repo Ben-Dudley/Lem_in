@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:33:37 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/02 15:33:41 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/09/05 18:00:12 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,46 @@ static void		free_path(t_path *path)
 		while (path->node)
 		{
 			ptr = path->node->next;
-			free (path->node);
+			free(path->node);
 			path->node = ptr;
 		}
-		free (path);
+		free(path);
 		path = temp;
 	}
 }
 
-static void		free_graph(t_graph **graph, t_info *info)
+void			free_graph(t_graph **graph, t_info *info)
 {
-    int		i;
-    t_link	*temp;
+	int		i;
+	t_link	*temp;
 
-    i = 0;
-    while (i < info->count_node) // (ну типо колличество графов)
+	i = 0;
+	while (i < info->count_node)
 	{
 		while (graph[0][i].link)
 		{
 			temp = graph[0][i].link;
 			graph[0][i].link = (graph[0][i].link)->next;
-			free (temp);
+			free(temp);
 			temp = NULL;
 		}
 		++i;
 	}
 	free_path(info->path);
+}
+
+void			help_error(t_graph **graph, t_info *info, int code_error)
+{
+	if (code_error == 10)
+		ft_putstr("Invalid input\n");
+	else if (code_error == 11)
+		ft_putstr("A vertex with this name already exists\n");
+	else if (code_error == 69)
+		ft_putstr("Pn9tnenko?!@@\n"); //решений нет
+	else if (code_error == 50)
+		ft_putstr("Invalid input\n");
+	else if (code_error == 77)
+		ft_putstr("The vertex name cannot start with character 'L'\n");
 }
 
 int				error_message(t_graph **graph, t_info *info, int code_error)
@@ -74,14 +88,8 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 		ft_putstr("You want to enter a number of type integer\n");
 	else if (code_error == 9)
 		ft_putstr("You entered nothing\n");
-	else if (code_error == 10)
-		ft_putstr("Invalid input\n");
-	else if (code_error == 11)
-		ft_putstr("A vertex with this name already exists\n");
-	else if (code_error == 10)
-		ft_putstr("Invalid input\n");
-	else if (code_error == 10)
-		ft_putstr("Invalid input\n");
+	else
+		help_error(graph, info, code_error);
 	free_graph(graph, info);
-	exit (0);
+	exit(3);
 }

@@ -23,7 +23,7 @@ t_node		*new_node(t_graph **graph, t_info *info, int node)
 	t_node		*new;
 
 	if (!(new = ((t_node *)malloc(sizeof(*new)))))
-		error("Memory allocation error\n", graph, info);
+		error_message(graph, info, 0);
 	new->node = node;
 	new->ant = 0;
 	new->next = NULL;
@@ -35,7 +35,7 @@ t_path		*new_path(t_graph **graph, t_info *info)
 	t_path		*new;
 
 	if (!(new = ((t_path *)malloc(sizeof(*new)))))
-		error("Memory allocation error\n", graph, info);
+		error_message(graph, info, 0);
 	new->length = 0;
 	new->stack = 0;
 	new->node = NULL;
@@ -47,17 +47,4 @@ void		add_path(t_path **path, t_path *new)
 {
 	new->next = *path;
 	*path = new;
-}
-
-void		free_path(t_path **path)
-{
-	t_path *ptr;
-
-	while (*path)
-	{
-		ptr = *path;
-		*path = (*path)->next;
-		free(ptr);
-		ptr = NULL;
-	}
 }

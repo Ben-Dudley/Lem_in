@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 16:13:12 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 19:26:49 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,82 +95,81 @@ void					del_flow(t_graph **graph, t_info *info, int count)
 	}
 }
 
-void					score_ways(t_graph **graph, t_info *info)
+int						distribution_ants(int **ways, int score_ants,
+											int count_ways, int size)
+{
+	int					j;
+
+	j = 0;
+	while (j < count_ways && score_ants > 0)
+	{
+		ways[0][j] += size;
+		score_ants -= size;
+		++j;
+	}
+	return (score_ants);
+}
+
+int						difference_length_path(t_info *info, int **ways)
 {
 	t_path				*ptr;
-	int 				count_ways;
-	int 				*ways;
-	int 				i;
-	int 				j;
-	int 				score_ants;
+	int					j;
+	int					i;
+	int					score_ants;
+
+	score_ants = info->count_ants;
+	ptr = info->path;
+	i = 0;
+	while (score_ants > 0 && ptr->next)
+	{
+		j = 0;
+		while (j <= i)
+		{
+			ways[0][j] += ptr->next->length - ptr->length;
+			score_ants -= ptr->next->length - ptr->length;
+			++j;
+		}
+		++i;
+		ptr = ptr->next;
+	}
+	return (score_ants);
+}
+
+void					score_ways(t_graph **graph, t_info *info,
+													int count_ways)
+{
+	int					*ways;
+	int					i;
+	int					score_ants;
 
 	reverse_list(graph, info);
-	ptr = info->path;
-	count_ways = 0;
-	score_ants = info->count_ants;
-	while (ptr)
-	{
-		ptr = ptr->next;
-		++count_ways;
-	}
-	if (!(ways = (int *) malloc(sizeof(int) * count_ways)))
-		error("MEMEEEE\n", graph, info);
+	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
+		error_message(graph, info, 0);
 	i = 0;
 	while (i < count_ways)
 		ways[i++] = 0;
 	if (count_ways > 1)
 	{
-
-		ptr = info->path;
-		i = 0;
-		while (score_ants > 0 && ptr->next)
-		{
-
-			j = 0;
-			while (j <= i)
-			{
-				ways[j] += ptr->next->length - ptr->length;
-				score_ants -= ptr->next->length - ptr->length;
-				++j;
-			}
-			++i;
-			ptr = ptr->next;
-		}
-		j = 0;
-		i =  score_ants / count_ways;
-		while (j < count_ways && score_ants > 0)
-		{
-
-			ways[j] += i;
-			score_ants -= i;
-			++j;
-		}
-		j = 0;
-
-		while (j < count_ways && score_ants > 0)
-		{
-
-			ways[j] += 1;
-			score_ants -= 1;
-			++j;
-		}
+		score_ants = difference_length_path(info, &ways);
+		distribution_ants(&ways, score_ants, count_ways,
+							score_ants / count_ways);
+		distribution_ants(&ways, score_ants, count_ways, 1);
 	}
 	else
 		ways[0] = info->count_ants;
-		steps_ants(graph, info, ways, count_ways);
+	steps_ants(graph, info, ways, count_ways);
 }
 
-void					score_ants(t_graph **graph, t_info *info, int count)
+int						score_ants(t_graph **graph, t_info *info, int count)
 {
-	int 				steps;
-	int 				length_mf;
-	int 				count_ants;
+	int					steps;
+	int					length_mf;
+	int					count_ants;
 	t_path				*ptr;
 
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;
-
 	while (ptr)
 	{
 		if (ptr->stack == info->max_flow)
@@ -183,10 +182,8 @@ void					score_ants(t_graph **graph, t_info *info, int count)
 		ptr = ptr->next;
 	}
 	if (steps <= 0)
-		error("WHAT?????", graph, info);
+		error_message(graph, info, 69);
 	count_ants = steps * info->max_flow - length_mf;
-	if (info->count_ants > count_ants)
-		del_flow(graph, info, info->max_flow);
-	else
-		del_flow(graph, info, 0);
+	del_flow(graph, info, (info->max_flow > count_ants) ? info->max_flow : 0);
+	return ((info->max_flow > count_ants) ? info->max_flow : count);
 }
