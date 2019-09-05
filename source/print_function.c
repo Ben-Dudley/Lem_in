@@ -106,3 +106,15 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 	}
 	printf(" \n ");
 }
+
+void			reverse_path(t_graph **graph, t_info *info)
+{
+	t_path *temp;
+
+	temp = info->path;
+	while (temp)
+	{
+		reverse_node(&temp);
+		temp = temp->next;
+	}
+}

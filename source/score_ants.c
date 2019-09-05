@@ -6,16 +6,16 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/08/31 21:13:09 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 16:13:12 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			reverse_node(t_path **path)
+void					reverse_node(t_path **path)
 {
-	t_node		*ptr;
-	t_node		*temp;
+	t_node				*ptr;
+	t_node				*temp;
 
 	temp = (*path)->node;
 	ptr = NULL;
@@ -39,29 +39,15 @@ void			reverse_node(t_path **path)
 		(*path)->node->next = ptr;
 }
 
-void			reverse_path(t_graph **graph, t_info *info)
+void					reverse_list(t_graph **graph, t_info *info)
 {
-	t_path *temp;
+	t_path				*ptr;
+	t_path				*temp;
 
-	temp = info->path;
-	while (temp)
-	{
-		reverse_node(&temp);
-		temp = temp->next;
-	}
-}
-
-void			reverse_list(t_graph **graph, t_info *info)
-{
-	t_path		*ptr;
-	t_path		*temp;
-	//printf("3\n");
-	//ft_print_pyti(graph, info);
 	temp = info->path;
 	ptr = NULL;
 	while (temp->next && temp->next->next)
 	{
-	//	printf("1\n");
 		temp = temp->next->next;
 		(info->path)->next->next = info->path;
 		(info->path) = (info->path)->next;
@@ -71,7 +57,6 @@ void			reverse_list(t_graph **graph, t_info *info)
 	}
 	if (info->path->next)
 	{
-	//	printf("2\n");
 		temp = temp->next;
 		temp->next = info->path;
 		temp->next->next = ptr;
@@ -81,10 +66,10 @@ void			reverse_list(t_graph **graph, t_info *info)
 		info->path->next = ptr;
 }
 
-void			del_flow(t_graph **graph, t_info *info, int count)
+void					del_flow(t_graph **graph, t_info *info, int count)
 {
-	t_path		*ptr;
-	t_path		*temp;
+	t_path				*ptr;
+	t_path				*temp;
 
 	ptr = info->path;
 	temp = ptr;
@@ -107,36 +92,27 @@ void			del_flow(t_graph **graph, t_info *info, int count)
 			temp = ptr;
 			ptr = ptr->next;
 		}
-		//printf("I exist!3!\n");
 	}
 }
 
-void 				score_ways(t_graph **graph, t_info *info)
+void					score_ways(t_graph **graph, t_info *info)
 {
-	t_path		*ptr;
-	int 		count_ways;
-	int 		*ways;
-	int 		i;
-	int 		j;
-	int 		score_ants;
-	printf("I exist!1!\n");
-	ft_print_pyti(graph, info);
+	t_path				*ptr;
+	int 				count_ways;
+	int 				*ways;
+	int 				i;
+	int 				j;
+	int 				score_ants;
+
 	reverse_list(graph, info);
-	printf("I exist!2!\n");
-	//reverse_path(graph, info);
-	ft_print_pyti(graph, info);
-	printf("I exist!3!\n");
 	ptr = info->path;
 	count_ways = 0;
 	score_ants = info->count_ants;
-	printf("I exist!4!\n");
 	while (ptr)
 	{
 		ptr = ptr->next;
 		++count_ways;
-	//	printf("I exist!3!\n");
 	}
-//	printf("I exist!!\n");
 	if (!(ways = (int *) malloc(sizeof(int) * count_ways)))
 		error("MEMEEEE\n", graph, info);
 	i = 0;
@@ -184,12 +160,12 @@ void 				score_ways(t_graph **graph, t_info *info)
 		steps_ants(graph, info, ways, count_ways);
 }
 
-void				score_ants(t_graph **graph, t_info *info, int count)
+void					score_ants(t_graph **graph, t_info *info, int count)
 {
-	int 		steps;
-	int 		length_mf;
-	int 		count_ants;
-	t_path		*ptr;
+	int 				steps;
+	int 				length_mf;
+	int 				count_ants;
+	t_path				*ptr;
 
 	ptr = info->path;
 	steps = 0;
@@ -214,4 +190,3 @@ void				score_ants(t_graph **graph, t_info *info, int count)
 	else
 		del_flow(graph, info, 0);
 }
-

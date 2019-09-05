@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/04 19:20:23 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/05 16:08:50 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 int					score_stack_path(t_graph **graph, t_info *info,
 										int *queue, int *traces)
 {
-	int	count;
-	int add_path;
+	int				count;
+	int				add_path;
 
 	count = 0;
 	add_path = find_path(graph, info, queue, traces);
@@ -38,7 +38,7 @@ int					score_stack_path(t_graph **graph, t_info *info,
 
 int					find_link_node(t_graph **graph, t_info *info, int node)
 {
-	t_link		*temp;
+	t_link			*temp;
 
 	temp = graph[0][info->ind_end].link;
 	while (temp)
@@ -52,9 +52,9 @@ int					find_link_node(t_graph **graph, t_info *info, int node)
 
 void				get_path_numbers(t_graph **graph, t_info *info)
 {
-	t_link		*temp;
-	t_path		*path;
-	int			i;
+	t_link			*temp;
+	t_path			*path;
+	int				i;
 
 	i = 0;
 	while (++i <= info->max_flow)
@@ -82,7 +82,7 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 int					stack_max_flow(t_graph **graph, t_info *info,
 						int index, int flow)
 {
-	t_link	*temp;
+	t_link			*temp;
 
 	if (flow > info->max_flow)
 		return (1);
@@ -110,9 +110,9 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 
 int					solution(t_graph **graph, t_info *info)
 {
-	int *queue;
-	int *traces;
-	int stack;
+	int				*queue;
+	int				*traces;
+	int				stack;
 
 	if (!(queue = (int *)malloc(+sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
