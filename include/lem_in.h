@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/06 10:14:57 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 10:57:21 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <limits.h>
 # include <stdio.h>
-# define SIZE 5001
+# define SIZE 2048
 
 typedef struct			s_node
 {

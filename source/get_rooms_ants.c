@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 15:21:20 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/05 18:16:10 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 11:21:23 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ int				get_ants(t_graph **graph, t_info *info)
 		{
 			info->count_ants = put_number(line, graph, info);
 			free(line);
-			if (info->count_ants < 0)
+			if (info->count_ants <= 0)
 				error_message(graph, info, 6);
 			return (1);
 		}
-		else
+		else //if (*line)
 			error_message(graph, info, 7);
+//		else
+//		printf("GAVNO!: USAGE!ERROR\n");
 		free(line);
 	}
 	return (0);

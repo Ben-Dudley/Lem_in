@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:33:37 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/05 18:00:12 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 11:52:41 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,17 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 		ft_putstr("Such a room does not exist in the graph. Unable\
 		to create path\n");
 	else if (code_error == 4)
-		ft_putstr("Empty File\n");
+		ft_putstr("Usage:  For start ./lem-in < file_name.txt. First to enter ant.\n"
+				  "Next room (format: name x y) with room ##start and room ##end.\n"
+	  "Last add link between rooms.\n");
 	else if (code_error == 5)
 		ft_putstr("It is impossible to translate ants\n");
 	else if (code_error == 6)
 		ft_putstr("The number of ants can only be positive\n");
 	else if (code_error == 7)
+	{
 		ft_putstr("First you need to enter the number of ants\n");
+	}
 	else if (code_error == 8)
 		ft_putstr("You want to enter a number of type integer\n");
 	else if (code_error == 9)

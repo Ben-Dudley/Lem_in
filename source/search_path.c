@@ -88,7 +88,7 @@ void				clear_graph(t_graph **graph, t_info *info)
 	}
 }
 
-void					reverse_node(t_path **path)
+void				reverse_node(t_path **path)
 {
 	t_node				*ptr;
 	t_node				*temp;
@@ -115,7 +115,7 @@ void					reverse_node(t_path **path)
 		(*path)->node->next = ptr;
 }
 
-void					reverse_list(t_graph **graph, t_info *info)
+void				reverse_list(t_graph **graph, t_info *info)
 {
 	t_path				*ptr;
 	t_path				*temp;

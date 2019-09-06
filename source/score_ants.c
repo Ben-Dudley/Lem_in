@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/06 10:17:55 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 12:27:33 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,13 @@ void					score_ways(t_graph **graph, t_info *info,
 	steps_ants(graph, info, ways, count_ways);
 }
 
-int						score_ants(t_graph **graph, t_info *info, int count) //rename score_stack
-{
+int						score_ants(t_graph **graph, t_info *info, int count)
+{//rename score_stack
 	int					steps;
 	int					length_mf;
 	int					count_ants;
 	t_path				*ptr;
+
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;

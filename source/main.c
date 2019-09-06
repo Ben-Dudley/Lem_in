@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 17:05:22 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 11:44:56 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int				main(void)
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
+//	printf("cvcv\n");
 	check(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");

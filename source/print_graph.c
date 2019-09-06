@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 17:24:18 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/05 20:30:35 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 11:05:52 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void				steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 
 	j = 1;
 	score_ants = 0;
+	print_graph(graph, info);
 	while (score_ants < info->count_ants)
 	{
 		i = 0;
@@ -102,9 +103,11 @@ void				print_graph(t_graph **graph, t_info *info)
 	while (i < info->count_node)
 	{
 		temp = graph[0][i].link;
-		while (temp)
+		while (temp && temp->status != 0)
 		{
 			printf("%s-%s\n", graph[0][i].name, graph[0][temp->node].name); //two print link
+			temp->status = 0;
+			temp->reverse->status = 0;
 			temp = temp->next;
 		}
 		++i;

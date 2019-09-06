@@ -35,7 +35,7 @@ t_graph		*new_graph(t_graph *prev_graph, t_info *info)
 	if (!(new_graph = (t_graph *)malloc(sizeof(*new_graph) *
 			info->count_max_node)))
 		error_message(&prev_graph, info, 0);
-	while (info->count_node != 0 && prev_graph + i)
+	while (i < info->count_node)
 	{
 		new_graph[i].name = prev_graph[i].name;
 		new_graph[i].x = prev_graph[i].x;
