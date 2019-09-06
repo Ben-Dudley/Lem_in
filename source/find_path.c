@@ -49,7 +49,12 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
 {
 	if (flag)
-		save_path(graph, info, traces);
+	{
+		save_path(graph, info, traces, info->ind_end);
+		--info->path->length;
+		info->path->stack = info->max_flow;
+		reverse_node(&info->path);
+	}
 	else
 		restoration_path(graph, info, traces);
 	return (1);

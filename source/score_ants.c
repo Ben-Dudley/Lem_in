@@ -6,65 +6,16 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 20:33:06 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 10:17:55 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void					reverse_node(t_path **path)
-{
-	t_node				*ptr;
-	t_node				*temp;
-
-	temp = (*path)->node;
-	ptr = NULL;
-	while (temp->next && temp->next->next)
-	{
-		temp = temp->next->next;
-		((*path)->node)->next->next = (*path)->node;
-		((*path)->node) = ((*path)->node)->next;
-		((*path)->node)->next->next = ptr;
-		ptr = (*path)->node;
-		(*path)->node = temp;
-	}
-	if ((*path)->node->next)
-	{
-		temp = temp->next;
-		temp->next = (*path)->node;
-		temp->next->next = ptr;
-		(*path)->node = temp;
-	}
-	else
-		(*path)->node->next = ptr;
-}
-
-void					reverse_list(t_graph **graph, t_info *info)
-{
-	t_path				*ptr;
-	t_path				*temp;
-
-	temp = info->path;
-	ptr = NULL;
-	while (temp->next && temp->next->next)
-	{
-		temp = temp->next->next;
-		(info->path)->next->next = info->path;
-		(info->path) = (info->path)->next;
-		(info->path)->next->next = ptr;
-		ptr = info->path;
-		info->path = temp;
-	}
-	if (info->path->next)
-	{
-		temp = temp->next;
-		temp->next = info->path;
-		temp->next->next = ptr;
-		info->path = temp;
-	}
-	else
-		info->path->next = ptr;
-}
+/*
+** Select main stack and delete another.
+** Distribution ways for ants.
+*/
 
 void					del_flow(t_graph **graph, t_info *info, int count)
 {
@@ -166,7 +117,6 @@ int						score_ants(t_graph **graph, t_info *info, int count) //rename score_sta
 	int					length_mf;
 	int					count_ants;
 	t_path				*ptr;
-
 	ptr = info->path;
 	steps = 0;
 	length_mf = 0;
@@ -184,6 +134,6 @@ int						score_ants(t_graph **graph, t_info *info, int count) //rename score_sta
 	if (steps <= 0)
 		error_message(graph, info, 69);
 	count_ants = steps * info->max_flow - length_mf;
-	del_flow(graph, info, (info->max_flow > count_ants) ? 0 : info->max_flow);
-	return ((info->max_flow > count_ants) ? count : info->max_flow);
+	del_flow(graph, info, (info->count_ants > count_ants) ? info->max_flow : 0);
+	return ((info->count_ants > count_ants) ? info->max_flow : count);
 }

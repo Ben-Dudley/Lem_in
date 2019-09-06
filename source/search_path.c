@@ -6,11 +6,17 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 14:14:51 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 19:59:59 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 10:32:10 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+** Save path and restoration path for traces.
+** Clear graph.
+** Reverse list and pat.
+*/
 
 void				restoration_path(t_graph **graph, t_info *info, int *traces)
 {
@@ -34,13 +40,11 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 	}
 }
 
-void				save_path(t_graph **graph, t_info *info, int *traces)
+void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 {
-	int				i;
 	t_link			*temp;
 	t_path			*path;
 
-	i = info->ind_end;
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
@@ -61,16 +65,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces)
 		i = traces[i];
 	}
 	add_node(&path->node, new_node(graph, info, i));
-	--path->length;
-	if (path->length == -1)
-		free(path);
-	else
-	{
-		path->stack = info->max_flow;
-		reverse_node(&path);
-		add_path(&info->path, path);
-	}
-
+	add_path(&info->path, path);
 }
 
 void				clear_graph(t_graph **graph, t_info *info)
@@ -91,4 +86,58 @@ void				clear_graph(t_graph **graph, t_info *info)
 		}
 		++i;
 	}
+}
+
+void					reverse_node(t_path **path)
+{
+	t_node				*ptr;
+	t_node				*temp;
+
+	temp = (*path)->node;
+	ptr = NULL;
+	while (temp->next && temp->next->next)
+	{
+		temp = temp->next->next;
+		((*path)->node)->next->next = (*path)->node;
+		((*path)->node) = ((*path)->node)->next;
+		((*path)->node)->next->next = ptr;
+		ptr = (*path)->node;
+		(*path)->node = temp;
+	}
+	if ((*path)->node->next)
+	{
+		temp = temp->next;
+		temp->next = (*path)->node;
+		temp->next->next = ptr;
+		(*path)->node = temp;
+	}
+	else
+		(*path)->node->next = ptr;
+}
+
+void					reverse_list(t_graph **graph, t_info *info)
+{
+	t_path				*ptr;
+	t_path				*temp;
+
+	temp = info->path;
+	ptr = NULL;
+	while (temp->next && temp->next->next)
+	{
+		temp = temp->next->next;
+		(info->path)->next->next = info->path;
+		(info->path) = (info->path)->next;
+		(info->path)->next->next = ptr;
+		ptr = info->path;
+		info->path = temp;
+	}
+	if (info->path->next)
+	{
+		temp = temp->next;
+		temp->next = info->path;
+		temp->next->next = ptr;
+		info->path = temp;
+	}
+	else
+		info->path->next = ptr;
 }

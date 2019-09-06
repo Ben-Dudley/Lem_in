@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/05 18:36:19 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/06 10:14:57 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct			s_info
 }						t_info;
 
 /*
- ** delete help function
+** delete help function
 */
 int						search_stack_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
@@ -76,7 +76,7 @@ void					ft_print_pyti(t_graph **graph, t_info *info);
 void					print_massiv(t_graph **graph, t_info *info);
 
 /*
- ** print graph
+** print graph
 */
 void					reverse_list(t_graph **graph, t_info *info);
 void					reverse_node(t_path **path);
@@ -84,7 +84,7 @@ void					print_graph(t_graph **graph, t_info *info); //rename function
 void					print_move(t_graph **graph, t_info *info,
 							int count);
 /*
- ** find path for ants
+** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
 int 					score_ants(t_graph **graph, t_info *info, int count);
@@ -93,19 +93,19 @@ void					steps_ants(t_graph **graph, t_info *info,
 void					score_ways(t_graph **graph, t_info *info, int stack);
 
 /*
- ** find max flow and stack with shortest path
+** find max flow and stack with shortest path
 */
 int						score_stack_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
 int						find_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
-void					save_path(t_graph **graph, t_info *info, int *traces);
+void					save_path(t_graph **graph, t_info *info, int *traces, int i);
 void					restoration_path(t_graph **graph, t_info *info,
 							int *traces);
 void					clear_graph(t_graph **graph, t_info *info);
 
 /*
- ** parse input data
+** parse input data
 */
 void					init(t_graph **graph, t_info *info);
 void					error(char *str, t_graph **graph, t_info *info);
@@ -118,7 +118,7 @@ int						help_rooms(t_graph **graph, t_info *info, int flag,
 							char *line); //rename this function
 
 /*
- ** Create and init structure
+** Create and init structure
 */
 t_link					*new_link(t_graph **graph, t_info *info);
 void					add_link(t_link **link, t_link *new);
