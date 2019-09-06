@@ -53,7 +53,17 @@ void			free_graph(t_graph **graph, t_info *info)
 
 void			help_error(t_graph **graph, t_info *info, int code_error)
 {
-	if (code_error == 10)
+	if (code_error == 5)
+		ft_putstr("It is impossible to translate ants\n");
+	else if (code_error == 6)
+		ft_putstr("The number of ants can only be positive\n");
+	else if (code_error == 7)
+		ft_putstr("First you need to enter the number of ants\n");
+	else if (code_error == 8)
+		ft_putstr("You want to enter a number of type integer\n");
+	else if (code_error == 9)
+		ft_putstr("You entered nothing\n");
+	else if (code_error == 10)
 		ft_putstr("Invalid input\n");
 	else if (code_error == 11)
 		ft_putstr("A vertex with this name already exists\n");
@@ -77,21 +87,10 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 		ft_putstr("Such a room does not exist in the graph. Unable\
 		to create path\n");
 	else if (code_error == 4)
-		ft_putstr("Usage:  For start ./lem-in < file_name.txt. First to enter ant.\n"
-				  "Next room (format: name x y) with room ##start and room ##end.\n"
-	  "Last add link between rooms.\n");
-	else if (code_error == 5)
-		ft_putstr("It is impossible to translate ants\n");
-	else if (code_error == 6)
-		ft_putstr("The number of ants can only be positive\n");
-	else if (code_error == 7)
-	{
-		ft_putstr("First you need to enter the number of ants\n");
-	}
-	else if (code_error == 8)
-		ft_putstr("You want to enter a number of type integer\n");
-	else if (code_error == 9)
-		ft_putstr("You entered nothing\n");
+		ft_putstr("Usage:  For start ./lem-in < file_name.txt. "
+		"First to enter ant.\n"
+		"Next room (format: name x y) with room ##start and room ##end.\n"
+		"Last add link between rooms.\n");
 	else
 		help_error(graph, info, code_error);
 	free_graph(graph, info);
