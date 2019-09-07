@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/06 11:44:56 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/07 19:47:44 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void			init(t_graph **graph, t_info *info)
 	info->count_max_node = SIZE;
 	info->ind_start = -1;
 	info->ind_end = -1;
+	info->len_buf = 0;
+	ft_bzero(info->buf, BUFF);
 }
 
 int				main(void)
@@ -44,6 +46,7 @@ int				main(void)
 	check(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
+	buf_init(&info);
 	error_message(&graph, &info, -1); // просто фришит
 	return (0);
 }

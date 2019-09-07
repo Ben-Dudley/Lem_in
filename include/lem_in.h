@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/06 10:57:21 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/07 19:51:09 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <limits.h>
 # include <stdio.h>
 # define SIZE 2048
+#define BUFF 1024
 
 typedef struct			s_node
 {
@@ -60,6 +61,8 @@ typedef struct			s_info
 	int					ind_end;
 	int					max_flow;
 	t_path				*path;
+	int 				len_buf;
+	char 				buf[BUFF];
 }						t_info;
 
 /*
@@ -83,6 +86,9 @@ void					reverse_node(t_path **path);
 void					print_graph(t_graph **graph, t_info *info); //rename function
 void					print_move(t_graph **graph, t_info *info,
 							int count);
+void					print_buf(t_info *info, char *str);
+void					buf_init(t_info *info);
+
 /*
 ** find path for ants
 */

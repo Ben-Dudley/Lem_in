@@ -126,7 +126,3 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 		free(line);
 	}
 }
-/**
- *  Обработать вхождение левых строк
- * 	То, что введен старт и энд
- */
