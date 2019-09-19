@@ -6,28 +6,42 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 17:24:18 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/07 20:15:01 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/19 16:02:43 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int 				min_score_ants(t_graph **graph, t_info *info)
+int 				min_score_ants(t_graph **graph, t_info *info, int count, int count_ways)
 {
+	int 		min;
+	int 		ant;
+	t_path		*temp;
 
+	ant = 0;
+	temp = info->path;
+	min = count;
+	while (temp)
+	{
+		 if (temp->length != 0)
+		 	ant = temp->node->next->ant - (count_ways * (temp->length - 1));
+		if (min > ant)
+			min = ant;
+		temp = temp->next;
+	}
 	//ft_print_pyti(graph, info);
-	return (0);
+	return (min);
 }
 
 void		buf_init(t_info *info)
 {
 	//printf("\nstroka govna tyta i tato4ki\n");
-	write(1, info->buf, BUFF);
+	write(1, info->buf, info->len_buf);
 	ft_bzero(info->buf, BUFF);
 	info->len_buf = 0;
 }
 
-void 		print_buf(t_info *info, char *str)
+void 		print_buf(t_info *info, char *str) //rename print_in_buf
 {
 	//printf("\nstroka govna tyta  - |%s|\n", str);
 	while (*str != '\0')
@@ -49,25 +63,26 @@ void		print_steps(int ant, char *name,  t_info *info, t_graph **graph)
 
 	if (!(str = ft_itoa(ant)))
 		error_message(graph, info, 0);
+	if (info->count_max_node > 0)
+		print_buf(info, " ");
 	print_buf(info, str);
 	free(str);
 	print_buf(info, "-");
-//	printf("|%s|\n", name);
 	print_buf(info, name);
 	//короче последний пробел в строке
 	//if (1)
-		print_buf(info, " ");
+
 
 }
 
-void				print_move(t_graph **graph, t_info *info, int count)
+void				print_move(t_graph **graph, t_info *info, int count, int count_ways)
 {
 	t_path		*temp;
 	t_node		*temp_node;
 	int			i;
 	int			counter;
 
-	i = min_score_ants(graph, info);
+	i = min_score_ants(graph, info, count, count_ways);
 	while (i < count)
 	{
 		counter = i;
@@ -91,8 +106,9 @@ void				print_move(t_graph **graph, t_info *info, int count)
 		if (counter == i)
 			i++;
 	}
-//	printf("\n");
 	print_buf(info, "\n");
+	info->count_max_node *= -1;
+//	printf("\n");
 }
 
 void				steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
@@ -133,7 +149,7 @@ void				steps_ants(t_graph **graph, t_info *info, int *ways, int count_ways)
 			++i;
 			ptr_path = ptr_path->next;
 		}
-		print_move(graph, info, j);
+		print_move(graph, info, j, count_ways);
 	}
 }
 void		print_node(int i, t_info *info, t_graph **graph)
@@ -181,6 +197,10 @@ void				print_graph(t_graph **graph, t_info *info)
 	print_node(-1, info, graph);
 	while (i < info->count_node)
 	{
+		if (i == info->ind_start)
+			print_buf(info, "##start\n");
+		if (i == info->ind_end)
+			print_buf(info, "##end\n");
 		print_node(i, info, graph);
 		//printf("%s %d %d\n", graph[0][i].name, graph[0][i].x, graph[0][i].y);
 		i++;

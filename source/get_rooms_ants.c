@@ -28,10 +28,8 @@ int				get_ants(t_graph **graph, t_info *info)
 				error_message(graph, info, 6);
 			return (1);
 		}
-		else //if (*line)
+		else
 			error_message(graph, info, 7);
-//		else
-//		printf("GAVNO!: USAGE!ERROR\n");
 		free(line);
 	}
 	return (0);

@@ -85,7 +85,7 @@ void					reverse_list(t_graph **graph, t_info *info);
 void					reverse_node(t_path **path);
 void					print_graph(t_graph **graph, t_info *info); //rename function
 void					print_move(t_graph **graph, t_info *info,
-							int count);
+							int count, int count_ways);
 void					print_buf(t_info *info, char *str);
 void					buf_init(t_info *info);
 
