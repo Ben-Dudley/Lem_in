@@ -64,7 +64,7 @@ int					flag_checking(int ac, char **av, t_graph **graph,
 		return (0);
 	while (ac > counter)
 	{
-		if (!info->end_flag && check_flag(av[counter], info))
+		if (check_flag(av[counter], info))
 			++counter;
 		else
 		{

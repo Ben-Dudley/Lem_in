@@ -65,6 +65,8 @@ void				print_move(t_graph **graph, t_info *info, int count,
 			i++;
 	}
 	print_buf(info, "\n");
+	if (info->flag_score > 0)
+		info->flag_score += 1;
 	info->count_max_node *= -1;
 }
 
