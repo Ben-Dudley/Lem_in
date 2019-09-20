@@ -56,7 +56,7 @@ typedef struct			s_info
 {
 	int					flag_score : 1;
 	int					flag_visual;
-	int					end_flag;
+	int					flag_colour;
 	int					flag_way;
 	int					flag_all_way;
 	int					flag_print_graph;
