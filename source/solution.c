@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/20 16:26:19 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 20:50:10 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,53 @@ int				priority(t_graph **graph, t_info *info, int index, int length)
 	temp = graph[0][index].link;
 	while (temp)
 	{
+		if (temp->node == info->ind_end)
+			return (1);
+		if (graph[0][index].weight < graph[0][temp->node].weight)
+		{
+			graph[0][index].weight = length;
+			if (priority(graph, info, temp->node, length + 1))
+			{
 
+				return ()
+			}
+
+		}
 		temp = temp->next;
 	}
+	return (0);
 }
+
+int				ft_priority(t_graph **graph, t_info *info, int index, int length)
+{
+	t_link			*temp;
+	int 			res;
+
+	res = 0;
+
+	temp = graph[0][index].link;
+	while (temp)
+	{
+		if (temp->node == info->ind_end)
+			return (length);
+		if (graph[0][index].weight < graph[0][temp->node].weight)
+		{
+			graph[0][index].weight = length;
+			res = priority(graph, info, temp->node, length + 1));
+			if (res < length)
+			{
+				graph[0][index].weight = 2147483647; // или -1 или (length -1)
+				return (length - 1);
+			}
+//			else
+				//graph[0][index].weight = res - 1;
+		}
+		temp = temp->next;
+	}
+	return (length);
+}
+
+
 
 int					solution(t_graph **graph, t_info *info)
 {
@@ -186,7 +229,7 @@ int					solution(t_graph **graph, t_info *info)
 		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
-	priority(graph, info, info->ind_end, 0);
+	priority(graph, info, info->ind_start, 0);
 	stack = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
