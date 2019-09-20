@@ -56,12 +56,14 @@ void			init(t_graph **graph, t_info *info)
 	ft_bzero(info->buf, BUFF);
 }
 
-int				main(void)
+int				main(int ac, char **av)
 {
 	t_graph *graph;
 	t_info	info;
 
 	init(&graph, &info);
+	// if (ac > 1)
+	// 	flag_checking(ac, av, &graph, &info);
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);

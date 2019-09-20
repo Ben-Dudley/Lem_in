@@ -50,6 +50,11 @@ void			free_graph(t_graph **graph, t_info *info)
 	}
 	free_path(info->path);
 }
+void			help_error1(t_graph **graph, t_info *info, int code_error)
+{
+	if (code_error == 21)
+		ft_putstr("Bad Flag\n");
+}
 
 void			help_error(t_graph **graph, t_info *info, int code_error)
 {
@@ -73,6 +78,8 @@ void			help_error(t_graph **graph, t_info *info, int code_error)
 		ft_putstr("Invalid input\n");
 	else if (code_error == 77)
 		ft_putstr("The vertex name cannot start with character 'L'\n");
+	else
+		help_error(graph, info, code_error);
 }
 
 int				error_message(t_graph **graph, t_info *info, int code_error)

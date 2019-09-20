@@ -54,6 +54,12 @@ typedef struct			s_graph
 
 typedef struct			s_info
 {
+	int					flag_score : 1;
+	int					flag_visual;
+	int					end_flag;
+	int					flag_way;
+	int					flag_all_way;
+	int					flag_print_graph;
 	int					count_ants;
 	int					count_node;
 	int					count_max_node;
@@ -123,6 +129,9 @@ void					get_room(t_graph **graph, t_info *info, int *flag,
 							char *line);
 int						help_rooms(t_graph **graph, t_info *info, int flag,
 							char *line); //rename this function
+
+int						flag_checking(int ac, char **av, t_graph **graph,
+												t_info *info); //
 
 /*
 ** Create and init structure
