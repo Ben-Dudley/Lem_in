@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/20 11:23:39 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 13:41:45 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,28 +125,33 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
-	//printf("info->ind_start %d\n", flow);
+	printf("MAX_FLOW %d\n", flow);
 	while (temp)
 	{
 		//print_massiv(graph, info);
 		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start
-			&& (temp->status + temp->reverse->status) > 1)
+			&& temp->status == 1)
 		{
-			printf("temp->node %d \n", temp->node);
+	//		printf("temp->node %d \n", temp->node);
 			graph[0][temp->node].visited = flow;
+			temp->status = 0;
+			temp->reverse->status = 0;
+		//	temp->status
 //			printf("3stack_max_flow\n");
 			if (find_link_node(graph, info, temp->node))
 			{
-			//	printf("!!!!!!!!!!!stack_max_flow\n");
+			//	printf("!!!!!!!!!!!stack_max_flow\n");./l
 				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
 					return (1);
 				graph[0][temp->node].visited = 0;
+				temp->status = 1;
 				return (0);
 			}
 		//	printf("4stack_max_flow\n");
 			if (stack_max_flow(graph, info, temp->node, flow))
 				return (1);
 			graph[0][temp->node].visited = 0;
+			temp->status = 1;
 		}
 		temp = temp->next;
 		//printf("5stack_max_flow\n");
@@ -160,7 +165,7 @@ int					solution(t_graph **graph, t_info *info)
 	int				*traces;
 	int				stack;
 
-	if (!(queue = (int *)malloc(+sizeof(int) * (info->count_node + 1))))
+	if (!(queue = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);

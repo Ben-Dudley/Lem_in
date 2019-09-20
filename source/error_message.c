@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:33:37 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/06 11:52:41 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 13:18:55 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			free_graph(t_graph **graph, t_info *info)
 	}
 	free_path(info->path);
 }
-void			help_error1(t_graph **graph, t_info *info, int code_error)
+void			error_arg(t_graph **graph, t_info *info, int code_error)
 {
 	if (code_error == 21)
 		ft_putstr("Bad Flag\n");
@@ -79,7 +79,7 @@ void			help_error(t_graph **graph, t_info *info, int code_error)
 	else if (code_error == 77)
 		ft_putstr("The vertex name cannot start with character 'L'\n");
 	else
-		help_error(graph, info, code_error);
+		error_arg(graph, info, code_error);
 }
 
 int				error_message(t_graph **graph, t_info *info, int code_error)
