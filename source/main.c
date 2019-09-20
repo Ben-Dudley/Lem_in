@@ -62,8 +62,8 @@ int				main(int ac, char **av)
 	t_info	info;
 
 	init(&graph, &info);
-	// if (ac > 1)
-	// 	flag_checking(ac, av, &graph, &info);
+	if (ac > 1)
+		flag_checking(ac, av, &graph, &info);
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
