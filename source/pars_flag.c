@@ -16,6 +16,8 @@ static int               pars_flag(char c, t_info *info)
 {
 	if (c == 'v')
 		info->flag_visual = 1;
+	else if (c == '-')
+		info->flag_colour = 1;
 	else if (c == 's')
 		info->flag_score = 1;
 	else if (c == 'p')

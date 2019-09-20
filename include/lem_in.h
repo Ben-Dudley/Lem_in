@@ -55,10 +55,11 @@ typedef struct			s_graph
 typedef struct			s_info
 {
 	int					flag_score : 1;
-	int					flag_visual : 1;
-	int					flag_way : 1;
-	int					flag_all_way : 1;
-	int					flag_print_graph : 1;
+	int					flag_visual;
+	int					flag_colour;
+	int					flag_way;
+	int					flag_all_way;
+	int					flag_print_graph;
 	int					count_ants;
 	int					count_node;
 	int					count_max_node;

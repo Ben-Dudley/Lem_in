@@ -53,6 +53,12 @@ void			init(t_graph **graph, t_info *info)
 	info->ind_start = -1;
 	info->ind_end = -1;
 	info->len_buf = 0;
+	info->flag_visual = 0;
+	info->flag_colour = 0;
+	info->flag_score = 0;
+	info->flag_way = 0;
+	info->flag_all_way = 0;
+	info->flag_print_graph = 0;
 	ft_bzero(info->buf, BUFF);
 }
 
