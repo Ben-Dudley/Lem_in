@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/20 13:41:45 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 16:26:19 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 	while (temp)
 	{
 		nodo4ka =  temp->node;
-		if (temp->stack == info->max_flow)
-		{
 		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
 		while (nodo4ka)
 		{
@@ -96,7 +94,6 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 			nodo4ka = nodo4ka->next;
 		}
 		printf(" \n ");
-		}
 		temp = temp->next;
 	}
 	if (temp && temp->stack == info->max_flow)
@@ -118,19 +115,24 @@ void			print_massiv(t_graph **graph, t_info *info)
 }
 
 int					stack_max_flow(t_graph **graph, t_info *info,
-						int index, int flow)
+						int index, int flow, int length)
 {
 	t_link			*temp;
 
 	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
-	printf("MAX_FLOW %d\n", flow);
+//	printf("MAX_FLOW %d\n", flow);
+	if (flow == 12)
+	{
+		printf("SEX!\n");
+		return (0);
+	}
 	while (temp)
 	{
 		//print_massiv(graph, info);
-		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start
-			&& temp->status == 1)
+		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start)
+		//	&& temp->status == 1)
 		{
 	//		printf("temp->node %d \n", temp->node);
 			graph[0][temp->node].visited = flow;
@@ -141,14 +143,17 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 			if (find_link_node(graph, info, temp->node))
 			{
 			//	printf("!!!!!!!!!!!stack_max_flow\n");./l
-				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
+			printf("length way #%d - %d\n", flow, length);
+			if (flow > 1)
+				return (0);
+				if (stack_max_flow(graph, info, info->ind_start, flow + 1, 0))
 					return (1);
 				graph[0][temp->node].visited = 0;
 				temp->status = 1;
 				return (0);
 			}
 		//	printf("4stack_max_flow\n");
-			if (stack_max_flow(graph, info, temp->node, flow))
+			if (stack_max_flow(graph, info, temp->node, flow, length + 1))
 				return (1);
 			graph[0][temp->node].visited = 0;
 			temp->status = 1;
@@ -157,6 +162,18 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 		//printf("5stack_max_flow\n");
 	}
 	return (0);
+}
+
+int				priority(t_graph **graph, t_info *info, int index, int length)
+{
+	t_link			*temp;
+
+	temp = graph[0][index].link;
+	while (temp)
+	{
+
+		temp = temp->next;
+	}
 }
 
 int					solution(t_graph **graph, t_info *info)
@@ -169,16 +186,19 @@ int					solution(t_graph **graph, t_info *info)
 		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
+	priority(graph, info, info->ind_end, 0);
 	stack = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1);
-	printf("1solution\n");
 	if (stack < info->max_flow)
 	{
-		stack_max_flow(graph, info, info->ind_start, 1);
+		printf("1solution\n");
+	//	ft_print_pyti(graph, info);
+	//	printf("6solution\n");
+		stack_max_flow(graph, info, info->ind_start, 1, 0);
 		printf("2solution\n");
 		get_path_numbers(graph, info);
 //	printf("3solution\n");
@@ -187,7 +207,7 @@ int					solution(t_graph **graph, t_info *info)
 		stack = score_ants(graph, info, stack);
 //	printf("5solution\n");
 	}
-//	printf("6solution\n");
+
 	free(queue);
 	free(traces);
 	score_ways(graph, info, stack);

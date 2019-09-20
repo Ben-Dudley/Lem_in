@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/19 17:18:19 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 16:35:51 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct			s_path
 	struct s_path		*next;
 }						t_path;
 
+
+typedef struct			s_stack
+{
+	int 				stack;
+	t_path				*path;
+}						t_stack;
+
 typedef struct			s_link
 {
 	int					status;
@@ -47,6 +54,7 @@ typedef struct			s_graph
 	char				*name;
 	int					x;
 	int					y;
+	int					weight;
 	int					visited;
 	t_link				*link;
 
