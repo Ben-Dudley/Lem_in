@@ -78,14 +78,16 @@ int				main(int ac, char **av)
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
 	buf_init(&info);
-		if (info.flag_score > 0)
-		{
-			ft_putnbr(info.flag_score - 1);
-			ft_putstr(" step");
-			if ((info.flag_score - 1) > 1)
-				ft_putstr("s");
-			ft_putstr("\n");
-		}
+	if (info.flag_score > 0)
+	{
+		if (info.flag_colour)
+			ft_putstr("\033[1;32m");
+		ft_putnbr(info.flag_score - 1);
+		ft_putstr(" step");
+		if ((info.flag_score - 1) > 1)
+			ft_putstr("s");
+		ft_putstr("\n");
+	}
 	error_message(&graph, &info, -1);
 	return (0);
 }

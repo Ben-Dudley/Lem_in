@@ -27,11 +27,15 @@ int					send_to_print_steps(t_node *temp_node, int i,
 				print_buf(info, " ");
 			else
 				info->count_max_node *= -1;
+			if (info->flag_colour && temp_node->node == info->ind_end)
+				print_buf(info, "\033[1;35m");
 			print_buf(info, "L");
 			print_buf(info, str);
 			free(str);
 			print_buf(info, "-");
 			print_buf(info, graph[0][temp_node->node].name);
+			if (info->flag_colour && temp_node->node == info->ind_end)
+				print_buf(info, "\033[0m");
 		}
 		return (1);
 	}
