@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:30:07 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/07 19:51:09 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/19 17:18:19 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int 					score_ants(t_graph **graph, t_info *info, int count);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
 void					score_ways(t_graph **graph, t_info *info, int stack);
-
+int 					min_score_ants(t_info *info, int count,
+								  int count_ways); // тудали я добавил хз)
 /*
 ** find max flow and stack with shortest path
 */

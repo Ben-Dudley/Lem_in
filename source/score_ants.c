@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 17:32:54 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/06 12:27:33 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/19 22:12:57 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,16 @@ int						difference_length_path(t_info *info, int **ways)
 		j = 0;
 		while (j <= i)
 		{
-			ways[0][j] += ptr->next->length - ptr->length;
-			score_ants -= ptr->next->length - ptr->length;
+			ways[0][j] += (ptr->next->length - ptr->length) > score_ants ?
+						  score_ants : (ptr->next->length - ptr->length);
+			score_ants -= (ptr->next->length - ptr->length) > score_ants ?
+							score_ants : (ptr->next->length - ptr->length);
 			++j;
 		}
 		++i;
 		ptr = ptr->next;
 	}
+	//printf("ways[0] %d %d\n", score_ants, ways[0][0]);
 	return (score_ants);
 }
 

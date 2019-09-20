@@ -68,7 +68,7 @@ void			help_error(t_graph **graph, t_info *info, int code_error)
 	else if (code_error == 11)
 		ft_putstr("A vertex with this name already exists\n");
 	else if (code_error == 69)
-		ft_putstr("Pn9tnenko?!@@\n"); //решений нет
+		ft_putstr("Path not found\n");
 	else if (code_error == 50)
 		ft_putstr("Invalid input\n");
 	else if (code_error == 77)

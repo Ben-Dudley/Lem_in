@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/06 12:11:50 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 08:50:46 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,30 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 	}
 }
 
+void			ft_print_pyti(t_graph **graph, t_info *info)
+{
+	t_path		*temp;
+	t_node		*nodo4ka;
+	temp = info->path;
+	while (temp)
+	{
+		nodo4ka =  temp->node;
+		if (temp->stack == info->max_flow)
+		{
+		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
+		while (nodo4ka)
+		{
+			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
+			nodo4ka = nodo4ka->next;
+		}
+		printf(" \n ");
+		}
+		temp = temp->next;
+	}
+	if (temp && temp->stack == info->max_flow)
+		printf(" \n ");
+}
+
 int					stack_max_flow(t_graph **graph, t_info *info,
 						int index, int flow)
 {
@@ -87,23 +111,29 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
+	printf("info->ind_start %d\n", flow);
 	while (temp)
 	{
+		//printf("2stack_max_flow\n");
 		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start)
 		{// проверить ребра
 			graph[0][temp->node].visited = flow;
+			//printf("3stack_max_flow\n");
 			if (find_link_node(graph, info, temp->node))
 			{
+				//printf("!!!!!!!!!!!stack_max_flow\n");
 				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
 					return (1);
 				graph[0][temp->node].visited = 0;
 				return (0);
 			}
+		//	printf("4stack_max_flow\n");
 			if (stack_max_flow(graph, info, temp->node, flow))
 				return (1);
 			graph[0][temp->node].visited = 0;
 		}
 		temp = temp->next;
+		//printf("5stack_max_flow\n");
 	}
 	return (0);
 }
@@ -124,15 +154,22 @@ int					solution(t_graph **graph, t_info *info)
 	info->count_ants *= -1;
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1);
+	printf("1solution\n");
 	if (stack < info->max_flow)
 	{
 		stack_max_flow(graph, info, info->ind_start, 1);
+		printf("2solution\n");
 		get_path_numbers(graph, info);
+//	printf("3solution\n");
 		clear_graph(graph, info);
+//		printf("4solution\n");
 		stack = score_ants(graph, info, stack);
+//	printf("5solution\n");
 	}
+//	printf("6solution\n");
 	free(queue);
 	free(traces);
 	score_ways(graph, info, stack);
+//	printf("7solution\n");
 	return (1);
 }

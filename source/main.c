@@ -6,11 +6,34 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 16:29:59 by bdudley           #+#    #+#             */
-/*   Updated: 2019/09/07 19:47:44 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/19 21:25:41 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void			buf_init(t_info *info)
+{
+	write(1, info->buf, info->len_buf);
+	ft_bzero(info->buf, BUFF);
+	info->len_buf = 0;
+}
+
+void			print_buf(t_info *info, char *str)
+{
+	while (*str != '\0')
+	{
+		info->buf[info->len_buf++] = *str;
+		++str;
+		if (info->len_buf == BUFF)
+		{
+			write(1, info->buf, info->len_buf);
+			ft_bzero(info->buf, BUFF);
+			info->len_buf = 0;
+			buf_init(info);
+		}
+	}
+}
 
 void			check(t_graph **graph, t_info *info)
 {
@@ -42,11 +65,11 @@ int				main(void)
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
-//	printf("cvcv\n");
 	check(&graph, &info);
+//	printf("info->count_ants in main %d\n", info.count_ants);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
 	buf_init(&info);
-	error_message(&graph, &info, -1); // просто фришит
+	error_message(&graph, &info, -1);
 	return (0);
 }
