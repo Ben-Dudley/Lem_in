@@ -6,7 +6,7 @@
 /*   By: bdudley <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 19:11:16 by hharrold          #+#    #+#             */
-/*   Updated: 2019/09/20 08:50:46 by bdudley          ###   ########.fr       */
+/*   Updated: 2019/09/20 11:23:39 by bdudley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,20 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 		printf(" \n ");
 }
 
+void			print_massiv(t_graph **graph, t_info *info)
+{
+	int			i;
+	t_link		*temp;
+
+	i = 0;
+	while (i < info->count_node)
+	{
+		printf(" %d(%s) ", graph[0][i].visited, graph[0][i].name);// удалить заменить
+		i++;
+	}
+	printf("\n");
+}
+
 int					stack_max_flow(t_graph **graph, t_info *info,
 						int index, int flow)
 {
@@ -111,17 +125,19 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
-	printf("info->ind_start %d\n", flow);
+	//printf("info->ind_start %d\n", flow);
 	while (temp)
 	{
-		//printf("2stack_max_flow\n");
-		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start)
-		{// проверить ребра
+		//print_massiv(graph, info);
+		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start
+			&& (temp->status + temp->reverse->status) > 1)
+		{
+			printf("temp->node %d \n", temp->node);
 			graph[0][temp->node].visited = flow;
-			//printf("3stack_max_flow\n");
+//			printf("3stack_max_flow\n");
 			if (find_link_node(graph, info, temp->node))
 			{
-				//printf("!!!!!!!!!!!stack_max_flow\n");
+			//	printf("!!!!!!!!!!!stack_max_flow\n");
 				if (stack_max_flow(graph, info, info->ind_start, flow + 1))
 					return (1);
 				graph[0][temp->node].visited = 0;
