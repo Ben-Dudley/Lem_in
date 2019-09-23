@@ -12,6 +12,24 @@
 
 #include "lem_in.h"
 
+void		add_stack(t_stack **stack, t_stack *new)
+{
+	new->next = *stack;
+	*stack = new;
+}
+
+t_stack		*new_stack(t_graph **graph, t_info *info, int stack, t_path *path)
+{
+	t_stack		*new;
+
+	if (!(new = ((t_stack *)malloc(sizeof(*new)))))
+		error_message(graph, info, 0);
+	new->stack = stack;
+	new->path = path;
+	new->next = NULL;
+	return (new);
+}
+
 void		add_node(t_node **node, t_node *new)
 {
 	new->next = *node;

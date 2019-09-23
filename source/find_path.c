@@ -66,14 +66,25 @@ int					find_path(t_graph **graph, t_info *info,
 	int			i;
 	int			j;
 	t_link		*ptr;
+	int			weight;
 
+	weight = 0;
 	i = init_mass(info, queue, traces);
 	j = 0;
 	while (queue[++i] != -1)
 	{
 		ptr = graph[0][queue[i]].link;
+		if (queue[i] == info->ind_start)
+			graph[0][queue[i]].weight = weight;
+		if (graph[0][queue[i]].weight == weight)
+			weight = weight + 1;
 		while (ptr)
 		{
+			if (weight < graph[0][ptr->node].weight)
+			{
+				graph[0][ptr->node].weight = weight;
+				printf("%d - имя(%s)\n", graph[0][ptr->node].weight, graph[0][ptr->node].name);
+			}
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)
 				if (find_index(info, queue, ptr->node) == info->count_node + 1)
 				{

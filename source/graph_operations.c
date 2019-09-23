@@ -20,6 +20,7 @@ void		init_graph(t_graph **graph, t_info *info, int i)
 		graph[0][i].x = 0;
 		graph[0][i].y = 0;
 		graph[0][i].visited = 0;
+		graph[0][i].weight = 2147483647;
 		graph[0][i].link = NULL;
 		i++;
 	}

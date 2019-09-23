@@ -31,6 +31,19 @@ static void		free_path(t_path *path)
 	}
 }
 
+static void		free_stack(t_stack *stack)
+{
+	t_path		*temp;
+	t_node		*ptr;
+
+	while (stack)
+	{
+		temp = stack->next;
+		free(stack);
+		stack = temp;
+	}
+}
+
 void			free_graph(t_graph **graph, t_info *info)
 {
 	int		i;
@@ -48,6 +61,7 @@ void			free_graph(t_graph **graph, t_info *info)
 		}
 		++i;
 	}
+	free_stack(info->stack);
 	free_path(info->path);
 }
 void			error_arg(t_graph **graph, t_info *info, int code_error)

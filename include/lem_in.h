@@ -39,6 +39,7 @@ typedef struct			s_stack
 {
 	int 				stack;
 	t_path				*path;
+	t_stack				*next;
 }						t_stack;
 
 typedef struct			s_link
@@ -75,6 +76,7 @@ typedef struct			s_info
 	int					ind_end;
 	int					max_flow;
 	t_path				*path;
+	t_stack				*stack;
 	int 				len_buf;
 	char 				buf[BUFF];
 }						t_info;

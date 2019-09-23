@@ -164,58 +164,137 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	return (0);
 }
 
-int				priority(t_graph **graph, t_info *info, int index, int length)
-{
-	t_link			*temp;
 
-	temp = graph[0][index].link;
-	while (temp)
-	{
-		if (temp->node == info->ind_end)
-			return (1);
-		if (graph[0][index].weight < graph[0][temp->node].weight)
-		{
-			graph[0][index].weight = length;
-			if (priority(graph, info, temp->node, length + 1))
-			{
+//int         f(t_graph **graph, t_info *info, int node, int last_node)
+//{
+//	t_link *temp;
+//	int result;// все строчки помеенные **** для последнего ретерна - понял именно так
+//	result = 0; //****
+//	if (node == info->ind_end) // если захожу в энд
+//	{ //то из енд к этой вершине
+//		printf("12332345654323456654323454345543456765434566543456543å\n");
+//		graph[0][last_node].link->status = 0; // я ставлю t->status = 0
+//		return(1); // и выхожу из рекурсии
+//	}
+//	temp = graph[0][node].link;
+//	while(temp) // иду по ребрам
+//	{
+//		printf("1\n");
+//		if (temp->node == info->ind_end) //пока не найду енд
+//		{
+//			printf("2\n");
+//			// если захожу в энд
+//			//то из енд к этой вершине
+//			graph[0][last_node].link->status = 0; // я ставлю t->status = 0
+//			printf("12332345654323456654323454345543456765434566543456543å\n");
+//			return(1); // и выхожу из рекурсии
+//		}
+//		printf("9\n");
+//		temp->status = 0; // и ставлю 0 t->status
+//		graph[0][temp->node].visited = 1; // и визитед 1
+//		result = f(graph, info, temp->node, node); // ****
+//		if (result == 1 && temp->status == 0 && temp->reverse->status == 0) // если // ****
+//		{// из рекурсии вернулась единица и t->status = 0 and t_reverse->status=0 // т реверс где??????
+//			printf("3\n");
+//			graph[0][temp->node].weight = 1;//поставь weight // на единицу?
+//			//дальше верни линки // всмысле return()?? но там int
+//			graph[0][temp->node].visited = 1;// и поставь visible 1 // не visited??
+//			return(1);
+//		}
+//		else if(result == 0 && graph[0][temp->node].weight == 0) // **** //return (пока у вершин нет веса) // или вес -1??
+//		{
+//			printf("4\n");
+//			temp->status = 1; //создать там status 1 visible 1
+//			graph[0][temp->node].visited = 1;
+//		}
+//		else // tyt hz
+//			temp = temp->next;
+//		//return(0);
+//		temp = temp->next;
+//	}
+//	printf("5\n");
+//	graph[0][temp->node].weight = -1; //если я прошла по всем link и не нашла end поставить weight = -1
+//	return (0); // (пока у вершин нет веса) // то есть возврашаю 0 пока вес -1? или 0? // для этого сделал переменную i и пометил все строчки ****
+//}// не понял последние две строчки
+// int				f(t_graph **graph, t_info *info, int node, int last_node)
+//{
+//	t_link		*temp;
+//	int 		result;
+//
+//	if (node == info->ind_end)
+//	{
+//
+//	}
+//	result = 0;
+//	temp = graph[0][node].link;
+//
+//	while (temp)
+//	{
+//		if (graph[0][temp->node].visited == 1) // && graph[0][temp->node].weight == 1
+//			result = f(graph, info, temp->node, node);
+//		if (temp->node == info->ind_end)
+//		{
+//
+//		}
+//		temp = temp->next;
+//	}
+//	return (0);
+//}
 
-				return ()
-			}
 
-		}
-		temp = temp->next;
-	}
-	return (0);
-}
 
-int				ft_priority(t_graph **graph, t_info *info, int index, int length)
-{
-	t_link			*temp;
-	int 			res;
-
-	res = 0;
-
-	temp = graph[0][index].link;
-	while (temp)
-	{
-		if (temp->node == info->ind_end)
-			return (length);
-		if (graph[0][index].weight < graph[0][temp->node].weight)
-		{
-			graph[0][index].weight = length;
-			res = priority(graph, info, temp->node, length + 1));
-			if (res < length)
-			{
-				graph[0][index].weight = 2147483647; // или -1 или (length -1)
-				return (length - 1);
-			}
-//			else
-				//graph[0][index].weight = res - 1;
-		}
-		temp = temp->next;
-	}
-	return (length);
-}
+//int				priority(t_graph **graph, t_info *info, int index, int length)
+//{
+//	t_link			*temp;
+//
+//	temp = graph[0][index].link;
+//	while (temp)
+//	{å
+//		if (temp->node == info->ind_end)
+//			return (1);
+//		if (graph[0][index].weight < graph[0][temp->node].weight)
+//		{
+//			graph[0][index].weight = length;
+//			if (priority(graph, info, temp->node, length + 1))
+//			{
+//
+//				return ()
+//			}
+//
+//		}
+//		temp = temp->next;
+//	}
+//	return (0);
+//}
+//
+//int				ft_priority(t_graph **graph, t_info *info, int index, int length)
+//{
+//	t_link			*temp;
+//	int 			res;
+//
+//	res = 0;
+//
+//	temp = graph[0][index].link;
+//	while (temp)
+//	{
+//		if (temp->node == info->ind_end)
+//			return (length);
+//		if (graph[0][index].weight < graph[0][temp->node].weight)
+//		{
+//			graph[0][index].weight = length;
+//			res = priority(graph, info, temp->node, length + 1));
+//			if (res < length)
+//			{
+//				graph[0][index].weight = 2147483647; // или -1 или (length -1)
+//				return (length - 1);
+//			}
+////			else
+//				//graph[0][index].weight = res - 1;
+//		}
+//		temp = temp->next;
+//	}
+//	return (length);
+//}
 
 
 
@@ -229,7 +308,11 @@ int					solution(t_graph **graph, t_info *info)
 		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
-	priority(graph, info, info->ind_start, 0);
+//	ft_print_pyti(graph, info);
+//	printf("dasdfsaad\n");
+//	f(graph, info,info->ind_start, 0);
+	//clear_graph(graph, info);
+//	priority(graph, info, info->ind_start, 0);
 	stack = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
