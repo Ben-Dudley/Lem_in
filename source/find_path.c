@@ -44,6 +44,28 @@ static int			find_index(t_info *info, int *queue, int node)
 	}
 	return (j);
 }
+void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
+{
+	t_stack		*temp;
+	int			i;
+
+	i = 0;
+	temp = info->stack;
+	while (temp)
+	{
+		if (temp->stack == stack)
+		{
+			temp->path = add_path(path, new_path(graph, info));
+			i += 1;
+			break ;
+		}// add path сюда
+		temp = temp->next;
+	}
+	if (i == 0)
+	{
+		add_stack(&info->stack, new_stack(graph, info, stack, path));
+	}
+}
 
 static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)

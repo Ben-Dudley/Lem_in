@@ -39,7 +39,7 @@ typedef struct			s_stack
 {
 	int 				stack;
 	t_path				*path;
-	t_stack				*next;
+	struct s_stack		*next;
 }						t_stack;
 
 typedef struct			s_link

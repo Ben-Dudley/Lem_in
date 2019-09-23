@@ -313,9 +313,9 @@ int					solution(t_graph **graph, t_info *info)
 //	f(graph, info,info->ind_start, 0);
 	//clear_graph(graph, info);
 //	priority(graph, info, info->ind_start, 0);
-	stack = score_stack_path(graph, info, queue, traces);
-	info->count_ants *= -1;
-	info->max_flow = score_stack_path(graph, info, queue, traces);
+	stack = score_stack_path(graph, info, queue, traces); // count min flow and path min flow
+ 	info->count_ants *= -1;
+	info->max_flow = score_stack_path(graph, info, queue, traces); //count max flow
 	info->count_ants *= -1;
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1);
@@ -324,7 +324,7 @@ int					solution(t_graph **graph, t_info *info)
 		printf("1solution\n");
 	//	ft_print_pyti(graph, info);
 	//	printf("6solution\n");
-		stack_max_flow(graph, info, info->ind_start, 1, 0);
+		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
 		printf("2solution\n");
 		get_path_numbers(graph, info);
 //	printf("3solution\n");
