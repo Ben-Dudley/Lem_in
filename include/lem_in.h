@@ -162,4 +162,6 @@ void					add_node(t_node **node, t_node *new);
 t_stack					*new_stack(t_graph **graph, t_info *info,
 										int stack, t_path *path);
 void					add_stack(t_stack **stack, t_stack *new);
+void					in_stack_add(t_graph **graph, t_info *info,
+										int stack, t_path *path);
 #endif

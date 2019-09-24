@@ -33,7 +33,7 @@ static void		free_path(t_path *path)
 
 static void		free_stack(t_stack *stack)
 {
-	t_path		*temp;
+	t_stack		*temp;
 	t_node		*ptr;
 
 	while (stack)

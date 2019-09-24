@@ -64,6 +64,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		}
 		i = traces[i];
 	}
+	//in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
 	add_node(&path->node, new_node(graph, info, i));
 	add_path(&info->path, path);
 }

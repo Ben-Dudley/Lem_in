@@ -105,7 +105,7 @@ int					find_path(t_graph **graph, t_info *info,
 			if (weight < graph[0][ptr->node].weight)
 			{
 				graph[0][ptr->node].weight = weight;
-				printf("%d - имя(%s)\n", graph[0][ptr->node].weight, graph[0][ptr->node].name);
+				//printf("%d - имя(%s)\n", graph[0][ptr->node].weight, graph[0][ptr->node].name);
 			}
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)
 				if (find_index(info, queue, ptr->node) == info->count_node + 1)
