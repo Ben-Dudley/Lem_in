@@ -55,7 +55,7 @@ void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
 	{
 		if (temp->stack == stack)
 		{
-			temp->path = add_path(path, new_path(graph, info));
+			add_path(&temp->path, new_path(graph, info));
 			i += 1;
 			break ;
 		}// add path сюда

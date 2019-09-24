@@ -159,4 +159,7 @@ void					add_path(t_path **path, t_path *new);
 t_node					*new_node(t_graph **graph, t_info *info, int node);
 void					add_node(t_node **node, t_node *new);
 
+t_stack					*new_stack(t_graph **graph, t_info *info,
+										int stack, t_path *path);
+void					add_stack(t_stack **stack, t_stack *new);
 #endif
