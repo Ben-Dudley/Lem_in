@@ -59,6 +59,7 @@ void			init(t_graph **graph, t_info *info)
 	info->flag_way = 0;
 	info->flag_all_way = 0;
 	info->flag_print_graph = 0;
+	info->stack = NULL;
 	ft_bzero(info->buf, BUFF);
 }
 

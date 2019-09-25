@@ -57,6 +57,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 					graph[0][temp->node].visited = 1;
 				temp->status = 0;
 				add_node(&path->node, new_node(graph, info, temp->node));
+				printf("save)path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
 				++path->length;
 				break ;
 			}
@@ -64,9 +65,11 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		}
 		i = traces[i];
 	}
-	//in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
+	//printf("PUPA in safe_path\n");
+
 	add_node(&path->node, new_node(graph, info, i));
 	add_path(&info->path, path);
+	in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
 }
 
 void				clear_graph(t_graph **graph, t_info *info)

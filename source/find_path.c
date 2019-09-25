@@ -51,6 +51,7 @@ void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
 
 	i = 0;
 	temp = info->stack;
+	//printf("PUPA in_in_stack_add\n");
 	while (temp)
 	{
 		if (temp->stack == stack)
@@ -65,6 +66,7 @@ void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
 	{
 		add_stack(&info->stack, new_stack(graph, info, stack, path));
 	}
+
 }
 
 static int			get_path(t_graph **graph, t_info *info, int *traces,
@@ -89,7 +91,7 @@ int					find_path(t_graph **graph, t_info *info,
 	int			j;
 	t_link		*ptr;
 	int			weight;
-
+//	int			z  = 0; // delete
 	weight = 0;
 	i = init_mass(info, queue, traces);
 	j = 0;
@@ -111,13 +113,19 @@ int					find_path(t_graph **graph, t_info *info,
 				if (find_index(info, queue, ptr->node) == info->count_node + 1)
 				{
 					queue[++j] = ptr->node;
+				//	printf("ptr->node %d\n", ptr->node);
 					traces[ptr->node] = queue[i];
 					if (ptr->node == info->ind_end)
 						return (get_path(graph, info, traces,
 								(info->count_ants > 0) ? 1 : 0));
 				}
+			//printf("times\n");
 			ptr = ptr->next;
 		}
+	//	printf("\n");
 	}
+//	while (queue[z])
+	//	printf("queue %d", queue[z++]);
+	//printf("\n");
 	return (0);
 }
