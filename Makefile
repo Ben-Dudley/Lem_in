@@ -26,18 +26,18 @@ LIB = ./libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make -C ./libft
-	gcc $(FLAGS) $(OBJS) $(OBJS_P) $(LIB) -o $(NAME)
+	@make -C ./libft
+	@gcc $(FLAGS) $(OBJS) $(OBJS_P) $(LIB) -o $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -c $< -o $@ -I$(INC) -I$(INC_2)
+	@gcc $(FLAGS) -c $< -o $@ -I$(INC) -I$(INC_2)
 
 clean:
-	make -C ./libft clean
-	rm -f $(OBJS)
+	@make -C ./libft clean
+	@rm -f $(OBJS)
 
 fclean: clean
-	make -C ./libft fclean
-	rm -f $(NAME)
+	@make -C ./libft fclean
+	@rm -f $(NAME)
 
 re: fclean all

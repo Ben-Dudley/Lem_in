@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-I = gcc -Wall -Wextra -Werror -c
+I = @gcc -Wall -Wextra -Werror -c
 
 OPART1 = ft_memset.o ft_bzero.o ft_memcpy.o ft_memccpy.o ft_memmove.o ft_memchr.o ft_memcmp.o ft_strlen.o ft_strdup.o ft_strcpy.o ft_strncpy.o ft_strcat.o ft_strncat.o ft_strlcat.o ft_strchr.o ft_strrchr.o ft_strstr.o ft_strnstr.o ft_strcmp.o ft_strncmp.o ft_atoi.o ft_isalpha.o ft_isdigit.o ft_isalnum.o ft_isascii.o ft_isprint.o ft_toupper.o ft_tolower.o
 
@@ -30,14 +30,14 @@ $(OPART1) = %.o : libft.h
 $(OPART2) = %.o : libft.h
 $(OPART3) = %.o : libft.h
 
-$(NAME): $(OPART1) $(OPART2) $(OPART3)
-	$(I) $(CPART1) $(CPART2) $(CPART3)
-	ar rc $(NAME) $(OPART1) $(OPART2) $(OPART3)
+$(NAME): $(@OPART1) $(@OPART2) $(@OPART3)
+	@$(I) $(CPART1) $(CPART2) $(CPART3)
+	@ar rc $(NAME) $(OPART1) $(OPART2) $(OPART3)
 
 clean:
-	rm -f $(OPART1) $(OPART2) $(OPART3)
+	@rm -f $(OPART1) $(OPART2) $(OPART3)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
