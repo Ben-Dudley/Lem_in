@@ -31,7 +31,7 @@ int					score_stack_path(t_graph **graph, t_info *info,
 	{
 		count += add_path;
 		add_path = find_path(graph, info, queue, traces);
-		printf("\nin score_stack_path add_path %d count %d\n", add_path, count);
+	//	printf("\nin score_stack_path add_path %d count %d\n", add_path, count);
 	}
 	clear_graph(graph, info);
 	return (count);
@@ -66,15 +66,15 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 		add_node(&path->node, new_node(graph, info, info->ind_start));
 		in_stack_add(graph, info, info->path->stack, path); // stack
 		path->stack = info->max_flow;
-		printf("save_path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
+	//	printf("save_path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
 		while (temp && temp->node != info->ind_end)
 		{
-			printf("save*path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
-			printf("graph[0][temp->node].visited %d - %d\n", graph[0][temp->node].visited , i);
+	//		printf("save*path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
+	//		printf("graph[0][temp->node].visited %d - %d\n", graph[0][temp->node].visited , i);
 			if (graph[0][temp->node].visited == i) // i  || temp->node == info->ind_start
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
-				printf("save+path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
+	//			printf("save+path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
 				++info->path->length;
 				temp = graph[0][temp->node].link;
 			}
@@ -83,7 +83,7 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 		}
 		add_node(&path->node, new_node(graph, info, info->ind_end));
 	}
-	printf("!!!!!!!\n");
+	//printf("!!!!!!!\n");
 }
 
 void			ft_print_pyti(t_graph **graph, t_info *info)
@@ -106,6 +106,55 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 	if (temp && temp->stack == info->max_flow)
 		printf(" \n ");
 }
+void			for_fix_stack(t_graph **graph, t_info *info)
+{
+	t_stack		*st;
+	t_path		*temp;
+	t_node		*nodo4ka;
+
+	st = info->stack;
+	while (st)
+	{
+		printf("\nStack#%d ", st->stack);
+		temp = st->path;
+		while (temp)
+		{
+			printf("len path %d, ", temp->length);
+			nodo4ka = temp->node;
+			while (nodo4ka)
+			{
+				printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
+				nodo4ka = nodo4ka->next;
+			}
+			temp = temp->next;
+		}
+		st = st->next;
+		printf("\n");
+	}
+	printf("\n");
+}
+//void			sort_algorithm(t_graph	**graph, int i);
+//{
+//	t_link	*link;
+//
+//	link = graph[0][i].link;
+//	while(link)
+//	{
+//		graph[0][link->node].weight
+//	}
+//}
+//
+//void			sort_link_for_weight(t_graph **graph, t_info *info)
+//{
+//	int 	i;
+//
+//	i = 0;
+//	while(i < info->count_node)
+//	{
+//		sort_algorithm(graph, i);
+//		i += 1;
+//	}
+//}
 
 void			print_stack(t_graph **graph, t_info *info)
 {
@@ -170,7 +219,7 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 		//	&& temp->status == 1)
 		{
 			//printf("temp->node %d \n", temp->node);
-			printf("name(%s) v-%d\n", graph[0][temp->node].name, flow);
+		//	printf("name(%s) v-%d\n", graph[0][temp->node].name, flow);
 			graph[0][temp->node].visited = flow;
 			temp->status = 0;
 			temp->reverse->status = 0;
@@ -178,13 +227,13 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 //			printf("3stack_max_flow\n");
 			if (find_link_node(graph, info, temp->node))
 			{
-				printf("!!!!!!!!!!!stack_max_flow\n");
-			printf("length way #%d - %d\n", flow, length);
+		//		printf("!!!!!!!!!!!stack_max_flow\n");
+		//	printf("length way #%d - %d\n", flow, length);
 			if (flow > 1)
 				return (0);
 				if (stack_max_flow(graph, info, info->ind_start, flow + 1, 0))
 					return (1);
-				printf("DELETE****name(%s) v-%d\n", graph[0][temp->node].name, graph[0][temp->node].visited);
+		//		printf("DELETE****name(%s) v-%d\n", graph[0][temp->node].name, graph[0][temp->node].visited);
 				//graph[0][temp->node].visited = 0;
 				temp->status = 1;
 				return (0);
@@ -192,7 +241,7 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 		//	printf("4stack_max_flow\n");
 			if (stack_max_flow(graph, info, temp->node, flow, length + 1))
 				return (1);
-			printf("DELETE!!!name(%s) v-%d\n", graph[0][temp->node].name, graph[0][temp->node].visited);
+		//	printf("DELETE!!!name(%s) v-%d\n", graph[0][temp->node].name, graph[0][temp->node].visited);
 			//graph[0][temp->node].visited = 0;
 			temp->status = 1;
 		}
@@ -355,30 +404,34 @@ int					solution(t_graph **graph, t_info *info)
  	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces); //count max flow
 	info->count_ants *= -1;
-	printf("in solution count ants %d\n", info->count_ants);
-	print_stack(graph, info);
+//	printf("in solution count ants %d\n", info->count_ants);
+	//print_stack(graph, info);
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1);
 	if (stack < info->max_flow)
 	{
-		printf("1solution\n");
+	//	printf("1solution\n");
 	//	ft_print_pyti(graph, info);
 	//	printf("6solution\n");
 		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
-		printf("2solution\n");
+//		printf("2solution\n");
 		get_path_numbers(graph, info);
-		print_stack(graph, info);
+		//print_stack(graph, info);
 //	printf("3solution\n");
 		clear_graph(graph, info);
 //		printf("4solution\n");
 		stack = score_ants(graph, info, stack);
 //	printf("5solution\n");
 	}
-
+	for_fix_stack(graph, info);
+	Merge_Sort(graph, info);
+	for_fix_stack(graph, info);
+//	sleep(1000);
 	free(queue);
 	free(traces);
 	ft_print_pyti(graph, info);
 	score_ways(graph, info, stack);
+
 //	printf("7solution\n");
 	return (1);
 }
