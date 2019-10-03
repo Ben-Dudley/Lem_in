@@ -1,27 +1,18 @@
-//
-// Created by Henly Harrold hardyng on 02/10/2019.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/03 18:11:04 by hharrold          #+#    #+#             */
+/*   Updated: 2019/10/03 18:11:51 by hharrold         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//struct node
-//{
-//	int number;
-//	struct node *next;
-//};
-
-//struct node *addnode(int number, struct node *next)
-//{
-//	struct node *tnode;
-//	tnode = (struct node*)malloc(sizeof(*tnode));
-//	if(tnode != NULL)
-//	{
-//		tnode->number = number;
-//		tnode->next = next;
-//	}
-//	return tnode;
-//}
 #include "lem_in.h"
 
-int Length(t_link *head)
+static int		length(t_link *head)
 {
 	int		count;
 	t_link	*current;
@@ -33,105 +24,84 @@ int Length(t_link *head)
 		count += 1;
 		current = current->next;
 	}
-	return(count);
+	return (count);
 }
 
-
-
-t_link *SortedMerge(t_graph **graph, t_link *a, t_link *b)
+static t_link	*sortedmerge(t_graph **graph, t_link *a, t_link *b)
 {
 	t_link *result;
 
 	result = NULL;
 	if (a == NULL)
-		return(b);
+		return (b);
 	else if (b == NULL)
-		return(a);
+		return (a);
 	if (graph[0][a->node].weight <= graph[0][b->node].weight)
 	{
 		result = a;
-		result->next = SortedMerge(graph, a->next, b);
+		result->next = sortedmerge(graph, a->next, b);
 	}
 	else
 	{
 		result = b;
-		result->next = SortedMerge(graph, a, b->next);
+		result->next = sortedmerge(graph, a, b->next);
 	}
-	return(result);
+	return (result);
 }
 
-
-//void Merge_Sort(struct node** headRef)
-//{
-//	struct node* head = *headRef;
-//	struct node* a;
-//	struct node* b;
-//	// вырожденный случай – длина списка равно 0 или 1
-//	if ((head == NULL) || (head->next == NULL))
-//	{
-//		return;
-//	}
-//	FrontBackSplit(head, &a, &b);
-//	Merge_Sort(&a); // рекурсивная сортировка подсписков
-//	Merge_Sort(&b);
-//	*headRef  = SortedMerge(a, b);
-//}
-
-void FrontBackSplit(t_link *source,
-					t_link **frontRef,
-					t_link **backRef)
+static void		front_back_split(t_link *source, t_link **frontref,
+												t_link **backref)
 {
-
-	int len;
-	int i;
-	t_link *current;
-	int hopCount;
+	int			len;
+	int			i;
+	t_link		*current;
+	int			hopcount;
 
 	current = source;
-	len = Length(source); // заменить
+	len = length(source);
 	i = 0;
 	if (len < 2)
 	{
-		*frontRef = source;
-		*backRef = NULL;
+		*frontref = source;
+		*backref = NULL;
 	}
 	else
 	{
-		hopCount = (len-1)/2;
-		while(i < hopCount)
+		hopcount = (len - 1) / 2;
+		while (i < hopcount)
 		{
 			current = current->next;
 			i += 1;
 		}
-		// исходный список разбивается на два подсписка
-		*frontRef = source;
-		*backRef = current->next;
+		*frontref = source;
+		*backref = current->next;
 		current->next = NULL;
 	}
 }
 
-void 	MergeSort(t_graph **graph, t_link **base)
+static void		mergesort(t_graph **graph, t_link **base)
 {
 	t_link	*link;
 	t_link	*a;
 	t_link	*b;
+
 	link = *base;
 	if ((link == NULL) || (link->next == NULL))
-		return;
-	FrontBackSplit(link, &a, &b);
-	MergeSort(graph, &a); // рекурсивная сортировка подсписков
-	MergeSort(graph, &b);
-	*base = SortedMerge(graph, a, b);
+		return ;
+	front_back_split(link, &a, &b);
+	mergesort(graph, &a);
+	mergesort(graph, &b);
+	*base = sortedmerge(graph, a, b);
 }
 
-void	Merge_Sort(t_graph **graph, t_info *info)
+void			merge_sort(t_graph **graph, t_info *info)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
-	while(i < info->count_node)
+	while (i < info->count_node)
 	{
-		MergeSort(graph, &graph[0][i].link);
+		mergesort(graph, &graph[0][i].link);
 		i += 1;
 	}
 }

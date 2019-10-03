@@ -167,6 +167,6 @@ void					in_stack_add(t_graph **graph, t_info *info,
 /*
 ** Sorted
 */
-void					Merge_Sort(t_graph **graph, t_info *info);
+void					merge_sort(t_graph **graph, t_info *info);
 
 #endif

@@ -424,7 +424,7 @@ int					solution(t_graph **graph, t_info *info)
 //	printf("5solution\n");
 	}
 	for_fix_stack(graph, info);
-	Merge_Sort(graph, info);
+	merge_sort(graph, info);
 	for_fix_stack(graph, info);
 //	sleep(1000);
 	free(queue);
