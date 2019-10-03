@@ -79,7 +79,7 @@ static void		front_back_split(t_link *source, t_link **frontref,
 	}
 }
 
-static void		mergesort(t_graph **graph, t_link **base)
+static void		merge_sort_helper(t_graph **graph, t_link **base)
 {
 	t_link	*link;
 	t_link	*a;
@@ -89,8 +89,8 @@ static void		mergesort(t_graph **graph, t_link **base)
 	if ((link == NULL) || (link->next == NULL))
 		return ;
 	front_back_split(link, &a, &b);
-	mergesort(graph, &a);
-	mergesort(graph, &b);
+	merge_sort_helper(graph, &a);
+	merge_sort_helper(graph, &b);
 	*base = sortedmerge(graph, a, b);
 }
 
@@ -101,7 +101,7 @@ void			merge_sort(t_graph **graph, t_info *info)
 	i = 0;
 	while (i < info->count_node)
 	{
-		mergesort(graph, &graph[0][i].link);
+		merge_sort_helper(graph, &graph[0][i].link);
 		i += 1;
 	}
 }

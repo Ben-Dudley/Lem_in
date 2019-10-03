@@ -122,7 +122,7 @@ int					find_path(t_graph **graph, t_info *info,
 			//printf("times\n");
 			ptr = ptr->next;
 		}
-	//	printf("\n");
+//		printf("\n");
 	}
 //	while (queue[z])
 	//	printf("queue %d", queue[z++]);
