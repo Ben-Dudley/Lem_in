@@ -19,25 +19,25 @@ SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/get_rooms_ants.c ./source/print_graph.c ./source/solution.c \
 		./source/search_path.c ./source/path_operations.c ./source/score_ants.c \
 		./source/find_path.c ./source/error_message.c ./source/move_ant.c \
-		./source/pars_flag.c
+		./source/pars_flag.c ./source/merge_sort.c
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make -C ./libft
-	gcc $(FLAGS) $(OBJS) $(OBJS_P) $(LIB) -o $(NAME)
+	@make -C ./libft
+	@gcc $(FLAGS) $(OBJS) $(OBJS_P) $(LIB) -o $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -c $< -o $@ -I$(INC) -I$(INC_2)
+	@gcc $(FLAGS) -c $< -o $@ -I$(INC) -I$(INC_2)
 
 clean:
-	make -C ./libft clean
-	rm -f $(OBJS)
+	@make -C ./libft clean
+	@rm -f $(OBJS)
 
 fclean: clean
-	make -C ./libft fclean
-	rm -f $(NAME)
+	@make -C ./libft fclean
+	@rm -f $(NAME)
 
 re: fclean all

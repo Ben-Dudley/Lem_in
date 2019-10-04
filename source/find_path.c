@@ -119,7 +119,7 @@ int					find_path(t_graph **graph, t_info *info,
 				}
 			ptr = ptr->next;
 		}
-	//	printf("\n");
+//		printf("\n");
 	}
 	return (0);
 }

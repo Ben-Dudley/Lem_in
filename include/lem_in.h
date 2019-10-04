@@ -164,4 +164,9 @@ t_stack					*new_stack(t_graph **graph, t_info *info,
 void					add_stack(t_stack **stack, t_stack *new);
 void					in_stack_add(t_graph **graph, t_info *info,
 										int stack, t_path *path);
+/*
+** Sorted
+*/
+void					merge_sort(t_graph **graph, t_info *info);
+
 #endif
