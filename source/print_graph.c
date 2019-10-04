@@ -51,10 +51,11 @@ void				print_move(t_graph **graph, t_info *info, int count,
 	int			counter;
 
 	i = min_score_ants(info, count, count_ways);
+//	printf("TUTU!!!!!!!\n");
 	while (i < count)
 	{
 		counter = i;
-		temp = info->path;
+		temp = info->stack->path;
 		while (temp)
 		{
 			temp_node = temp->node;

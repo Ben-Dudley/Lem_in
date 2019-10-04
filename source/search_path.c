@@ -43,11 +43,10 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 {
 	t_link			*temp;
-	t_path			*path;
-	//t_stack			*stack;
-
-	//stack = new_stack(graph, info, 0, new_path(graph, info)); // stack = 0
-	path = new_path(graph, info);
+	//t_path			*path;
+	t_stack			*stack;
+	stack = new_stack(graph, info, 0, new_path(graph, info)); // stack = 0
+//	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
 		temp = graph[0][traces[i]].link;
@@ -58,11 +57,15 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 				if (i != info->ind_end)
 					graph[0][temp->node].visited = 1;
 				temp->status = 0;
-				add_node(&path->node, new_node(graph, info, temp->node));
+				//add_node(&path->node, new_node(graph, info, temp->node));
 				//printf("save)path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
 				//add_node(&stack->path->node, new_node(graph, info, temp->node));
-				++path->length;
-				//++stack->path->length;
+				//++path->length;
+//				++stack->path->length;
+//				add_node(&path->node, new_node(graph, info, temp->node));
+				add_node(&stack->path->node, new_node(graph, info, temp->node));
+//				++path->length;
+				++stack->path->length;
 				break ;
 			}
 			temp = temp->next;
@@ -70,12 +73,11 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		i = traces[i];
 	}
 	//printf("PUPA in safe_path\n");
-
-	add_node(&path->node, new_node(graph, info, i));
-//	add_node(&stack->path->node, new_node(graph, info, i));
-	add_path(&info->path, path);
-//	add_stack(&info->stack, stack);
-	in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
+//	add_node(&path->node, new_node(graph, info, i));
+	add_node(&stack->path->node, new_node(graph, info, i));
+//	add_path(&info->path, path);
+	add_stack(&info->stack, stack);
+//	in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
 }
 
 void				clear_graph(t_graph **graph, t_info *info)
@@ -130,24 +132,24 @@ void				reverse_list(t_graph **graph, t_info *info)
 	t_path				*ptr;
 	t_path				*temp;
 
-	temp = info->path;
+	temp = info->stack->path;
 	ptr = NULL;
 	while (temp->next && temp->next->next)
 	{
 		temp = temp->next->next;
-		(info->path)->next->next = info->path;
-		(info->path) = (info->path)->next;
-		(info->path)->next->next = ptr;
-		ptr = info->path;
-		info->path = temp;
+		(info->stack->path)->next->next = info->stack->path;
+		(info->stack->path) = (info->stack->path)->next;
+		(info->stack->path)->next->next = ptr;
+		ptr = info->stack->path;
+		info->stack->path = temp;
 	}
-	if (info->path->next)
+	if (info->stack->path->next)
 	{
 		temp = temp->next;
 		temp->next = info->path;
 		temp->next->next = ptr;
-		info->path = temp;
+		info->stack->path = temp;
 	}
 	else
-		info->path->next = ptr;
+		info->stack->path->next = ptr;
 }

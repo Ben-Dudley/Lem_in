@@ -112,7 +112,7 @@ int						solution(t_graph **graph, t_info *info);
 int 					score_ants(t_graph **graph, t_info *info, int count);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
-void					score_ways(t_graph **graph, t_info *info, int stack);
+void					score_ways(t_graph **graph, t_info *info, int count_ways);
 int 					min_score_ants(t_info *info, int count,
 								  int count_ways); // тудали я добавил хз)
 /*
@@ -168,5 +168,11 @@ void					in_stack_add(t_graph **graph, t_info *info,
 ** Sorted
 */
 void					merge_sort(t_graph **graph, t_info *info);
+
+
+/* search_path.c -> save_path
+** solution.c -> get_path_numbers -> get_path
+*/
+
 
 #endif

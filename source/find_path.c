@@ -44,6 +44,7 @@ static int			find_index(t_info *info, int *queue, int node)
 	}
 	return (j);
 }
+
 void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
 {
 	t_stack		*temp;
@@ -72,12 +73,13 @@ void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
 static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
 {
+
 	if (flag)
 	{
 		save_path(graph, info, traces, info->ind_end);
-		--info->path->length;
-		info->path->stack = info->max_flow;
-		reverse_node(&info->path);
+		--info->stack->path->length;
+		info->stack->path->stack = info->max_flow;
+		reverse_node(&info->stack->path);
 	}
 	else
 		restoration_path(graph, info, traces);

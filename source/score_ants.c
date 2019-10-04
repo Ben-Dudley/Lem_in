@@ -47,7 +47,7 @@ void					del_flow(t_graph **graph, t_info *info, int count)
 }
 
 int						distribution_ants(int **ways, int score_ants,
-											int count_ways, int size)
+											 int count_ways, int size)
 {
 	int					j;
 
@@ -68,7 +68,7 @@ int						difference_length_path(t_info *info, int **ways, int *used_path)
 	int					score_ants;
 
 	score_ants = info->count_ants;
-	ptr = info->path;
+	ptr = info->stack->path;
 	*used_path = 1;
 	while (ptr->next && score_ants >= ptr->next->length - ptr->length && score_ants >= *used_path * (ptr->next->length - ptr->length))
 	{
@@ -80,9 +80,9 @@ int						difference_length_path(t_info *info, int **ways, int *used_path)
 			ways[0][j] += (ptr->next->length - ptr->length) > score_ants ?
 						  score_ants : (ptr->next->length - ptr->length);
 			score_ants -= (ptr->next->length - ptr->length) > score_ants ?
-							score_ants : (ptr->next->length - ptr->length);
+						  score_ants : (ptr->next->length - ptr->length);
 			++j;
-		//	print_ways(info, *ways, 14);
+			//	print_ways(info, *ways, 14);
 
 		}
 		++(*used_path);
@@ -107,7 +107,7 @@ void			print_ways(t_info *info, int *ways, int count)
 }
 
 void					score_ways(t_graph **graph, t_info *info,
-													int count_ways)
+								   int count_ways)
 {
 	int					*ways;
 	int					i;
@@ -115,17 +115,19 @@ void					score_ways(t_graph **graph, t_info *info,
 	int 				used_path;
 
 	reverse_list(graph, info);
+
 	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
 		error_message(graph, info, 0);
 	i = 0;
 	while (i < count_ways)
 		ways[i++] = 0;
+
 	ft_print_pyti(graph, info);
 	if (count_ways > 1)
 	{
 		score_ants = difference_length_path(info, &ways, &used_path);
 		score_ants = distribution_ants(&ways, score_ants, used_path,
-							score_ants / used_path);
+									   score_ants / used_path);
 		distribution_ants(&ways, score_ants, used_path, 1);
 	}
 	else
