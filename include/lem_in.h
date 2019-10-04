@@ -125,7 +125,7 @@ int						find_path(t_graph **graph, t_info *info,
 void					save_path(t_graph **graph, t_info *info, int *traces, int i);
 void					restoration_path(t_graph **graph, t_info *info,
 							int *traces);
-void					clear_graph(t_graph **graph, t_info *info);
+void					clear_graph(t_graph **graph, t_info *info, int flag);
 
 /*
 ** parse input data

@@ -31,7 +31,12 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 		{
 			if (temp->node == i)
 			{
+
+				if (traces[i] != info->ind_start)
+					graph[0][traces[i]].visited = 1;
 				temp->status = 0;
+//				printf("!!!!!!!!!!!!!!!!!queue[%d] %s(%d)\n",i, graph[0][traces[i]].name, graph[0][traces[i]].visited);
+//				printf("±!±±±±±±±±±±±±±±±±ptr->node %s (%d, %d)\n", graph[0][temp->node].name, temp->status, temp->reverse->status);
 				break ;
 			}
 			temp = temp->next;
@@ -47,10 +52,11 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 	t_stack			*stack;
 	int				st;
 
-	if (info->stack)
-		st = info->stack->stack + 1;
-	else
-		st = 0;
+//	if (info->stack)
+////		st = info->stack->stack + 1;
+////	else
+////		st = 0;
+	st = 0;
 	stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0
 //	path = new_path(graph, info);
 	while (i != info->ind_start)
@@ -86,7 +92,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 //	in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
 }
 
-void				clear_graph(t_graph **graph, t_info *info)
+void				clear_graph(t_graph **graph, t_info *info, int flag)
 {
 	int				i;
 	t_link			*temp;
@@ -98,8 +104,9 @@ void				clear_graph(t_graph **graph, t_info *info)
 		while (temp)
 		{
 			graph[0][temp->node].visited = 0;
-			if (!(temp->reverse->status == 0 && temp->status == 0))
-				temp->status = 1;
+			if (flag)
+				if (!(temp->reverse->status == 0 && temp->status == 0))
+					temp->status = 1;
 			temp = temp->next;
 		}
 		++i;

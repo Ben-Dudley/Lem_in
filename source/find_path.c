@@ -76,6 +76,7 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 
 	if (flag)
 	{
+
 		save_path(graph, info, traces, info->ind_end);
 		--info->stack->path->length;
 		info->stack->path->stack = info->max_flow;
@@ -110,15 +111,25 @@ int					find_path(t_graph **graph, t_info *info,
 			{
 				graph[0][ptr->node].weight = weight;
 			}
-			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)
+//			printf("queue[%d] %s(%d)\n",i, graph[0][queue[i]].name, graph[0][queue[i]].visited);
+//			printf("ptr->node %s (%d, %d)\n", graph[0][ptr->node].name, ptr->status, ptr->reverse->status);
+			if (info->count_ants < 0 && ptr->status != 0 && ptr->reverse->status == 0 &&
+			graph[0][queue[i]].visited == 1 && graph[0][ptr->node].visited == 1)
+			{
+				graph[0][queue[i]].visited = 0;
+				graph[0][ptr->node].visited = 0;
+			}
+			if (ptr->status != 0 && graph[0][queue[i]].visited == 0)
+			{
 				if (find_index(info, queue, ptr->node) == info->count_node + 1)
 				{
 					queue[++j] = ptr->node;
 					traces[ptr->node] = queue[i];
 					if (ptr->node == info->ind_end)
 						return (get_path(graph, info, traces,
-								(info->count_ants > 0) ? 1 : 0));
+										 (info->count_ants > 0) ? 1 : 0));
 				}
+			}
 			ptr = ptr->next;
 		}
 //		printf("\n");

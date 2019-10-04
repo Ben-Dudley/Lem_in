@@ -25,13 +25,13 @@ int					score_stack_path(t_graph **graph, t_info *info,
 	int				count;
 	int				add_path;
 	count = 0;
-	clear_graph(graph, info);
 	add_path = find_path(graph, info, queue, traces);
 	while (add_path > 0)
 	{
 		count += add_path;
 		add_path = find_path(graph, info, queue, traces);
 	}
+	clear_graph(graph, info, info->count_ants > 0 ? 1 : 0);
 	return (count);
 }
 
@@ -219,6 +219,7 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	temp = graph[0][index].link;
 	while (temp)
 	{
+	//	print_massiv(graph, info);
 		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start &&
 			temp->status + temp->reverse->status == 1)
 		{
@@ -250,6 +251,7 @@ int					solution(t_graph **graph, t_info *info)
 		error_message(graph, info, 0);
 	//stack = score_stack_path(graph, info, queue, traces);
 	stack = score_stack_path(graph, info, queue, traces); // count min flow and path min flow
+	printf("POLO\n");
  	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
@@ -264,10 +266,10 @@ int					solution(t_graph **graph, t_info *info)
 		printf("PO\n");
 		ft_print_pyti(graph, info);
 		for_fix_stack(graph, info);
-//		exit(0);
+		exit(0);
 		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
 		get_path_numbers(graph, info);
-		clear_graph(graph, info);
+		clear_graph(graph, info, 1);
 		stack = score_ants(graph, info, stack);
 	}
 	free(queue);
