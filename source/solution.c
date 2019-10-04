@@ -25,13 +25,13 @@ int					score_stack_path(t_graph **graph, t_info *info,
 	int				count;
 	int				add_path;
 	count = 0;
+	clear_graph(graph, info);
 	add_path = find_path(graph, info, queue, traces);
 	while (add_path > 0)
 	{
 		count += add_path;
 		add_path = find_path(graph, info, queue, traces);
 	}
-	clear_graph(graph, info);
 	return (count);
 }
 
@@ -72,12 +72,13 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 	int				i;
 	int 			st;
 
-	if (info->stack)
-	{
-		st = info->stack->stack + 1;
-	}
-	else
-		st = 0;
+//	if (info->stack)
+//	{
+//		st = info->stack->stack + 1;
+//	}
+//	else
+//		st = 0;
+	st = info->max_flow;
 	i = 0;
 	print_massiv(graph, info);
 	//exit(0);
@@ -216,32 +217,22 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
-	if (flow == 12) // delete>???!!?!?!?!?!
-	{
-		print_massiv(graph, info);
-		exit(0);
-		return (1);
-	}
-	temp = graph[0][index].link;
 	while (temp)
 	{
-		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start)
+		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start &&
+			temp->status + temp->reverse->status == 1)
 		{
 			graph[0][temp->node].visited = flow;
-			temp->status = 0;
-			temp->reverse->status = 0;
 			if (find_link_node(graph, info, temp->node))
 			{
-			if (flow > 1)
-				return (0);
 				if (stack_max_flow(graph, info, info->ind_start, flow + 1, 0))
 					return (1);
-				temp->status = 1;
+				graph[0][temp->node].visited = 0;
 				return (0);
 			}
 			if (stack_max_flow(graph, info, temp->node, flow, length + 1))
 				return (1);
-			temp->status = 1;
+			graph[0][temp->node].visited = 0;
 		}
 		temp = temp->next;
 	}
