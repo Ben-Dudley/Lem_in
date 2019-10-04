@@ -280,11 +280,11 @@ int					solution(t_graph **graph, t_info *info)
 	}
 	free(queue);
 	free(traces);
-	ft_print_pyti(graph, info);
+//	ft_print_pyti(graph, info);
 	//print_links(graph, info);
 	//for_fix_stack(graph, info);
-	merge_sort(graph, info);
-	print_links(graph, info);
-	//score_ways(graph, info, stack);
+//	merge_sort(graph, info);
+//	print_links(graph, info);
+	score_ways(graph, info, stack);
 	return (1);
 }
