@@ -143,7 +143,7 @@ int						score_ants(t_graph **graph, t_info *info, int count)
 	int					count_ants;
 	t_path				*ptr;
 
-	ptr = info->path;
+	ptr = info->stack->path;
 	steps = 0;
 	length_mf = 0;
 	while (ptr)

@@ -272,6 +272,7 @@ int					solution(t_graph **graph, t_info *info)
 		get_path_numbers(graph, info);
 		printf("PO\n");
 		ft_print_pyti(graph, info);
+		for_fix_stack(graph, info);
 //		exit(0);
 		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
 		get_path_numbers(graph, info);
@@ -282,7 +283,7 @@ int					solution(t_graph **graph, t_info *info)
 	free(traces);
 //	ft_print_pyti(graph, info);
 	//print_links(graph, info);
-	//for_fix_stack(graph, info);
+
 //	merge_sort(graph, info);
 //	print_links(graph, info);
 	score_ways(graph, info, stack);
