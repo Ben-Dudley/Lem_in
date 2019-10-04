@@ -233,7 +233,7 @@ int					solution(t_graph **graph, t_info *info)
  	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
-	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
+//	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1); //eto nado&&&
 	if (stack < info->max_flow)
