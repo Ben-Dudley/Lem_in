@@ -70,7 +70,14 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 //	t_path			*path;
 	t_stack			*stack;
 	int				i;
+	int 			st;
 
+	if (info->stack)
+	{
+		st = info->stack->stack + 1;
+	}
+	else
+		st = 0;
 	i = 0;
 	print_massiv(graph, info);
 	//exit(0);
@@ -78,7 +85,7 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 	{
 		temp = graph[0][info->ind_start].link;
 //		path = new_path(graph, info);
-		stack = new_stack(graph, info, 0, new_path(graph, info)); // stack = 0 ???
+		stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0 ???
 //		add_path(&info->path, path);
 		add_stack(&info->stack, stack);
 //		add_node(&path->node, new_node(graph, info, info->ind_start));
@@ -181,6 +188,26 @@ void			print_stack(t_graph **graph, t_info *info)
 	}
 }
 
+void				print_links(t_graph **graph, t_info *info)
+{
+	int 	i;
+	t_link	*temp;
+
+	i = 0;
+	while(i < info->count_node)
+	{
+		temp = graph[0][i].link;
+		while(temp)
+		{
+			printf(" (%s) %d ", graph[0][temp->node].name, graph[0][temp->node].weight);
+			temp = temp->next;
+		}
+		i += 1;
+		printf(" \n");
+	}
+	printf(" \n");
+}
+
 int					stack_max_flow(t_graph **graph, t_info *info,
 						int index, int flow, int length)
 {
@@ -253,7 +280,11 @@ int					solution(t_graph **graph, t_info *info)
 	}
 	free(queue);
 	free(traces);
-	//ft_print_pyti(graph, info);
-	score_ways(graph, info, stack);
+	ft_print_pyti(graph, info);
+	//print_links(graph, info);
+	//for_fix_stack(graph, info);
+	merge_sort(graph, info);
+	print_links(graph, info);
+	//score_ways(graph, info, stack);
 	return (1);
 }

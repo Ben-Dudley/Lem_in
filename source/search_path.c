@@ -45,7 +45,13 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 	t_link			*temp;
 	//t_path			*path;
 	t_stack			*stack;
-	stack = new_stack(graph, info, 0, new_path(graph, info)); // stack = 0
+	int				st;
+
+	if (info->stack)
+		st = info->stack->stack + 1;
+	else
+		st = 0;
+	stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0
 //	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
