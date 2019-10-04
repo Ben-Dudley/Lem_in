@@ -57,7 +57,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 					graph[0][temp->node].visited = 1;
 				temp->status = 0;
 				add_node(&path->node, new_node(graph, info, temp->node));
-				printf("save)path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
+			//	printf("save)path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
 				++path->length;
 				break ;
 			}

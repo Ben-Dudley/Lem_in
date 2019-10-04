@@ -91,7 +91,7 @@ int					find_path(t_graph **graph, t_info *info,
 	int			j;
 	t_link		*ptr;
 	int			weight;
-//	int			z  = 0; // delete
+
 	weight = 0;
 	i = init_mass(info, queue, traces);
 	j = 0;
@@ -107,25 +107,19 @@ int					find_path(t_graph **graph, t_info *info,
 			if (weight < graph[0][ptr->node].weight)
 			{
 				graph[0][ptr->node].weight = weight;
-				//printf("%d - имя(%s)\n", graph[0][ptr->node].weight, graph[0][ptr->node].name);
 			}
 			if (ptr->status != 0 && graph[0][ptr->node].visited == 0)
 				if (find_index(info, queue, ptr->node) == info->count_node + 1)
 				{
 					queue[++j] = ptr->node;
-				//	printf("ptr->node %d\n", ptr->node);
 					traces[ptr->node] = queue[i];
 					if (ptr->node == info->ind_end)
 						return (get_path(graph, info, traces,
 								(info->count_ants > 0) ? 1 : 0));
 				}
-			//printf("times\n");
 			ptr = ptr->next;
 		}
 	//	printf("\n");
 	}
-//	while (queue[z])
-	//	printf("queue %d", queue[z++]);
-	//printf("\n");
 	return (0);
 }

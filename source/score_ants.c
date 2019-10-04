@@ -61,32 +61,49 @@ int						distribution_ants(int **ways, int score_ants,
 	return (score_ants);
 }
 
-int						difference_length_path(t_info *info, int **ways)
+int						difference_length_path(t_info *info, int **ways, int *used_path)
 {
 	t_path				*ptr;
 	int					j;
-	int					i;
 	int					score_ants;
 
 	score_ants = info->count_ants;
 	ptr = info->path;
-	i = 0;
-	while (score_ants > 0 && ptr->next)
+	*used_path = 1;
+	while (ptr->next && score_ants >= ptr->next->length - ptr->length && score_ants >= *used_path * (ptr->next->length - ptr->length))
 	{
 		j = 0;
-		while (j <= i)
+		//printf("difference %d used_path %d score_ants %d\n", ptr->next->length - ptr->length, *used_path, score_ants);
+		while (j < *used_path)
 		{
+
 			ways[0][j] += (ptr->next->length - ptr->length) > score_ants ?
 						  score_ants : (ptr->next->length - ptr->length);
 			score_ants -= (ptr->next->length - ptr->length) > score_ants ?
 							score_ants : (ptr->next->length - ptr->length);
 			++j;
+		//	print_ways(info, *ways, 14);
+
 		}
-		++i;
+		++(*used_path);
 		ptr = ptr->next;
 	}
+
 	//printf("ways[0] %d %d\n", score_ants, ways[0][0]);
 	return (score_ants);
+}
+
+void			print_ways(t_info *info, int *ways, int count)
+{
+	int i;
+
+	i = 0;
+	while (i < count)
+	{
+		printf(" %d ", ways[i]);
+		++i;
+	}
+	printf("\n");
 }
 
 void					score_ways(t_graph **graph, t_info *info,
@@ -95,6 +112,7 @@ void					score_ways(t_graph **graph, t_info *info,
 	int					*ways;
 	int					i;
 	int					score_ants;
+	int 				used_path;
 
 	reverse_list(graph, info);
 	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
@@ -102,15 +120,17 @@ void					score_ways(t_graph **graph, t_info *info,
 	i = 0;
 	while (i < count_ways)
 		ways[i++] = 0;
+	ft_print_pyti(graph, info);
 	if (count_ways > 1)
 	{
-		score_ants = difference_length_path(info, &ways);
-		score_ants = distribution_ants(&ways, score_ants, count_ways,
-							score_ants / count_ways);
-		distribution_ants(&ways, score_ants, count_ways, 1);
+		score_ants = difference_length_path(info, &ways, &used_path);
+		score_ants = distribution_ants(&ways, score_ants, used_path,
+							score_ants / used_path);
+		distribution_ants(&ways, score_ants, used_path, 1);
 	}
 	else
 		ways[0] = info->count_ants;
+	//print_ways(info, ways, 6);
 	steps_ants(graph, info, ways, count_ways);
 }
 

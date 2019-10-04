@@ -26,12 +26,7 @@ void			print_buf(t_info *info, char *str)
 		info->buf[info->len_buf++] = *str;
 		++str;
 		if (info->len_buf == BUFF)
-		{
-			write(1, info->buf, info->len_buf);
-			ft_bzero(info->buf, BUFF);
-			info->len_buf = 0;
 			buf_init(info);
-		}
 	}
 }
 
@@ -75,7 +70,6 @@ int				main(int ac, char **av)
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
 	check(&graph, &info);
-//	printf("info->count_ants in main %d\n", info.count_ants);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
 	buf_init(&info);

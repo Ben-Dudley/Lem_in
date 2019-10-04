@@ -71,7 +71,7 @@ void				steps_ants(t_graph **graph, t_info *info,
 
 	j = 1;
 	score_ants = 0;
-	print_graph(graph, info);
+	//print_graph(graph, info);
 	while (score_ants < info->count_ants)
 	{
 		i = 0;

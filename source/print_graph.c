@@ -112,7 +112,6 @@ void				print_graph(t_graph **graph, t_info *info)
 	char	*str;
 
 	i = -1;
-	//printf("info->count_ants %d\n", info->count_ants);
 	if (!(str = ft_itoa(info->count_ants)))
 		error_message(graph, info, 0);
 	print_buf(info, str);
@@ -124,12 +123,13 @@ void				print_graph(t_graph **graph, t_info *info)
 	while (++i < info->count_node)
 	{
 		temp = graph[0][i].link;
-		while (temp && temp->status != 0)
+		while (temp)
 		{
+			if (temp->status != -1)
 			print_link(graph[0][i].name,
 					graph[0][temp->node].name, info, graph);
-			temp->status = 0;
-			temp->reverse->status = 0;
+			temp->status = -1;
+			temp->reverse->status = -1;
 			temp = temp->next;
 		}
 	}
