@@ -238,15 +238,24 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 {
 	t_link			*temp;
 
-	if (flow > info->max_flow)
+	if (flow > info->max_flow || flow  == 8)
 		return (1);
 	temp = graph[0][index].link;
 	while (temp)
 	{
-	//	print_massiv(graph, info);
-		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start &&
-			temp->status + temp->reverse->status == 1)
+		if (flow < 3)
 		{
+
+			//print_massiv(graph, info);
+			printf("flow %d, index %d(%s) - temp->node %d(%s) status (%d, %d)\n", flow, index, graph[0][index].name,
+					temp->node, graph[0][temp->node].name, temp->status, temp->reverse->status);
+		}
+		else
+			exit(0);
+		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start
+		&& temp->status + temp->reverse->status == 1)
+		{
+			printf("length %d\n", length);
 			graph[0][temp->node].visited = flow;
 			if (find_link_node(graph, info, temp->node))
 			{
@@ -276,33 +285,33 @@ int					solution(t_graph **graph, t_info *info)
 //	stack = score_stack_path(graph, info, queue, traces);
 	stack = score_stack_path(graph, info, queue, traces); // count min flow and path min flow
 	printf("POLO\n");
- 	info->count_ants *= -1;
-	info->max_flow = score_stack_path(graph, info, queue, traces);
-	info->count_ants *= -1;
-	for_fix_stack(graph, info);
-	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
-	if (info->max_flow <= 0)
-		error_message(graph, info, 1); //eto nado&&&
-	if (stack < info->max_flow)
-	{
-		stack_max_flow(graph, info, info->ind_start, 1, 0);
-		printf("PO\n");
-		get_path_numbers(graph, info);
-		printf("PO\n");
-		//ft_print_pyti(graph, info);
-		for_fix_stack(graph, info);
-		exit(0);
-		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
-		get_path_numbers(graph, info);
-		clear_graph(graph, info, 1);
-		stack = score_ants(graph, info, stack);
-	}
+// 	info->count_ants *= -1;
+//	info->max_flow = score_stack_path(graph, info, queue, traces);
+//	info->count_ants *= -1;
+//	for_fix_stack(graph, info);
+//	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
+//	if (info->max_flow <= 0)
+//		error_message(graph, info, 1); //eto nado&&&
+//	if (stack < info->max_flow)
+//	{
+//		stack_max_flow(graph, info, info->ind_start, 1, 0);
+//		printf("PO\n");
+//		get_path_numbers(graph, info);
+//		printf("PO\n");
+//		//ft_print_pyti(graph, info);
+//		for_fix_stack(graph, info);
+//		exit(0);
+//		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
+//		get_path_numbers(graph, info);
+//		clear_graph(graph, info, 1);
+//		stack = score_ants(graph, info, stack);
+//	}
 	free(queue);
 	free(traces);
 //	ft_print_pyti(graph, info);
 //	print_links(graph, info);
 //	merge_sort(graph, info);
 //	print_links(graph, info);
-	score_ways(graph, info, stack);
+//	score_ways(graph, info, stack);
 	return (1);
 }
