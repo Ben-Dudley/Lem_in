@@ -48,17 +48,13 @@ void				restoration_path(t_graph **graph, t_info *info, int *traces)
 void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 {
 	t_link			*temp;
-	//t_path			*path;
-	t_stack			*stack;
+	t_path			*path;
+//	t_stack			*stack;
 	int				st;
 
-//	if (info->stack)
-////		st = info->stack->stack + 1;
-////	else
-////		st = 0;
-	st = 0;
-	stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0
-//	path = new_path(graph, info);
+//	st = 0;
+	//stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0
+	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
 		temp = graph[0][traces[i]].link;
@@ -75,22 +71,23 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 				//++path->length;
 //				++stack->path->length;
 //				add_node(&path->node, new_node(graph, info, temp->node));
-				add_node(&stack->path->node, new_node(graph, info, temp->node));
+				add_node(&path->node, new_node(graph, info, temp->node));
 //				++path->length;
-				++stack->path->length;
+				++path->length;
 				break ;
 			}
 			temp = temp->next;
 		}
 		i = traces[i];
 	}
-	//printf("PUPA in safe_path\n");
+	printf("PUPA in safe_path\n");
 //	add_node(&path->node, new_node(graph, info, i));
-	add_node(&stack->path->node, new_node(graph, info, i));
+	add_node(&path->node, new_node(graph, info, i));
 //	add_path(&info->path, path);
-
-	add_stack(&info->stack, stack);
-
+	if (!info->stack)
+		info->stack = new_stack(graph, info, 0, path);
+	else
+		add_path(&(info->stack->path), path);
 
 //	in_stack_add(graph, info, info->stack->stack, path); // stack == info->path->stack'????
 }

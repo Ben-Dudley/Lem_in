@@ -76,10 +76,10 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 
 	if (flag)
 	{
-
+		printf("POLO\n");
 		save_path(graph, info, traces, info->ind_end);
 		--info->stack->path->length;
-		info->stack->stack = info->max_flow;
+		//info->stack->stack = info->max_flow;
 		reverse_node(&info->stack->path);
 	}
 	else

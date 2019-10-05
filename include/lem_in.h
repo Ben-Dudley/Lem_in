@@ -174,5 +174,6 @@ void					merge_sort(t_graph **graph, t_info *info);
 ** solution.c -> get_path_numbers -> get_path
 */
 
+//void			for_fix_stack(t_info *info);
 
 #endif

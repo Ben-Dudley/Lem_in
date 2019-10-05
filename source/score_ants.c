@@ -98,10 +98,12 @@ int						difference_length_path(t_info *info, int **ways, int *used_path)
 	score_ants = info->count_ants;
 	ptr = info->stack->path;
 	*used_path = 1;
+//	for_fix_stack(info);
+	printf("score_ants %d %d\n", score_ants, ptr->next->length - ptr->length );
 	while (ptr->next && score_ants >= ptr->next->length - ptr->length && score_ants >= *used_path * (ptr->next->length - ptr->length))
 	{
 		j = 0;
-		//printf("difference %d used_path %d score_ants %d\n", ptr->next->length - ptr->length, *used_path, score_ants);
+		printf("difference %d used_path %d score_ants %d\n", ptr->next->length - ptr->length, *used_path, score_ants);
 		while (j < *used_path)
 		{
 
@@ -116,8 +118,7 @@ int						difference_length_path(t_info *info, int **ways, int *used_path)
 		++(*used_path);
 		ptr = ptr->next;
 	}
-
-	//printf("ways[0] %d %d\n", score_ants, ways[0][0]);
+	printf("ways[0] %d %d\n", score_ants, ways[0][0]);
 	return (score_ants);
 }
 
@@ -143,7 +144,7 @@ void					score_ways(t_graph **graph, t_info *info,
 	int 				used_path;
 
 	reverse_list(graph, info);
-
+	//printf("count_ways %d", count_ways);
 	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
 		error_message(graph, info, 0);
 	i = 0;
@@ -153,6 +154,7 @@ void					score_ways(t_graph **graph, t_info *info,
 //	ft_print_pyti(graph, info);
 	if (count_ways > 1)
 	{
+		printf("I here!\n");
 		score_ants = difference_length_path(info, &ways, &used_path);
 		score_ants = distribution_ants(&ways, score_ants, used_path,
 									   score_ants / used_path);
@@ -160,8 +162,8 @@ void					score_ways(t_graph **graph, t_info *info,
 	}
 	else
 		ways[0] = info->count_ants;
-	//print_ways(info, ways, 6);
-	steps_ants(graph, info, ways, count_ways);
+	print_ways(info, ways, 6);
+	//steps_ants(graph, info, ways, count_ways);
 }
 
 int						score_ants(t_graph **graph, t_info *info, int count)
