@@ -45,30 +45,30 @@ static int			find_index(t_info *info, int *queue, int node)
 	return (j);
 }
 
-void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
-{
-	t_stack		*temp;
-	int			i;
-
-	i = 0;
-	temp = info->stack;
-	//printf("PUPA in_in_stack_add\n");
-	while (temp)
-	{
-		if (temp->stack == stack)
-		{
-			add_path(&temp->path, new_path(graph, info));
-			i += 1;
-			break ;
-		}// add path сюда
-		temp = temp->next;
-	}
-	if (i == 0)
-	{
-		add_stack(&info->stack, new_stack(graph, info, stack, path));
-	}
-
-}
+//void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
+//{
+//	t_stack		*temp;
+//	int			i;
+//
+//	i = 0;
+//	temp = info->stack;
+//	//printf("PUPA in_in_stack_add\n");
+//	while (temp)
+//	{
+//		if (temp->stack == stack)
+//		{
+//			add_path(&temp->path, new_path(graph, info));
+//			i += 1;
+//			break ;
+//		}// add path сюда
+//		temp = temp->next;
+//	}
+//	if (i == 0)
+//	{
+//		add_stack(&info->stack, new_stack(graph, info, stack, path));
+//	}
+//
+//}
 
 static int			get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
@@ -79,7 +79,7 @@ static int			get_path(t_graph **graph, t_info *info, int *traces,
 
 		save_path(graph, info, traces, info->ind_end);
 		--info->stack->path->length;
-		info->stack->path->stack = info->max_flow;
+		info->stack->stack = info->max_flow;
 		reverse_node(&info->stack->path);
 	}
 	else

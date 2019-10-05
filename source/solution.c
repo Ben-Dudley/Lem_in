@@ -115,13 +115,14 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 
 void			ft_print_pyti(t_graph **graph, t_info *info)
 {
-	t_path		*temp;
+	t_stack		*temp;
 	t_node		*nodo4ka;
-	temp = info->stack->path;
-	while (temp)
+
+	temp = info->stack;
+	while (temp->path)
 	{
-		nodo4ka =  temp->node;
-		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
+		nodo4ka =  temp->path->node;
+		printf("\nlen - %d, stack - %d \n", temp->path->length, temp->stack);
 		while (nodo4ka)
 		{
 			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
@@ -130,9 +131,30 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 		printf(" \n ");
 		temp = temp->next;
 	}
-	if (temp && temp->stack == info->max_flow)
+	if (temp->path && temp->stack == info->max_flow)
 		printf(" \n ");
 }
+
+//void			ft_print_pyti(t_graph **graph, t_info *info)
+//{
+//	t_path		*temp;
+//	t_node		*nodo4ka;
+//	temp = info->stack->path;
+//	while (temp)
+//	{
+//		nodo4ka =  temp->node;
+//		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
+//		while (nodo4ka)
+//		{
+//			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
+//			nodo4ka = nodo4ka->next;
+//		}
+//		printf(" \n ");
+//		temp = temp->next;
+//	}
+//	if (temp && temp->stack == info->max_flow)
+//		printf(" \n ");
+//}
 
 void			for_fix_stack(t_graph **graph, t_info *info)
 {
@@ -160,6 +182,7 @@ void			for_fix_stack(t_graph **graph, t_info *info)
 		printf("\n");
 	}
 	printf("\n");
+	printf("\n");
 }
 
 void			print_stack(t_graph **graph, t_info *info)
@@ -175,7 +198,7 @@ void			print_stack(t_graph **graph, t_info *info)
 		while (temp)
 		{
 			nodo4ka =  temp->node;
-			printf("длина пути %d, стек № %d \n", temp->length, temp->stack);
+			printf("длина пути %d, стек № %d \n", temp->length, st->stack);
 			while (nodo4ka)
 			{
 				printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
@@ -184,7 +207,7 @@ void			print_stack(t_graph **graph, t_info *info)
 			printf(" \n ");
 			temp = temp->next;
 		}
-		if (temp && temp->stack == info->max_flow)
+//		if (temp->path && temp->stack == info->max_flow)
 			printf(" \n ");
 		st = st->next;
 	}
@@ -250,12 +273,13 @@ int					solution(t_graph **graph, t_info *info)
 		error_message(graph, info, 0);
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
-	//stack = score_stack_path(graph, info, queue, traces);
+//	stack = score_stack_path(graph, info, queue, traces);
 	stack = score_stack_path(graph, info, queue, traces); // count min flow and path min flow
 	printf("POLO\n");
  	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
+	for_fix_stack(graph, info);
 	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
 	if (info->max_flow <= 0)
 		error_message(graph, info, 1); //eto nado&&&
@@ -265,7 +289,7 @@ int					solution(t_graph **graph, t_info *info)
 		printf("PO\n");
 		get_path_numbers(graph, info);
 		printf("PO\n");
-		ft_print_pyti(graph, info);
+		//ft_print_pyti(graph, info);
 		for_fix_stack(graph, info);
 		exit(0);
 		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow

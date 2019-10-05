@@ -150,7 +150,7 @@ void					score_ways(t_graph **graph, t_info *info,
 	while (i < count_ways)
 		ways[i++] = 0;
 
-	ft_print_pyti(graph, info);
+//	ft_print_pyti(graph, info);
 	if (count_ways > 1)
 	{
 		score_ants = difference_length_path(info, &ways, &used_path);
@@ -176,7 +176,7 @@ int						score_ants(t_graph **graph, t_info *info, int count)
 	length_mf = 0;
 	while (ptr)
 	{
-		if (ptr->stack == info->max_flow)
+		if (info->stack->stack == info->max_flow)
 		{
 			length_mf += ptr->length;
 			steps += ptr->length;

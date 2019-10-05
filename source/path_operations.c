@@ -55,7 +55,7 @@ t_path		*new_path(t_graph **graph, t_info *info)
 	if (!(new = ((t_path *)malloc(sizeof(*new)))))
 		error_message(graph, info, 0);
 	new->length = 0;
-	new->stack = 0;
+//	new->stack = 0;
 	new->node = NULL;
 	new->next = NULL;
 	return (new);
