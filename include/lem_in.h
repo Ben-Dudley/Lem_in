@@ -75,7 +75,7 @@ typedef struct			s_info
 	int					ind_start;
 	int					ind_end;
 	int					max_flow;
-	t_path				*path;
+//	t_path				*path;
 	t_stack				*stack;
 	int 				len_buf;
 	char 				buf[BUFF];

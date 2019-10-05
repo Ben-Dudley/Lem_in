@@ -16,13 +16,12 @@
 ** Select main stack and delete another.
 ** Distribution ways for ants.
 */
-
 void					del_flow(t_graph **graph, t_info *info, int count)
 {
-	t_path				*ptr;
-	t_path				*temp;
+	t_stack				*ptr;
+	t_stack				*temp;
 
-	ptr = info->path;
+	ptr = info->stack;
 	temp = ptr;
 	while (ptr)
 	{
@@ -30,8 +29,8 @@ void					del_flow(t_graph **graph, t_info *info, int count)
 		{
 			if (temp == ptr)
 			{
-				info->path = info->path->next;
-				temp = info->path;
+				info->stack = info->stack->next;
+				temp = info->stack;
 			}
 			else
 				temp->next = ptr->next;
@@ -45,6 +44,35 @@ void					del_flow(t_graph **graph, t_info *info, int count)
 		}
 	}
 }
+
+//void					del_flow(t_graph **graph, t_info *info, int count)
+//{
+//	t_path				*ptr;
+//	t_path				*temp;
+//
+//	ptr = info->stack->path;
+//	temp = ptr;
+//	while (ptr)
+//	{
+//		if (ptr->stack != count)
+//		{
+//			if (temp == ptr)
+//			{
+//				info->path = info->path->next;
+//				temp = info->path;
+//			}
+//			else
+//				temp->next = ptr->next;
+//			free(ptr);
+//			ptr = temp;
+//		}
+//		else
+//		{
+//			temp = ptr;
+//			ptr = ptr->next;
+//		}
+//	}
+//}
 
 int						distribution_ants(int **ways, int score_ants,
 											 int count_ways, int size)

@@ -88,8 +88,11 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 //	add_node(&path->node, new_node(graph, info, i));
 	add_node(&stack->path->node, new_node(graph, info, i));
 //	add_path(&info->path, path);
+
 	add_stack(&info->stack, stack);
-//	in_stack_add(graph, info, info->path->stack, path); // stack == info->path->stack'????
+
+
+//	in_stack_add(graph, info, info->stack->stack, path); // stack == info->path->stack'????
 }
 
 void				clear_graph(t_graph **graph, t_info *info, int flag)
@@ -159,7 +162,7 @@ void				reverse_list(t_graph **graph, t_info *info)
 	if (info->stack->path->next)
 	{
 		temp = temp->next;
-		temp->next = info->path;
+		temp->next = info->stack->path;
 		temp->next->next = ptr;
 		info->stack->path = temp;
 	}

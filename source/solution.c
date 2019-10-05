@@ -93,7 +93,8 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 		add_node(&stack->path->node, new_node(graph, info, info->ind_start));
 //		in_stack_add(graph, info, info->path->stack, path); // stack
 //		path->stack = info->max_flow;
-		stack->path->stack = info->max_flow;
+		stack->stack = info->max_flow;
+//		stack->path->stack = info->max_flow;
 		while (temp && temp->node != info->ind_end)
 		{
 			if (graph[0][temp->node].visited == i) // i  || temp->node == info->ind_start
@@ -116,7 +117,7 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 {
 	t_path		*temp;
 	t_node		*nodo4ka;
-	temp = info->path;
+	temp = info->stack->path;
 	while (temp)
 	{
 		nodo4ka =  temp->node;
@@ -275,8 +276,7 @@ int					solution(t_graph **graph, t_info *info)
 	free(queue);
 	free(traces);
 //	ft_print_pyti(graph, info);
-	//print_links(graph, info);
-
+//	print_links(graph, info);
 //	merge_sort(graph, info);
 //	print_links(graph, info);
 	score_ways(graph, info, stack);
