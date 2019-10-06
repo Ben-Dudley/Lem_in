@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <zconf.h>
 #include "lem_in.h"
 
 /*
@@ -18,6 +19,28 @@
 ** It choose best variant and move ants.
 ** Here also is search paths max flow stack.
 */
+
+void				print_max(t_graph **graph, t_info *info)
+{
+	t_link  *temp;
+	int		i;
+
+	i = 0;
+	while (i < info->count_node)
+	{
+		//printf("%d\n", i);
+		temp = graph[0][i].link;
+		while (temp)
+		{
+			if (temp->status + temp->reverse->status == 0)
+			{
+				printf("vertics %s and %s in flow %d, status (%d, %d)\n", graph[0][i].name, graph[0][temp->node].name, graph[0][i].visited, temp->status, temp->reverse->status);
+			}
+			temp = temp->next;
+		}
+		i++;
+	}
+}
 
 int					score_stack_path(t_graph **graph, t_info *info,
 										int *queue, int *traces)
@@ -28,9 +51,16 @@ int					score_stack_path(t_graph **graph, t_info *info,
 	add_path = find_path(graph, info, queue, traces);
 	while (add_path > 0)
 	{
+//		if (count >= 8)
+//		{
+//			print_max(graph, info);
+//			printf("\n\n");
+//		}
 		count += add_path;
 		add_path = find_path(graph, info, queue, traces);
 	}
+//	print_max(graph, info);
+	//printf("\n\n");
 	clear_graph(graph, info, info->count_ants > 0 ? 1 : 0);
 	return (count);
 }
@@ -49,7 +79,7 @@ int					find_link_node(t_graph **graph, t_info *info, int node)
 	return (0);
 }
 
-void			print_massiv(t_graph **graph, t_info *info)
+void				print_massiv(t_graph **graph, t_info *info)
 {
 	int			i;
 	t_link		*temp;
@@ -68,21 +98,9 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 {
 	t_link			*temp;
 	t_path			*path;
-//	t_stack			*stack;
 	int				i;
-//	int 			st;
 
-//	if (info->stack)
-//	{
-//		st = info->stack->stack + 1;
-//	}
-//	else
-//		st = 0;
-//	st = info->max_flow;
 	i = 0;
-//	print_massiv(graph, info);
-	//exit(0);
-//	path = new_path(graph, info);
 	while (++i <= info->max_flow)
 	{
 		temp = graph[0][info->ind_start].link;
@@ -91,34 +109,24 @@ void				get_path_numbers(t_graph **graph, t_info *info)
 			add_stack(&info->stack, new_stack(graph, info, info->max_flow, path)); // stack = 0 ???
 		else
 			add_path(&info->stack->path, path);
-//		add_stack(&info->stack, stack);
-//		add_node(&path->node, new_node(graph, info, info->ind_start));
 		add_node(&path->node, new_node(graph, info, info->ind_start));
-//		in_stack_add(graph, info, info->path->stack, path); // stack
-//		path->stack = info->max_flow;
-//		stack->stack = info->max_flow;
-//		stack->path->stack = info->max_flow;
 		while (temp && temp->node != info->ind_end)
 		{
 			if (graph[0][temp->node].visited == i) // i  || temp->node == info->ind_start
 			{
-//				add_node(&path->node, new_node(graph, info, temp->node));
 				add_node(&path->node, new_node(graph, info, temp->node));
-//				++info->path->length;
 				++path->length;
 				temp = graph[0][temp->node].link;
 			}
 			else
 				temp = temp->next;
 		}
-//		add_node(&path->node, new_node(graph, info, info->ind_end));
 		add_node(&path->node, new_node(graph, info, info->ind_end));
-
 	}
 
 }
 
-void			ft_print_pyti(t_graph **graph, t_info *info)
+void				ft_print_pyti(t_graph **graph, t_info *info)
 {
 	t_stack		*temp;
 	t_node		*nodo4ka;
@@ -140,28 +148,7 @@ void			ft_print_pyti(t_graph **graph, t_info *info)
 		printf(" \n ");
 }
 
-//void			ft_print_pyti(t_graph **graph, t_info *info)
-//{
-//	t_path		*temp;
-//	t_node		*nodo4ka;
-//	temp = info->stack->path;
-//	while (temp)
-//	{
-//		nodo4ka =  temp->node;
-//		printf("\nlen - %d, stack - %d \n", temp->length, temp->stack);
-//		while (nodo4ka)
-//		{
-//			printf(" %d - (%s) ", nodo4ka->node, graph[0][nodo4ka->node].name);
-//			nodo4ka = nodo4ka->next;
-//		}
-//		printf(" \n ");
-//		temp = temp->next;
-//	}
-//	if (temp && temp->stack == info->max_flow)
-//		printf(" \n ");
-//}
-
-void			for_fix_stack(t_graph **graph, t_info *info)
+void				for_fix_stack(t_graph **graph, t_info *info)
 {
 	t_stack		*st;
 	t_path		*temp;
@@ -189,7 +176,7 @@ void			for_fix_stack(t_graph **graph, t_info *info)
 	printf("\n");
 }
 
-void			print_stack(t_graph **graph, t_info *info)
+void				print_stack(t_graph **graph, t_info *info)
 {
 	t_stack		*st;
 	t_path		*temp;
@@ -237,29 +224,22 @@ void				print_links(t_graph **graph, t_info *info)
 	printf(" \n");
 }
 
+
+
 int					stack_max_flow(t_graph **graph, t_info *info,
 						int index, int flow, int length)
 {
 	t_link			*temp;
 
-	if (flow > info->max_flow || flow  == 8)
+	if (flow > info->max_flow)
 		return (1);
 	temp = graph[0][index].link;
 	while (temp)
 	{
-		if (flow < 3)
-		{
-
-			//print_massiv(graph, info);
-			printf("flow %d, index %d(%s) - temp->node %d(%s) status (%d, %d)\n", flow, index, graph[0][index].name,
-					temp->node, graph[0][temp->node].name, temp->status, temp->reverse->status);
-		}
-		else
-			exit(0);
 		if (graph[0][temp->node].visited == 0 && temp->node != info->ind_start
 		&& temp->status + temp->reverse->status == 1)
 		{
-			printf("length %d\n", length);
+			//printf("length %d\n", length);
 			graph[0][temp->node].visited = flow;
 			if (find_link_node(graph, info, temp->node))
 			{
@@ -287,34 +267,26 @@ int					solution(t_graph **graph, t_info *info)
 	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
 	stack = score_stack_path(graph, info, queue, traces); // count min flow and path min flow
-	printf("POLO\n");
+	//printf("aaaa\n");
  	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, queue, traces);
 	info->count_ants *= -1;
-//	for_fix_stack(graph, info);
 	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
-	if (info->max_flow <= 0)
-		error_message(graph, info, 1); //eto nado&&&
+	//if (info->max_flow <= 0) //error delete sluchaino
 	if (stack < info->max_flow)
 	{
+		print_max(graph, info);
+		printf("PK\n");
 		stack_max_flow(graph, info, info->ind_start, 1, 0);
-		printf("PO\n");
-		get_path_numbers(graph, info);
-		printf("PO\n");
-//ft_print_pyti(graph, info);
-	for_fix_stack(graph, info);
-//		exit(0);
-//		stack_max_flow(graph, info, info->ind_start, 1, 0); //path max flow
-//		get_path_numbers(graph, info);
-//		clear_graph(graph, info, 1);
-//		stack = score_ants(graph, info, stack);
+		printf("PK\n");
+			get_path_numbers(graph, info);
+		//for_fix_stack(graph, info);
+			clear_graph(graph, info, 1);
+			stack = score_ants(graph, info, stack);
+		//	printf("stack %d", stack);
 	}
 	free(queue);
 	free(traces);
-//	ft_print_pyti(graph, info);
-//	print_links(graph, info);
-//	merge_sort(graph, info);
-//	print_links(graph, info);
-	//score_ways(graph, info, stack);
+//	score_ways(graph, info, stack);
 	return (1);
 }

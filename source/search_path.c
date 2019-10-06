@@ -80,7 +80,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		}
 		i = traces[i];
 	}
-	printf("PUPA in safe_path\n");
+//	printf("PUPA in safe_path\n");
 //	add_node(&path->node, new_node(graph, info, i));
 	add_node(&path->node, new_node(graph, info, i));
 //	add_path(&info->path, path);
@@ -88,7 +88,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		info->stack = new_stack(graph, info, 0, path);
 	else
 		add_path(&(info->stack->path), path);
-
+//	reverse_list(graph, info);
 //	in_stack_add(graph, info, info->stack->stack, path); // stack == info->path->stack'????
 }
 
@@ -144,25 +144,30 @@ void				reverse_list(t_graph **graph, t_info *info)
 {
 	t_path				*ptr;
 	t_path				*temp;
+	t_stack				*stack;
 
-	temp = info->stack->path;
-	ptr = NULL;
-	while (temp->next && temp->next->next)
+	stack = info->stack;
+	while (stack)
 	{
-		temp = temp->next->next;
-		(info->stack->path)->next->next = info->stack->path;
-		(info->stack->path) = (info->stack->path)->next;
-		(info->stack->path)->next->next = ptr;
-		ptr = info->stack->path;
-		info->stack->path = temp;
+		temp = stack->path;
+		ptr = NULL;
+		while (temp->next && temp->next->next)
+		{
+			temp = temp->next->next;
+			(stack->path)->next->next = stack->path;
+			(stack->path) = (stack->path)->next;
+			(stack->path)->next->next = ptr;
+			ptr = stack->path;
+			stack->path = temp;
+		}
+		if (stack->path->next)
+		{
+			temp = temp->next;
+			temp->next = stack->path;
+			temp->next->next = ptr;
+			stack->path = temp;
+		} else
+			stack->path->next = ptr;
+		stack = stack->next;
 	}
-	if (info->stack->path->next)
-	{
-		temp = temp->next;
-		temp->next = info->stack->path;
-		temp->next->next = ptr;
-		info->stack->path = temp;
-	}
-	else
-		info->stack->path->next = ptr;
 }
