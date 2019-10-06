@@ -12,24 +12,6 @@
 
 #include "lem_in.h"
 
-void		add_stack(t_stack **stack, t_stack *new)
-{
-	new->next = *stack;
-	*stack = new;
-}
-
-t_stack		*new_stack(t_graph **graph, t_info *info, int stack, t_path *path)
-{
-	t_stack		*new;
-
-	if (!(new = ((t_stack *)malloc(sizeof(*new)))))
-		error_message(graph, info, 0);
-	new->stack = stack;
-	new->path = path;
-	new->next = NULL;
-	return (new);
-}
-
 void		add_node(t_node **node, t_node *new)
 {
 	new->next = *node;
@@ -55,7 +37,6 @@ t_path		*new_path(t_graph **graph, t_info *info)
 	if (!(new = ((t_path *)malloc(sizeof(*new)))))
 		error_message(graph, info, 0);
 	new->length = 0;
-//	new->stack = 0;
 	new->node = NULL;
 	new->next = NULL;
 	return (new);
@@ -65,4 +46,30 @@ void		add_path(t_path **path, t_path *new)
 {
 	new->next = *path;
 	*path = new;
+}
+
+void		restoration_path(t_graph **graph, t_info *info, int *traces)
+{
+	int			i;
+	t_link		*temp;
+
+	i = info->ind_end;
+	while (i != info->ind_start)
+	{
+		temp = graph[0][traces[i]].link;
+		while (temp)
+		{
+			if (temp->node == i)
+			{
+				if (traces[i] != info->ind_start)
+					graph[0][traces[i]].visited = 1;
+				temp->status = 0;
+//				printf("!!!!!!!!!!!!!!!!!queue[%d] %s(%d)\n",i, graph[0][traces[i]].name, graph[0][traces[i]].visited);
+//				printf("±!±±±±±±±±±±±±±±±±ptr->node %s (%d, %d)\n", graph[0][temp->node].name, temp->status, temp->reverse->status);
+				break ;
+			}
+			temp = temp->next;
+		}
+		i = traces[i];
+	}
 }

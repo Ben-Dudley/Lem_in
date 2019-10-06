@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 int					send_to_print_steps(t_node *temp_node, int i,
-											t_info *info, t_graph **graph)
+									t_info *info, t_graph **graph)
 {
 	char	*str;
 
@@ -42,42 +42,25 @@ int					send_to_print_steps(t_node *temp_node, int i,
 	return (0);
 }
 
-void				print_move(t_graph **graph, t_info *info, int count,
-															int count_ways)
+static void			print_link(char *name_node_1, char *name_node_2,
+								t_info *info, t_graph **graph)
 {
-	t_path		*temp;
-	t_node		*temp_node;
-	int			i;
-	int			counter;
-
-	i = min_score_ants(info, count, count_ways);
-//	printf("TUTU!!!!!!!\n");
-	while (i < count)
-	{
-		counter = i;
-		temp = info->stack->path;
-		while (temp)
-		{
-			temp_node = temp->node;
-			while (temp_node)
-			{
-				i += send_to_print_steps(temp_node, i, info, graph);
-				temp_node = temp_node->next;
-			}
-			temp = temp->next;
-		}
-		if (counter == i)
-			i++;
-	}
+	print_buf(info, name_node_1);
+	print_buf(info, "-");
+	print_buf(info, name_node_2);
 	print_buf(info, "\n");
-	if (info->flag_score > 0)
-		info->flag_score += 1;
-	info->count_max_node *= -1;
+}
+
+static void			add_str_in_buf(t_info *info, char *str)
+{
+	print_buf(info, str);
+	print_buf(info, "\n");
+	free(str); // если тут фришить str, то норм???
 }
 
 void				print_node(int i, t_info *info, t_graph **graph)
 {
-	char *str;
+	char		*str;
 
 	if (i == info->ind_start)
 		print_buf(info, "##start\n");
@@ -92,21 +75,10 @@ void				print_node(int i, t_info *info, t_graph **graph)
 	free(str);
 	if (!(str = ft_itoa(graph[0][i].y)))
 		error_message(graph, info, 0);
-	print_buf(info, str);
-	free(str);
-	print_buf(info, "\n");
+	add_str_in_buf(info, str);
 }
 
-void				print_link(char *name_node_1, char *name_node_2,
-										t_info *info, t_graph **graph)
-{
-	print_buf(info, name_node_1);
-	print_buf(info, "-");
-	print_buf(info, name_node_2);
-	print_buf(info, "\n");
-}
-
-void				print_graph(t_graph **graph, t_info *info)
+void				print_graph(t_graph **gr, t_info *info)
 {
 	int		i;
 	t_link	*temp;
@@ -114,21 +86,18 @@ void				print_graph(t_graph **graph, t_info *info)
 
 	i = -1;
 	if (!(str = ft_itoa(info->count_ants)))
-		error_message(graph, info, 0);
-	print_buf(info, str);
-	print_buf(info, "\n");
-	free(str);
+		error_message(gr, info, 0);
+	add_str_in_buf(info, str);
 	while (++i < info->count_node)
-		print_node(i, info, graph);
+		print_node(i, info, gr);
 	i = -1;
 	while (++i < info->count_node)
 	{
-		temp = graph[0][i].link;
+		temp = gr[0][i].link;
 		while (temp)
 		{
 			if (temp->status != -1)
-			print_link(graph[0][i].name,
-					graph[0][temp->node].name, info, graph);
+				print_link(gr[0][i].name, gr[0][temp->node].name, info, gr);
 			temp->status = -1;
 			temp->reverse->status = -1;
 			temp = temp->next;

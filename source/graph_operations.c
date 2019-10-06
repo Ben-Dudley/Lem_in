@@ -72,3 +72,24 @@ void		add_link(t_link **link, t_link *new)
 	new->next = *link;
 	*link = new;
 }
+
+void		clear_graph(t_graph **graph, t_info *info, int flag)
+{
+	int				i;
+	t_link			*temp;
+
+	i = 0;
+	while (i < info->count_node)
+	{
+		temp = graph[0][i].link;
+		while (temp)
+		{
+			graph[0][temp->node].visited = 0;
+			if (flag)
+				if (!(temp->reverse->status == 0 && temp->status == 0))
+					temp->status = 1;
+			temp = temp->next;
+		}
+		++i;
+	}
+}

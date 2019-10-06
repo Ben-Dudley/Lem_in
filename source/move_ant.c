@@ -33,7 +33,7 @@ int					min_score_ants(t_info *info, int count,
 	return (min);
 }
 
-static int			step(int *ways, t_path **ptr_path, t_info *info, int *j) //rename
+static int			step(int *ways, t_path **ptr_path, t_info *info, int *j)
 {
 	t_node		*ptr_node;
 	int			score_ants;
@@ -44,7 +44,6 @@ static int			step(int *ways, t_path **ptr_path, t_info *info, int *j) //rename
 		score_ants += 1;
 	while (ptr_node->next->node != info->ind_start)
 	{
-
 		ptr_node->ant = ptr_node->next->ant;
 		if (ptr_node->node == info->ind_end && ptr_node->next->ant != 0)
 			score_ants += 1;
@@ -80,7 +79,6 @@ void				steps_ants(t_graph **graph, t_info *info,
 		while (ptr_path)
 		{
 			score_ants += step(&(ways[i]), &ptr_path, info, &j);
-//			printf("score ants %d, %d\n",score_ants, info->count_ants);
 			++i;
 		}
 		print_move(graph, info, j, count_ways);

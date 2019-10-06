@@ -17,7 +17,7 @@
 # include <limits.h>
 # include <stdio.h>
 # define SIZE 2048
-#define BUFF 1024
+# define BUFF 1024
 
 typedef struct			s_node
 {
@@ -34,10 +34,9 @@ typedef struct			s_path
 	struct s_path		*next;
 }						t_path;
 
-
 typedef struct			s_stack
 {
-	int 				stack;
+	int					stack;
 	t_path				*path;
 	struct s_stack		*next;
 }						t_stack;
@@ -75,10 +74,9 @@ typedef struct			s_info
 	int					ind_start;
 	int					ind_end;
 	int					max_flow;
-//	t_path				*path;
 	t_stack				*stack;
-	int 				len_buf;
-	char 				buf[BUFF];
+	int					len_buf;
+	char				buf[BUFF];
 }						t_info;
 
 /*
@@ -94,6 +92,10 @@ void					print_ways(t_info *info, int *ways, int count);
 void					ft_print_pyti(t_graph **graph, t_info *info);
 void					print_massiv(t_graph **graph, t_info *info);
 
+void					print_max(t_graph **graph, t_info *info);
+void					for_fix_stack(t_graph **graph, t_info *info);
+void					print_stack(t_graph **graph, t_info *info);
+void					print_links(t_graph **graph, t_info *info);
 /*
 ** print graph
 */
@@ -103,18 +105,21 @@ void					print_graph(t_graph **graph, t_info *info); //rename function
 void					print_move(t_graph **graph, t_info *info,
 							int count, int count_ways);
 void					print_buf(t_info *info, char *str);
+int						send_to_print_steps(t_node *temp_node, int i,
+											t_info *info, t_graph **graph);
 void					buf_init(t_info *info);
 
 /*
 ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-int 					score_ants(t_graph **graph, t_info *info, int count);
+int						score_ants(t_graph **graph, t_info *info, int count);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
-void					score_ways(t_graph **graph, t_info *info, int count_ways);
-int 					min_score_ants(t_info *info, int count,
-								  int count_ways); // тудали я добавил хз)
+void					score_ways(t_graph **graph, t_info *info,
+										int count_ways);
+int						min_score_ants(t_info *info, int count,
+										int count_ways);
 /*
 ** find max flow and stack with shortest path
 */
@@ -122,11 +127,13 @@ int						score_stack_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
 int						find_path(t_graph **graph, t_info *info,
 							int *queue, int *traces);
-void					save_path(t_graph **graph, t_info *info, int *traces, int i);
+void					save_path(t_graph **graph, t_info *info, int *traces,
+																		int i);
 void					restoration_path(t_graph **graph, t_info *info,
 							int *traces);
 void					clear_graph(t_graph **graph, t_info *info, int flag);
-
+void					del_flow(t_graph **graph, t_info *info, int count);
+void					get_path_numbers(t_graph **graph, t_info *info);
 /*
 ** parse input data
 */
@@ -141,7 +148,7 @@ int						help_rooms(t_graph **graph, t_info *info, int flag,
 							char *line); //rename this function
 
 int						flag_checking(int ac, char **av, t_graph **graph,
-												t_info *info); //
+												t_info *info);
 
 /*
 ** Create and init structure
@@ -168,12 +175,6 @@ void					in_stack_add(t_graph **graph, t_info *info,
 ** Sorted
 */
 void					merge_sort(t_graph **graph, t_info *info);
-
-
-/* search_path.c -> save_path
-** solution.c -> get_path_numbers -> get_path
-*/
-
-void			for_fix_stack(t_graph **graph, t_info *info);
+void					for_fix_stack(t_graph **graph, t_info *info);
 
 #endif

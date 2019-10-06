@@ -17,7 +17,7 @@
 ** Here is also counts the numbers max flow.
 */
 
-static int			init_mass(t_info *info, int *queue, int *traces)
+static int		init_mass(t_info *info, int *queue, int *traces)
 {
 	int			i;
 
@@ -31,7 +31,7 @@ static int			init_mass(t_info *info, int *queue, int *traces)
 	return (-1);
 }
 
-static int			find_index(t_info *info, int *queue, int node)
+static int		find_index(t_info *info, int *queue, int node)
 {
 	int		j;
 
@@ -45,38 +45,11 @@ static int			find_index(t_info *info, int *queue, int node)
 	return (j);
 }
 
-//void				in_stack_add(t_graph **graph, t_info *info, int stack, t_path *path)
-//{
-//	t_stack		*temp;
-//	int			i;
-//
-//	i = 0;
-//	temp = info->stack;
-//	//printf("PUPA in_in_stack_add\n");
-//	while (temp)
-//	{
-//		if (temp->stack == stack)
-//		{
-//			add_path(&temp->path, new_path(graph, info));
-//			i += 1;
-//			break ;
-//		}// add path сюда
-//		temp = temp->next;
-//	}
-//	if (i == 0)
-//	{
-//		add_stack(&info->stack, new_stack(graph, info, stack, path));
-//	}
-//
-//}
-
-static int			get_path(t_graph **graph, t_info *info, int *traces,
+static int		get_path(t_graph **graph, t_info *info, int *traces,
 						int flag)
 {
-
 	if (flag)
 	{
-	//	printf("POLO\n");
 		save_path(graph, info, traces, info->ind_end);
 		--info->stack->path->length;
 		reverse_node(&info->stack->path);
@@ -93,7 +66,6 @@ int				rewrite_queue(t_info *info, int *queue, int j, int node)
 
 	i = 0;
 	count = 0;
-	//printf("%d ----- %d\n", j, node);
 	while (queue[i] != node)
 		i++;
 	while (i < j - 1)
@@ -110,20 +82,7 @@ int				rewrite_queue(t_info *info, int *queue, int j, int node)
 	return (count);
 }
 
-void			print_queue(t_graph **graph, int *queue, int count)
-{
-	int i;
-
-	i = 0;
-	while (i < count)
-	{
-		printf(" %d(%d) ", queue[i], i);
-		++i;
-	}
-	printf("\n");
-}
-
-int					find_path(t_graph **graph, t_info *info,
+int				find_path(t_graph **graph, t_info *info,
 						int *queue, int *traces)
 {
 	int			i;
@@ -192,12 +151,12 @@ int					find_path(t_graph **graph, t_info *info,
 					}
 				}
 			}
-
 			ptr = ptr->next;
 		}
 		if (graph[0][queue[i]].weight < 0)
 			graph[0][queue[i]].weight *= -1;
 //		printf("\n");
 	}
+
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static int               pars_flag(char c, t_info *info)
+static int				pars_flag(char c, t_info *info)
 {
 	if (c == 'v')
 		info->flag_visual = 1;
@@ -22,16 +22,16 @@ static int               pars_flag(char c, t_info *info)
 		info->flag_score = 1;
 	else if (c == 'p')
 		info->flag_way = 1;
-    else if (c == 'a')
+	else if (c == 'a')
 		info->flag_all_way = 1;
-    else if (c == 'g')
+	else if (c == 'g')
 		info->flag_print_graph = 1;
 	else
 		return (0);
 	return (1);
 }
 
-static int			check_flag(char *av, t_info *info)
+static int				check_flag(char *av, t_info *info)
 {
 	int		i;
 
@@ -54,8 +54,8 @@ static int			check_flag(char *av, t_info *info)
 	return (0);
 }
 
-int					flag_checking(int ac, char **av, t_graph **graph,
-                                                        t_info *info)
+int						flag_checking(int ac, char **av, t_graph **graph,
+														t_info *info)
 {
 	int			counter;
 
@@ -68,7 +68,7 @@ int					flag_checking(int ac, char **av, t_graph **graph,
 			++counter;
 		else
 		{
-            error_message(graph, info, 21);
+			error_message(graph, info, 21);
 			return (0);
 		}
 	}

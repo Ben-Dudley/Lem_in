@@ -18,42 +18,22 @@
 ** Reverse list and pat.
 */
 
-void				restoration_path(t_graph **graph, t_info *info, int *traces)
+static void			sup_add_stack(t_graph **graph, t_info *info,
+															t_path *path, int i)
 {
-	int			i;
-	t_link		*temp;
-
-	i = info->ind_end;
-	while (i != info->ind_start)
-	{
-		temp = graph[0][traces[i]].link;
-		while (temp)
-		{
-			if (temp->node == i)
-			{
-
-				if (traces[i] != info->ind_start)
-					graph[0][traces[i]].visited = 1;
-				temp->status = 0;
-//				printf("!!!!!!!!!!!!!!!!!queue[%d] %s(%d)\n",i, graph[0][traces[i]].name, graph[0][traces[i]].visited);
-//				printf("±!±±±±±±±±±±±±±±±±ptr->node %s (%d, %d)\n", graph[0][temp->node].name, temp->status, temp->reverse->status);
-				break ;
-			}
-			temp = temp->next;
-		}
-		i = traces[i];
-	}
+	add_node(&path->node, new_node(graph, info, i));
+	if (!info->stack)
+		info->stack = new_stack(graph, info, 0, path);
+	else
+		add_path(&(info->stack->path), path);
 }
 
 void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 {
 	t_link			*temp;
 	t_path			*path;
-//	t_stack			*stack;
 	int				st;
 
-//	st = 0;
-	//stack = new_stack(graph, info, st, new_path(graph, info)); // stack = 0
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
@@ -65,14 +45,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 				if (i != info->ind_end)
 					graph[0][temp->node].visited = 1;
 				temp->status = 0;
-				//add_node(&path->node, new_node(graph, info, temp->node));
-				//printf("save)path  %d - (%s)\n", path->node->node, graph[0][path->node->node].name);
-				//add_node(&stack->path->node, new_node(graph, info, temp->node));
-				//++path->length;
-//				++stack->path->length;
-//				add_node(&path->node, new_node(graph, info, temp->node));
 				add_node(&path->node, new_node(graph, info, temp->node));
-//				++path->length;
 				++path->length;
 				break ;
 			}
@@ -80,37 +53,7 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 		}
 		i = traces[i];
 	}
-//	printf("PUPA in safe_path\n");
-//	add_node(&path->node, new_node(graph, info, i));
-	add_node(&path->node, new_node(graph, info, i));
-//	add_path(&info->path, path);
-	if (!info->stack)
-		info->stack = new_stack(graph, info, 0, path);
-	else
-		add_path(&(info->stack->path), path);
-//	reverse_list(graph, info);
-//	in_stack_add(graph, info, info->stack->stack, path); // stack == info->path->stack'????
-}
-
-void				clear_graph(t_graph **graph, t_info *info, int flag)
-{
-	int				i;
-	t_link			*temp;
-
-	i = 0;
-	while (i < info->count_node)
-	{
-		temp = graph[0][i].link;
-		while (temp)
-		{
-			graph[0][temp->node].visited = 0;
-			if (flag)
-				if (!(temp->reverse->status == 0 && temp->status == 0))
-					temp->status = 1;
-			temp = temp->next;
-		}
-		++i;
-	}
+	sup_add_stack(graph, info, path, i);
 }
 
 void				reverse_node(t_path **path)
@@ -140,6 +83,15 @@ void				reverse_node(t_path **path)
 		(*path)->node->next = ptr;
 }
 
+static void			sup_rev_temp(t_path *temp, t_stack *stack, t_path *ptr)
+{// не надо ли случаем &
+	(stack->path)->next->next = stack->path;
+	(stack->path) = (stack->path)->next;
+	(stack->path)->next->next = ptr;
+	ptr = stack->path;
+	stack->path = temp;
+}
+
 void				reverse_list(t_graph **graph, t_info *info)
 {
 	t_path				*ptr;
@@ -154,11 +106,7 @@ void				reverse_list(t_graph **graph, t_info *info)
 		while (temp->next && temp->next->next)
 		{
 			temp = temp->next->next;
-			(stack->path)->next->next = stack->path;
-			(stack->path) = (stack->path)->next;
-			(stack->path)->next->next = ptr;
-			ptr = stack->path;
-			stack->path = temp;
+			sup_rev_temp(temp, stack, ptr);
 		}
 		if (stack->path->next)
 		{
@@ -166,7 +114,8 @@ void				reverse_list(t_graph **graph, t_info *info)
 			temp->next = stack->path;
 			temp->next->next = ptr;
 			stack->path = temp;
-		} else
+		}
+		else
 			stack->path->next = ptr;
 		stack = stack->next;
 	}
