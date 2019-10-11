@@ -36,7 +36,7 @@ void				print_max(t_graph **graph, t_info *info) // 1
 		temp = graph[0][i].link;
 		while (temp)
 		{
-			if (temp->status + temp->reverse->status == 0)
+			if (temp->status + temp->reverse->status < 2)
 			{
 				printf("vertics %s and %s in flow %d, status (%d, %d)\n",
 					   graph[0][i].name, graph[0][temp->node].name,

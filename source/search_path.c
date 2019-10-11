@@ -83,13 +83,13 @@ void				reverse_node(t_path **path)
 		(*path)->node->next = ptr;
 }
 
-static void			sup_rev_temp(t_path *temp, t_stack *stack, t_path *ptr)
+static void			sup_rev_temp(t_path **temp, t_stack **stack, t_path **ptr)
 {// не надо ли случаем &
-	(stack->path)->next->next = stack->path;
-	(stack->path) = (stack->path)->next;
-	(stack->path)->next->next = ptr;
-	ptr = stack->path;
-	stack->path = temp;
+	((*stack)->path)->next->next = (*stack)->path;
+	((*stack)->path) = ((*stack)->path)->next;
+	((*stack)->path)->next->next = *ptr;
+	*ptr = (*stack)->path;
+	(*stack)->path = *temp;
 }
 
 void				reverse_list(t_graph **graph, t_info *info)
@@ -106,7 +106,7 @@ void				reverse_list(t_graph **graph, t_info *info)
 		while (temp->next && temp->next->next)
 		{
 			temp = temp->next->next;
-			sup_rev_temp(temp, stack, ptr);
+			sup_rev_temp(&temp, &stack, &ptr);
 		}
 		if (stack->path->next)
 		{

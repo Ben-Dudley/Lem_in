@@ -84,7 +84,7 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	steps_ants(graph, info, ways, count_ways);
 }
 
-int			score_step_in_ants(t_info *info, int steps, int length_mf)
+int			score_step_in_ants(t_info *info, int steps, int *length_mf)
 {
 	t_path				*ptr;
 	t_stack				*temp;
@@ -95,7 +95,7 @@ int			score_step_in_ants(t_info *info, int steps, int length_mf)
 	{
 		if (temp->stack == info->max_flow)
 		{
-			length_mf += ptr->length;
+			*length_mf += ptr->length;
 			steps += ptr->length;
 		}
 		else
@@ -118,7 +118,7 @@ int			score_ants(t_graph **graph, t_info *info, int count)
 
 	steps = 0;
 	length_mf = 0;
-	steps = score_step_in_ants(info, steps, length_mf);
+	steps = score_step_in_ants(info, steps, &length_mf);
 	if (steps <= 0)
 		error_message(graph, info, 69);
 	count_ants = steps * info->max_flow - length_mf;
