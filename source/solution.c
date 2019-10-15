@@ -21,17 +21,17 @@
 */
 
 int					score_stack_path(t_graph **graph, t_info *info,
-										int *queue, int *traces)
+										int *queue, int *traces_0, int *traces_1)
 {
 	int				count;
 	int				add_path;
 
 	count = 0;
-	add_path = find_path(graph, info, queue, traces);
+	add_path = find_path(graph, info, queue, traces_0, traces_1);
 	while (add_path > 0)
 	{
 		count += add_path;
-		add_path = find_path(graph, info, queue, traces);
+		add_path = find_path(graph, info, queue, traces_0, traces_1);
 	}
 	clear_graph(graph, info, info->count_ants > 0 ? 1 : 0);
 	return (count);
@@ -82,15 +82,15 @@ int					stack_max_flow(t_graph **graph, t_info *info,
 }
 
 int					diff_stack_max(t_graph **graph, t_info *info,
-									int *queue, int *traces)
+									int *queue, int *traces_0, int *traces_1)
 {
 	int				stack;
 
-	stack = score_stack_path(graph, info, queue, traces);
+	stack = score_stack_path(graph, info, queue, traces_0, traces_1);
 	// count min flow and path min flow
 	printf("aaaa\n"); //
 	info->count_ants *= -1;
-	info->max_flow = score_stack_path(graph, info, queue, traces);
+	info->max_flow = score_stack_path(graph, info, queue, traces_0, traces_1);
 	info->count_ants *= -1;
 	return (stack);
 }
@@ -98,18 +98,21 @@ int					diff_stack_max(t_graph **graph, t_info *info,
 int					solution(t_graph **graph, t_info *info)
 {
 	int				*queue;
-	int				*traces;
+	int				*traces_0;
+	int				*traces_1;
 	int				stack;
 
 	if (!(queue = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
-	if (!(traces = (int *)malloc(sizeof(int) * (info->count_node + 1))))
+	if (!(traces_0 = (int *)malloc(sizeof(int) * (info->count_node + 1))))
 		error_message(graph, info, 0);
-	stack = diff_stack_max(graph, info, queue, traces);
+	if (!(traces_1 = (int *)malloc(sizeof(int) * (info->count_node + 1))))
+		error_message(graph, info, 0);
+	stack = diff_stack_max(graph, info, queue, traces_0, traces_1);
 	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
 	//if (info->max_flow <= 0) //error delete sluchaino
 	print_max(graph, info);
-	for_fix_stack(graph, info);
+	//for_fix_stack(graph, info);
 	if (stack < info->max_flow)
 	{
 		//print_max(graph, info);
@@ -121,7 +124,8 @@ int					solution(t_graph **graph, t_info *info)
 		//	printf("stack %d", stack);
 	}
 	free(queue);
-	free(traces);
+	free(traces_0);
+	free(traces_1);
 	//score_ways(graph, info, stack);
 	return (1);
 }

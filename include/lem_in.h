@@ -29,7 +29,7 @@ typedef struct			s_node
 typedef struct			s_path
 {
 	int					length;
-	int					stack;
+	int					stack; //zachem
 	t_node				*node;
 	struct s_path		*next;
 }						t_path;
@@ -124,13 +124,13 @@ int						min_score_ants(t_info *info, int count,
 ** find max flow and stack with shortest path
 */
 int						score_stack_path(t_graph **graph, t_info *info,
-							int *queue, int *traces);
+							int *queue, int *traces_0, int *traces_1);
 int						find_path(t_graph **graph, t_info *info,
-							int *queue, int *traces);
+							int *queue, int *traces_0, int *traces_1);
 void					save_path(t_graph **graph, t_info *info, int *traces,
 																		int i);
 void					restoration_path(t_graph **graph, t_info *info,
-							int *traces);
+							int *traces_0, int *traces_1);
 void					clear_graph(t_graph **graph, t_info *info, int flag);
 void					del_flow(t_graph **graph, t_info *info, int count);
 void					get_path_numbers(t_graph **graph, t_info *info);

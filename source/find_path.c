@@ -17,7 +17,7 @@
 ** Here is also counts the numbers max flow.
 */
 
-static int		init_mass(t_info *info, int *queue, int *traces)
+static int			init_mass(t_info *info, int *queue, int *traces_0, int *traces_1)
 {
 	int			i;
 
@@ -27,7 +27,12 @@ static int		init_mass(t_info *info, int *queue, int *traces)
 		queue[i++] = -1;
 	i = 0;
 	while (i <= info->count_node)
-		traces[i++] = -1;
+		traces_0[i++] = -1;
+	i = 0;
+	while (i <= info->count_node)
+		traces_1[i++] = -1;
+	traces_0[info->ind_start] = info->ind_start;
+	traces_1[info->ind_start] = info->ind_start;
 	return (-1);
 }
 
@@ -45,17 +50,18 @@ static int		find_index(t_info *info, int *queue, int node)
 	return (j);
 }
 
-static int		get_path(t_graph **graph, t_info *info, int *traces,
+static int		get_path(t_graph **graph, t_info *info, int *traces_0, int *traces_1,
 						int flag)
 {
+	printf("Save path\n");
 	if (flag)
 	{
-		save_path(graph, info, traces, info->ind_end);
+		save_path(graph, info, traces_0, info->ind_end);
 		--info->stack->path->length;
 		reverse_node(&info->stack->path);
 	}
 	else
-		restoration_path(graph, info, traces);
+		restoration_path(graph, info, traces_0, traces_1);
 	return (1);
 }
 
@@ -82,8 +88,13 @@ int				rewrite_queue(t_info *info, int *queue, int j, int node)
 	return (count);
 }
 
+/*
+				 * && (graph[0][traces[queue[i]]].visited == 1) 3
+				 * && graph[0][ptr->node].weight > 0 1
+				 */
+
 int				find_path(t_graph **graph, t_info *info,
-						int *queue, int *traces)
+						int *queue, int *traces_0, int *traces_1)
 {
 	int			i;
 	int			j;
@@ -96,7 +107,7 @@ int				find_path(t_graph **graph, t_info *info,
 	while (++ko < info->count_node)
 		if (graph[0][ko].weight < 0)
 			graph[0][ko].weight *= -1;
-	i = init_mass(info, queue, traces);
+	i = init_mass(info, queue, traces_0, traces_1);
 	j = 0;
 	while (queue[++i] != -1)
 	{
@@ -113,60 +124,52 @@ int				find_path(t_graph **graph, t_info *info,
 			}
 
 			if (ptr->status != 0 &&
-			((graph[0][queue[i]].visited == 0 && traces[ptr->node] == -1) ||
-			graph[0][queue[i]].weight < 0 ||
-			(info->count_ants < 0 && ptr->status != 0 && ptr->reverse->status == 0 &&
-			graph[0][queue[i]].visited == 1 && graph[0][ptr->node].visited == 1)))
+			((graph[0][queue[i]].visited == 0 && traces_0[ptr->node] == -1) ||
+			(info->count_ants < 0 && graph[0][queue[i]].visited == 1 && traces_1[ptr->node] == -1 &&
+			((graph[0][queue[i]].weight < 0) ||
+			(ptr->reverse->status == 0 && graph[0][ptr->node].visited == 1)))))
 			{
-				if (info->count_ants < 0 && ptr->status != 0 && ptr->reverse->status == 0 &&
-					graph[0][queue[i]].visited == 1 && graph[0][ptr->node].visited == 1)
+				printf("%d(%s) ---- %d(%s)\n", graph[0][queue[i]].visited, graph[0][queue[i]].name, graph[0][ptr->node].visited, graph[0][ptr->node].name);
+				if (!(traces_0[ptr->node] == -1 && traces_1[ptr->node] == -1)
+					&& find_index(info, queue, ptr->node) < 1 && info->count_ants < 0)
 				{
-					//printf("!!!!!!!!%s", graph[0][ptr->node].name);
-					if (graph[0][ptr->node].weight > 0)
-					graph[0][ptr->node].weight *= -1;
-					//if (traces[ptr->node] == -1)
-					if (find_index(info, queue, ptr->node) == info->count_node + 1)
-					{
-						//printf("ddd\n");
-						//printf("%s %s\n", graph[0][queue[i]].name, graph[0][ptr->node].name);
-						queue[++j] = ptr->node;
-						//if (traces[ptr->node] == -1)
-						traces[ptr->node] = queue[i];
-						if (ptr->node == info->ind_end)
-						{
-							return (get_path(graph, info, traces,
-											 (info->count_ants > 0) ? 1 : 0));
-						}
-					}
-						break ;
-					//перезаписать все вершины без вершины которая с минимальным весом
-					//и текующую начать с начала
+					printf("rewrite_queue\n");
+					j -= 2;
+					i = rewrite_queue(info, queue, i, ptr->node);
 				}
-				//	printf("%s %s\n", graph[0][queue[i]].name, graph[0][ptr->node].name);
-				 if (find_index(info, queue, ptr->node) == info->count_node + 1)
+
+				if (info->count_ants < 0 && ptr->status != 0 && ptr->reverse->status == 0 &&
+					graph[0][queue[i]].visited == 1 && graph[0][ptr->node].visited == 1 && traces_1[ptr->node] == -1)
 				{
-					//printf("ddd\n");
-					//printf("%s %s\n", graph[0][queue[i]].name, graph[0][ptr->node].name);
+					printf("weigth\n");
+					if (graph[0][ptr->node].weight > 0)
+						graph[0][ptr->node].weight *= -1;
 					queue[++j] = ptr->node;
-					if (traces[ptr->node] == -1)
-						traces[ptr->node] = queue[i];
-					if (ptr->node == info->ind_end)
-					{
+					traces_1[ptr->node] = queue[i];
+				}
+				else if (traces_0[ptr->node] == -1)
+				{
+					printf("vis_0\n");
+					queue[++j] = ptr->node;
+					traces_0[ptr->node] = queue[i];
+				}
+
+				if (ptr->node == info->ind_end)
+				{
 //						if (graph[0][queue[i]].weight < 0)
 //						{
 //							printf("333\n");
 //							graph[0][queue[i]].weight *= -1;
 //
 //						}
-						return (get_path(graph, info, traces,
-										 (info->count_ants > 0) ? 1 : 0));
-					}
+					return (get_path(graph, info, traces_0, traces_1,
+									 (info->count_ants > 0) ? 1 : 0));
 				}
 			}
 			ptr = ptr->next;
 		}
-		if (graph[0][queue[i]].weight < 0)
-			graph[0][queue[i]].weight *= -1;
+//		if (graph[0][queue[i]].weight < 0)
+//			graph[0][queue[i]].weight *= -1;
 //		printf("\n");
 	}
 
