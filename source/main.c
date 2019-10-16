@@ -51,6 +51,7 @@ void			init(t_graph **graph, t_info *info)
 	info->flag_visual = 0;
 	info->flag_colour = 0;
 	info->flag_score = 0;
+	info->flag_score_in_file = 0;
 	info->flag_way = 0;
 	info->flag_all_way = 0;
 	info->flag_print_graph = 0;
@@ -73,16 +74,7 @@ int				main(int ac, char **av)
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");
 	buf_init(&info);
-	if (info.flag_score > 0)
-	{
-		if (info.flag_colour)
-			ft_putstr("\033[1;32m");
-		ft_putnbr(info.flag_score - 1);
-		ft_putstr(" step");
-		if ((info.flag_score - 1) > 1)
-			ft_putstr("s");
-		ft_putstr("\n");
-	}
+	print_flags(&info);
 	error_message(&graph, &info, -1);
 	return (0);
 }

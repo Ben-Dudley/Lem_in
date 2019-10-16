@@ -42,40 +42,11 @@ int					send_to_print_steps(t_node *temp_node, int i,
 	return (0);
 }
 
-static void			print_link(char *name_node_1, char *name_node_2,
-								t_info *info, t_graph **graph)
-{
-	print_buf(info, name_node_1);
-	print_buf(info, "-");
-	print_buf(info, name_node_2);
-	print_buf(info, "\n");
-}
-
 static void			add_str_in_buf(t_info *info, char *str)
 {
 	print_buf(info, str);
 	print_buf(info, "\n");
 	free(str); // если тут фришить str, то норм???
-}
-
-void				print_node(int i, t_info *info, t_graph **graph)
-{
-	char		*str;
-
-	if (i == info->ind_start)
-		print_buf(info, "##start\n");
-	if (i == info->ind_end)
-		print_buf(info, "##end\n");
-	print_buf(info, graph[0][i].name);
-	print_buf(info, " ");
-	if (!(str = ft_itoa(graph[0][i].x)))
-		error_message(graph, info, 0);
-	print_buf(info, str);
-	print_buf(info, " ");
-	free(str);
-	if (!(str = ft_itoa(graph[0][i].y)))
-		error_message(graph, info, 0);
-	add_str_in_buf(info, str);
 }
 
 void				print_graph(t_graph **gr, t_info *info)
@@ -88,20 +59,10 @@ void				print_graph(t_graph **gr, t_info *info)
 	if (!(str = ft_itoa(info->count_ants)))
 		error_message(gr, info, 0);
 	add_str_in_buf(info, str);
-	while (++i < info->count_node)
-		print_node(i, info, gr);
-	i = -1;
-	while (++i < info->count_node)
+	print_buf(info, info->basic_information);
+	if (info->flag_score_in_file == 0)
 	{
-		temp = gr[0][i].link;
-		while (temp)
-		{
-			if (temp->status != -1)
-				print_link(gr[0][i].name, gr[0][temp->node].name, info, gr);
-			temp->status = -1;
-			temp->reverse->status = -1;
-			temp = temp->next;
-		}
+		free(info->basic_information);
 	}
 	print_buf(info, "\n");
 }

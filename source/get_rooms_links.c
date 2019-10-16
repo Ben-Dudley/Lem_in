@@ -123,6 +123,7 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 			free(line);
 			return ;
 		}
+		writer_base(info, line);
 		free(line);
 	}
 }

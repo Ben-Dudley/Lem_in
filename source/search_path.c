@@ -21,23 +21,24 @@
 static void			sup_add_stack(t_graph **graph, t_info *info,
 															t_path *path, int i)
 {
-	add_node(&path->node, new_node(graph, info, i));
+	add_node(&path->node, new_node(graph, info, i)); // это не фришится
 	if (!info->stack)
 		info->stack = new_stack(graph, info, 0, path);
 	else
 		add_path(&(info->stack->path), path);
 }
 
-void				save_path(t_graph **graph, t_info *info, int *traces, int i)
+void				save_path(t_graph **graph, t_info *info, t_trace *trace, int i)
 {
 	t_link			*temp;
 	t_path			*path;
 	int				st;
+	t_node			*n_node;
 
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
-		temp = graph[0][traces[i]].link;
+		temp = graph[0][trace->traces_0[i]].link;
 		while (temp)
 		{
 			if (temp->node == i)
@@ -45,15 +46,18 @@ void				save_path(t_graph **graph, t_info *info, int *traces, int i)
 				if (i != info->ind_end)
 					graph[0][temp->node].visited = 1;
 				temp->status = 0;
-				add_node(&path->node, new_node(graph, info, temp->node));
+				n_node = new_node(graph, info, temp->node);
+				add_node(&path->node, n_node);
+				free (n_node);
 				++path->length;
 				break ;
 			}
 			temp = temp->next;
 		}
-		i = traces[i];
+		i = trace->traces_0[i];
 	}
 	sup_add_stack(graph, info, path, i);
+	free (path);
 }
 
 void				reverse_node(t_path **path)

@@ -82,6 +82,7 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	else
 		ways[0] = info->count_ants;
 	steps_ants(graph, info, ways, count_ways);
+	free(ways);
 }
 
 int			score_step_in_ants(t_info *info, int steps, int *length_mf)

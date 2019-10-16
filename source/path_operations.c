@@ -48,7 +48,7 @@ void		add_path(t_path **path, t_path *new)
 	*path = new;
 }
 
-void		restoration_path(t_graph **graph, t_info *info, int *traces_0, int *traces_1)
+void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 {
 	int			i;
 	t_link		*temp;
@@ -56,20 +56,20 @@ void		restoration_path(t_graph **graph, t_info *info, int *traces_0, int *traces
 	i = info->ind_end;
 	while (i != info->ind_start)
 	{
-		temp = graph[0][traces_0[i]].link;
+		temp = graph[0][trace->traces_0[i]].link;
 		while (temp)
 		{
 			if (temp->node == i)
 			{
 				temp->status = 0;
-				if (traces_1[traces_0[i]] != -1 && temp->status + temp->reverse->status == 1 && graph[0][traces_0[i]].visited == 1)
-					traces_0[traces_0[i]] = traces_1[traces_0[i]];
-				if (traces_0[i] != info->ind_start)
-					graph[0][traces_0[i]].visited = 1;
+				if (trace->traces_1[trace->traces_0[i]] != -1 && temp->status + temp->reverse->status == 1 && graph[0][trace->traces_0[i]].visited == 1)
+					trace->traces_0[trace->traces_0[i]] = trace->traces_1[trace->traces_0[i]];
+				if (trace->traces_0[i] != info->ind_start)
+					graph[0][trace->traces_0[i]].visited = 1;
 				break ;
 			}
 			temp = temp->next;
 		}
-		i = traces_0[i];
+		i = trace->traces_0[i];
 	}
 }

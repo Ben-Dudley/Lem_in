@@ -12,22 +12,22 @@
 
 #include "lem_in.h"
 
-static void		free_path(t_path *path)
+static void		free_path(t_stack *stack)
 {
 	t_path		*temp;
 	t_node		*ptr;
 
-	while (path)
+	while (stack->path)
 	{
-		temp = path->next;
-		while (path->node)
+		temp = stack->path->next;
+		while (stack->path->node)
 		{
-			ptr = path->node->next;
-			free(path->node);
-			path->node = ptr;
+			ptr = stack->path->node->next;
+			free(stack->path->node);
+			stack->path->node = ptr;
 		}
-		free(path);
-		path = temp;
+		free(stack->path);
+		stack->path = temp;
 	}
 }
 
@@ -39,7 +39,7 @@ static void		free_stack(t_stack *stack)
 	while (stack)
 	{
 		temp = stack->next;
-		free_path(stack->path);
+		free_path(stack);
 		free(stack);
 		stack = temp;
 	}

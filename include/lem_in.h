@@ -60,9 +60,17 @@ typedef struct			s_graph
 
 }						t_graph;
 
+typedef struct			s_trace
+{
+	int					*queue;
+	int					*traces_0;
+	int					*traces_1;
+}						t_trace;
+
 typedef struct			s_info
 {
 	int					flag_score;
+	int					flag_score_in_file : 1;
 	int					flag_visual : 1;
 	int					flag_colour : 1;
 	int					flag_way : 1;
@@ -77,6 +85,7 @@ typedef struct			s_info
 	t_stack				*stack;
 	int					len_buf;
 	char				buf[BUFF];
+	char				*basic_information;
 }						t_info;
 
 /*
@@ -108,7 +117,7 @@ void					print_buf(t_info *info, char *str);
 int						send_to_print_steps(t_node *temp_node, int i,
 											t_info *info, t_graph **graph);
 void					buf_init(t_info *info);
-
+void					writer_base(t_info *info, char *line);
 /*
 ** find path for ants
 */
@@ -124,13 +133,13 @@ int						min_score_ants(t_info *info, int count,
 ** find max flow and stack with shortest path
 */
 int						score_stack_path(t_graph **graph, t_info *info,
-							int *queue, int *traces_0, int *traces_1);
+															t_trace *trace);
 int						find_path(t_graph **graph, t_info *info,
-							int *queue, int *traces_0, int *traces_1);
-void					save_path(t_graph **graph, t_info *info, int *traces,
+															t_trace *trace);
+void					save_path(t_graph **graph, t_info *info, t_trace *trace,
 																		int i);
 void					restoration_path(t_graph **graph, t_info *info,
-							int *traces_0, int *traces_1);
+										 					t_trace *trace);
 void					clear_graph(t_graph **graph, t_info *info, int flag);
 void					del_flow(t_graph **graph, t_info *info, int count);
 void					get_path_numbers(t_graph **graph, t_info *info);
@@ -149,7 +158,7 @@ int						help_rooms(t_graph **graph, t_info *info, int flag,
 
 int						flag_checking(int ac, char **av, t_graph **graph,
 												t_info *info);
-
+void					print_flags(t_info *info);
 /*
 ** Create and init structure
 */
