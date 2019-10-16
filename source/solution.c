@@ -125,16 +125,16 @@ int					solution(t_graph **graph, t_info *info)
 //	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
 
 //	//if (info->max_flow <= 0) //error delete sluchaino
-//	print_max(graph, info);
+	print_max(graph, info);
 //	//for_fix_stack(graph, info);
 	if (stack < info->max_flow)
 	{
 ////		print_max(graph, info);
-		stack_max_flow(graph, info, info->ind_start, 1, 0);
-		get_path_numbers(graph, info);
+		//stack_max_flow(graph, info, info->ind_start, 1, 0);
+		//get_path_numbers(graph, info);
 
-		clear_graph(graph, info, 1);
-		stack = score_ants(graph, info, stack);
+		//clear_graph(graph, info, 1);
+		//stack = score_ants(graph, info, stack);
 //		//	printf("stack %d", stack);
 	}
 	create_del_trace(&trace, 0, graph, info);

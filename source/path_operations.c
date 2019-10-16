@@ -53,6 +53,7 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 	int			i;
 	t_link		*temp;
 
+	printf("%d, %d\n", info->ind_start, info->ind_end);
 	i = info->ind_end;
 	while (i != info->ind_start)
 	{
@@ -71,5 +72,9 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 			temp = temp->next;
 		}
 		i = trace->traces_0[i];
+		printf("[%d] ", i);
+		if (i == 4512)
+			printf("\n%d(%s) - tr_0 %d tr_1 %d\n", i, graph[0][i].name, trace->traces_0[i], trace->traces_1[i]);
 	}
+	printf("\n");
 }

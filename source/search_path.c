@@ -49,7 +49,7 @@ void				save_path(t_graph **graph, t_info *info,
 				temp->status = 0;
 				n_node = new_node(graph, info, temp->node);
 				add_node(&path->node, n_node);
-				free(n_node);
+	//			free(n_node);
 				++path->length;
 				break ;
 			}
@@ -58,7 +58,7 @@ void				save_path(t_graph **graph, t_info *info,
 		i = trace->traces_0[i];
 	}
 	sup_add_stack(graph, info, path, i);
-	free(path);
+	//free(path);
 }
 
 void				reverse_node(t_path **path)

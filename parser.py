@@ -1,4 +1,4 @@
-f = open('del')
+f = open('del.txt')
 line = f.readline()
 res = {}
 errors = {}

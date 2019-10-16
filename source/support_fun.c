@@ -100,17 +100,17 @@ void				for_fix_stack(t_graph **graph, t_info *info) // 4
 		while (temp)
 		{
 			printf("len path %d, ", temp->length);
-//			nodo4ka = temp->node;
-//			while (nodo4ka)
-//			{
-//				printf(" %d - (%s) ", nodo4ka->node,
-//						graph[0][nodo4ka->node].name);
-//				nodo4ka = nodo4ka->next;
-//			}
+			nodo4ka = temp->node;
+			while (nodo4ka)
+			{
+				printf(" %d - (%s) ", nodo4ka->node,
+						graph[0][nodo4ka->node].name);
+				nodo4ka = nodo4ka->next;
+			}
 			temp = temp->next;
+			printf("\n");
 		}
 		st = st->next;
-		printf("\n");
 	}
 	printf("\n");
 }
