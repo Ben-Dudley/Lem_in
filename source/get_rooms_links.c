@@ -118,9 +118,13 @@ void			get_rooms_links(t_graph **graph, t_info *info)
 		}
 		else
 			flag = -1;
+		if (flag == -1)
+		{
+			free(line);
+			return;
+		}
 		writer_base(info, line);
 		free(line);
-		if (flag == -1)
-			return ;
+
 	}
 }

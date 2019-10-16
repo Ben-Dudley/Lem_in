@@ -86,12 +86,14 @@ void		clear_graph(t_graph **graph, t_info *info, int flag)
 		{
 			graph[0][temp->node].visited = 0;
 			if (flag)
+			{
 				if (!(temp->reverse->status == 0 && temp->status == 0))
 					temp->status = 1;
-			if (i == info->ind_start)
-				temp->reverse->status = 0;
-			if (i == info->ind_end)
-				temp->status = 0;
+			//	if (temp->node == info->ind_start)
+			//		temp->status = 0;
+//				if (i == info->ind_end)
+//					temp->status = 0;
+			}
 			temp = temp->next;
 		}
 		++i;
