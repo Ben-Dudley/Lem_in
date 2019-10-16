@@ -111,8 +111,8 @@ int			score_step_in_ants(t_info *info, int steps, int *length_mf)
 	return (steps);
 }
 
-int			score_ants(t_graph **graph, t_info *info, int count)
-{//rename score_stack
+int			score_stack(t_graph **graph, t_info *info, int count)
+{
 	int					steps;
 	int					length_mf;
 	int					count_ants;

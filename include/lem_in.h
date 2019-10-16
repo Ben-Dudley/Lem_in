@@ -122,7 +122,7 @@ void					writer_base(t_info *info, char *line);
 ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-int						score_ants(t_graph **graph, t_info *info, int count);
+int						score_stack(t_graph **graph, t_info *info, int count);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
 void					score_ways(t_graph **graph, t_info *info,

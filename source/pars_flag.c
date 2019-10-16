@@ -14,7 +14,7 @@
 
 void					print_flags(t_info *info)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	if (info->flag_score > 0)
@@ -26,7 +26,6 @@ void					print_flags(t_info *info)
 		if ((info->flag_score - 1) > 1)
 			ft_putstr("s");
 		ft_putstr("\n");
-
 	}
 	if (info->flag_score_in_file != 0)
 	{
@@ -48,9 +47,9 @@ void					writer_base(t_info *info, char *line)
 	temp2 = ft_strjoin(line, "\n");
 	info->basic_information = ft_strjoin(info->basic_information, temp2);
 	if (*temp2)
-		free (temp2);
+		free(temp2);
 	if (*temp)
-		free (temp);
+		free(temp);
 }
 
 static int				pars_flag(char c, t_info *info)
@@ -71,7 +70,6 @@ static int				pars_flag(char c, t_info *info)
 		info->flag_score_in_file = 1;
 	else
 		return (0);
-
 	return (1);
 }
 

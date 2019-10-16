@@ -28,12 +28,13 @@ static void			sup_add_stack(t_graph **graph, t_info *info,
 		add_path(&(info->stack->path), path);
 }
 
-void				save_path(t_graph **graph, t_info *info, t_trace *trace, int i)
+void				save_path(t_graph **graph, t_info *info,
+												t_trace *trace, int i)
 {
 	t_link			*temp;
 	t_path			*path;
-	int				st;
 	t_node			*n_node;
+	int				st;
 
 	path = new_path(graph, info);
 	while (i != info->ind_start)
@@ -48,7 +49,7 @@ void				save_path(t_graph **graph, t_info *info, t_trace *trace, int i)
 				temp->status = 0;
 				n_node = new_node(graph, info, temp->node);
 				add_node(&path->node, n_node);
-				free (n_node);
+				free(n_node);
 				++path->length;
 				break ;
 			}
@@ -57,7 +58,7 @@ void				save_path(t_graph **graph, t_info *info, t_trace *trace, int i)
 		i = trace->traces_0[i];
 	}
 	sup_add_stack(graph, info, path, i);
-	free (path);
+	free(path);
 }
 
 void				reverse_node(t_path **path)
