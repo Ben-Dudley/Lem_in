@@ -53,9 +53,11 @@ static int		find_index(t_info *info, t_trace *trace, int node)
 static int		get_path(t_graph **graph, t_info *info, t_trace *trace,
 						int flag)
 {
-//printf("Save path\n");
+
+
 	if (flag)
 	{
+		printf("Save path\n");
 		save_path(graph, info, trace, info->ind_end);
 		--info->stack->path->length;
 		reverse_node(&info->stack->path);
@@ -130,14 +132,14 @@ int				find_path(t_graph **graph, t_info *info,
 				//	   graph[0][trace->queue[i]].weight, graph[0][trace->queue[i]].visited, graph[0][ptr->node].visited, ptr->status, ptr->reverse->status);
 			if (ptr->status != 0 && (trace->traces_0)[(trace->queue)[i]] != ptr->node && (trace->traces_1)[(trace->queue)[i]] != ptr->node &&
 			((graph[0][(trace->queue)[i]].visited == 0 && (trace->traces_0)[ptr->node] == -1) ||
-			(info->count_ants < 0 && graph[0][(trace->queue)[i]].visited == 1 && (trace->traces_1)[ptr->node] == -1 &&
+			(graph[0][(trace->queue)[i]].visited == 1 && (trace->traces_1)[ptr->node] == -1 &&
 			((graph[0][(trace->queue)[i]].weight < 0) ||
 			(ptr->reverse->status == 0 && graph[0][ptr->node].visited == 1)))))
 			{
 //				if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
 		//	printf("%d(%s)(%d) ---- %d(%s)(%d)\n", graph[0][(trace->queue)[i]].visited, graph[0][(trace->queue)[i]].name, (trace->queue)[i], graph[0][ptr->node].visited, graph[0][ptr->node].name, ptr->node);
 				if (!((trace->traces_0)[ptr->node] == -1 && (trace->traces_1)[ptr->node] == -1)
-					&& find_index(info, trace, ptr->node) < i && info->count_ants < 0)
+					&& find_index(info, trace, ptr->node) < i)
 				{
 //					if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
 				//	  printf("rewrite_queue\n");
@@ -147,7 +149,7 @@ int				find_path(t_graph **graph, t_info *info,
 //					printf("%d(%s) ---- %d(%s)\nrewrite\n", (trace->queue)[i], graph[0][(trace->queue)[i]].name, ptr->node, graph[0][ptr->node].name);
 				}
 
-				if (info->count_ants < 0 && ptr->status != 0 && ptr->reverse->status == 0 &&
+				if (ptr->status != 0 && ptr->reverse->status == 0 &&
 					graph[0][(trace->queue)[i]].visited == 1 && graph[0][ptr->node].visited == 1 && (trace->traces_1)[ptr->node] == -1)
 				{
 //					if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
@@ -175,8 +177,7 @@ int				find_path(t_graph **graph, t_info *info,
 //
 //						}
 			//		printf("wwww\n");
-					return (get_path(graph, info, trace,
-									 (info->count_ants > 0) ? 1 : 0));
+					return (get_path(graph, info, trace,0));
 				}
 			}
 			ptr = ptr->next;

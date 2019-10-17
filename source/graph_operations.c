@@ -73,7 +73,7 @@ void		add_link(t_link **link, t_link *new)
 	*link = new;
 }
 
-void		clear_graph(t_graph **graph, t_info *info, int flag)
+void		clear_graph(t_graph **graph, t_info *info)
 {
 	int				i;
 	t_link			*temp;
@@ -85,15 +85,12 @@ void		clear_graph(t_graph **graph, t_info *info, int flag)
 		while (temp)
 		{
 			graph[0][temp->node].visited = 0;
-			if (flag)
-			{
-				if (!(temp->reverse->status == 0 && temp->status == 0))
-					temp->status = 1;
+			if (!(temp->reverse->status == 0 && temp->status == 0))
+				temp->status = 1;
 			//	if (temp->node == info->ind_start)
 			//		temp->status = 0;
 //				if (i == info->ind_end)
 //					temp->status = 0;
-			}
 			temp = temp->next;
 		}
 		++i;

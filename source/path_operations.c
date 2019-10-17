@@ -72,6 +72,7 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 		{
 			if (temp->node == i)
 			{
+				//printf("i %d \n", i);
 				temp->status = 0;
 				if(was_in_room_1(graph, temp, trace, i))
 					(trace->traces_0)[(trace->traces_0)[i]] =
@@ -84,4 +85,5 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 		}
 		i = (trace->traces_0)[i];
 	}
+	//printf("qqqq\n");
 }
