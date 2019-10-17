@@ -119,6 +119,7 @@ int						send_to_print_steps(t_node *temp_node, int i,
 											t_info *info, t_graph **graph);
 void					buf_init(t_info *info);
 void					writer_base(t_info *info, char *line);
+void					for_flag_v(t_graph **graph, t_info *info);
 /*
 ** find path for ants
 */
