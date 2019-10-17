@@ -76,12 +76,6 @@ int				rewrite_queue(t_info *info, t_trace *trace, int j, int node)
 	//count = 0;
 	while ((trace->queue)[i] != node)
 		i++;
-//	while (i < j - 1)
-//	{
-//		trace->queue[i] = trace->queue[i + 1];
-//		i++;
-//	}
-//	count = j - 1;
 	while ((trace->queue)[i] != -1)
 	{
 		(trace->queue)[i] = (trace->queue)[i + 1];
@@ -102,30 +96,36 @@ int				find_path(t_graph **graph, t_info *info,
 	int			i;
 	int			j;
 	t_link		*ptr;
-	int			weight;
+//	int			weight;
 
-	weight = 0;
+//	weight = 0;
 	int ko;
 	ko = -1;
 	while (++ko < info->count_node)
-		if (graph[0][ko].weight < 0)
-			graph[0][ko].weight *= -1;
+			graph[0][ko].weight = 1;
+	ptr = graph[0][info->ind_end].link;
+	while (ptr)
+	{
+		if (ptr->reverse->status == -7)
+			ptr->reverse->status = 0;
+		ptr = ptr->next;
+	}
 	i = init_mass(info, trace);
 	//printf("init\n");
 	j = 0;
 	while ((trace->queue)[++i] != -1)
 	{
 		ptr = graph[0][(trace->queue)[i]].link;
-		if ((trace->queue)[i] == info->ind_start)
-			graph[0][(trace->queue)[i]].weight = weight;
-		if (graph[0][(trace->queue)[i]].weight == weight)
-			weight = weight + 1;
+//		if ((trace->queue)[i] == info->ind_start)
+//			graph[0][(trace->queue)[i]].weight = weight;
+//		if (graph[0][(trace->queue)[i]].weight == weight)
+//			weight = weight + 1;
 		while (ptr)
 		{
-			if (weight < graph[0][ptr->node].weight)
-			{
-				graph[0][ptr->node].weight = weight;
-			}
+//			if (weight < graph[0][ptr->node].weight)
+//			{
+//				graph[0][ptr->node].weight = weight;
+//			}
 
 //			if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
 				//printf("aueue[i] %d , ptr->node %d tr_0 %d, tr_1 %d, weight %d, %d-%d, status %d, rev %d\n", trace->queue[i], ptr->node, trace->traces_0[ptr->node], trace->traces_1[ptr->node],

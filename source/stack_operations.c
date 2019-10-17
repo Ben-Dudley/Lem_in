@@ -94,14 +94,20 @@ void get_path_numbers(t_graph **graph, t_info *info)
 		path = new_path(graph, info);
 		for_add_in_stack(graph, info, path);
 		//printf("pppp\n");
-		while (temp && temp->node != info->ind_end)
+		while (temp)// && temp->node != info->ind_end)
 		{
 		//	printf("!!! %d\n", temp->node);
-			if (temp->status == 0 && temp->reverse->status == 1 && graph[0][temp->node].weight != INT_MAX)
+			if (temp->status == 0 && temp->reverse->status == 1 && graph[0][temp->node].weight != 0)
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
 				++path->length;
-				graph[0][temp->node].weight = INT_MAX;
+				if (temp->status != info->ind_end)
+					graph[0][temp->node].weight = 0;
+				else
+				{
+					temp->status = -7;
+					break ;
+				}
 				temp = graph[0][temp->node].link;
 			}
 			else

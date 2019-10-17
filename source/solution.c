@@ -29,20 +29,23 @@ void					score_stack_path(t_graph **graph, t_info *info,
 	//flow = 0;
 
 	add_path = find_path(graph, info, trace);
+	if (add_path == 0)
+		error_message(graph, info, 69);
 	while (add_path > 0)
 	{
 		info->max_flow += add_path;
-	//	printf("add_path %d ==== %d\n", add_path, info->max_flow);
+		//printf("add_path %d ==== %d\n", add_path, info->max_flow);
 	//	if (info->max_flow == 5)
 	//		exit(0);
 		get_path_numbers(graph, info);
 	//	print_max(graph,info);
-	//	for_fix_stack(graph, info);
+		//for_fix_stack(graph, info);
 	//	printf("www\n");
 	//	clear_graph(graph, info);
 		if (score_stack(graph, info) == info->max_flow - 1 && info->max_flow > 1)
 		{
 		//	printf("ooo\n");
+			info->max_flow--;
 			return;
 		}
 		//add_path = 0;
@@ -139,19 +142,15 @@ int					solution(t_graph **graph, t_info *info)
 //	if (stack < info->max_flow)
 //	{
 ///		print_max(graph, info);
-		//stack_max_flow(graph, info, info->ind_start, 1, 0);
-		//printf("stack %d\n", stack);
-		//print_massiv(graph, info);
-
-	//printf("stack %d\n", stack);
-	//	clear_graph(graph, info, 1);
-
-	//
-	//	stack =
+//stack_max_flow(graph, info, info->ind_start, 1, 0);
+//printf("stack %d\n", stack);
+//print_massiv(graph, info);
+//printf("stack %d\n", stack);
+//	clear_graph(graph, info, 1);
+//	stack =
 //		printf("stack %d", stack);
-
 //	}
-	//for_fix_stack(graph, info);
+//	for_fix_stack(graph, info);
 	create_del_trace(&trace, 0, graph, info);
 	if (info->max_flow > 0)
 		score_ways(graph, info, info->max_flow);
