@@ -67,7 +67,7 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	int				used_path;
 
 	reverse_list(graph, info);
-	for_fix_stack(graph, info);
+//	for_fix_stack(graph, info);
 	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
 		error_message(graph, info, 0);
 	i = 0;
@@ -82,8 +82,8 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	}
 	else
 		ways[0] = info->count_ants;
-	print_queue(graph, ways, count_ways);
-//	steps_ants(graph, info, ways, count_ways);
+//	print_queue(graph, ways, count_ways);
+	steps_ants(graph, info, ways, count_ways);
 	free(ways);
 }
 

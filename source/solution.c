@@ -129,13 +129,13 @@ int					solution(t_graph **graph, t_info *info)
 ///		print_max(graph, info);
 		stack_max_flow(graph, info, info->ind_start, 1, 0);
 		//printf("stack %d\n", stack);
-	//	print_massiv(graph, info);
+		//print_massiv(graph, info);
 		get_path_numbers(graph, info);
-		//printf("stack %d\n", stack);
+	//printf("stack %d\n", stack);
 		clear_graph(graph, info, 1);
 
 		stack = score_stack(graph, info, stack);
-		printf("stack %d", stack);
+//		printf("stack %d", stack);
 
 	}
 

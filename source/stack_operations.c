@@ -86,11 +86,11 @@ void		get_path_numbers(t_graph **graph, t_info *info)
 		while (temp && temp->node != info->ind_end)
 		{
 		//	printf("!!! %d\n", temp->node);
-			if (graph[0][temp->node].visited == i)
+			if (graph[0][temp->node].visited == i )
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
 				++path->length;
-				//graph[0][temp->node].visited = 0;
+				graph[0][temp->node].visited = 0;
 				temp = graph[0][temp->node].link;
 			}
 			else
