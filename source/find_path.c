@@ -17,7 +17,7 @@
 ** Here is also counts the numbers max flow.
 */
 
-static int			init_mass(t_info *info, t_trace *trace)
+int		init_mass(t_info *info, t_trace *trace)
 {
 	int			i;
 
@@ -36,7 +36,7 @@ static int			init_mass(t_info *info, t_trace *trace)
 	return (-1);
 }
 
-static int		find_index(t_info *info, t_trace *trace, int node)
+int		find_index(t_info *info, t_trace *trace, int node)
 {
 	int		j;
 
@@ -53,8 +53,6 @@ static int		find_index(t_info *info, t_trace *trace, int node)
 static int		get_path(t_graph **graph, t_info *info, t_trace *trace,
 						int flag)
 {
-
-
 	if (flag)
 	{
 		printf("Save path\n");
@@ -69,11 +67,9 @@ static int		get_path(t_graph **graph, t_info *info, t_trace *trace,
 
 int				rewrite_queue(t_info *info, t_trace *trace, int j, int node)
 {
-	int i;
-//	int count;
+	int			i;
 
 	i = 0;
-	//count = 0;
 	while ((trace->queue)[i] != node)
 		i++;
 	while ((trace->queue)[i] != -1)
@@ -81,111 +77,35 @@ int				rewrite_queue(t_info *info, t_trace *trace, int j, int node)
 		(trace->queue)[i] = (trace->queue)[i + 1];
 		i++;
 	}
-//	printf("%d %d -- queue %d %d\n", i - 1, i, (trace->queue)[i - 1], (trace->queue)[i]);
 	return (j - 1);
 }
 
-/*
-				 * && (graph[0][traces[queue[i]]].visited == 1) 3
-				 * && graph[0][ptr->node].weight > 0 1
-				 */
-
 int				find_path(t_graph **graph, t_info *info,
-						t_trace *trace)
+													t_trace *trace)
 {
-	int			i;
-	int			j;
+	int			ij[2];
 	t_link		*ptr;
-//	int			weight;
 
-//	weight = 0;
-	int ko;
-	ko = -1;
-	while (++ko < info->count_node)
-			graph[0][ko].weight = 1;
-	ptr = graph[0][info->ind_end].link;
-	while (ptr)
+	ij[0] = init_mass_and_clear_end_link_weight(graph, info, trace);
+	ij[1] = 0;
+	while ((trace->queue)[++(ij[0])] != -1)
 	{
-		if (ptr->reverse->status == -7)
-			ptr->reverse->status = 0;
-		ptr = ptr->next;
-	}
-	i = init_mass(info, trace);
-	//printf("init\n");
-	j = 0;
-	while ((trace->queue)[++i] != -1)
-	{
-		ptr = graph[0][(trace->queue)[i]].link;
-//		if ((trace->queue)[i] == info->ind_start)
-//			graph[0][(trace->queue)[i]].weight = weight;
-//		if (graph[0][(trace->queue)[i]].weight == weight)
-//			weight = weight + 1;
+		ptr = graph[0][(trace->queue)[ij[0]]].link;
 		while (ptr)
 		{
-//			if (weight < graph[0][ptr->node].weight)
-//			{
-//				graph[0][ptr->node].weight = weight;
-//			}
-
-//			if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
-				//printf("aueue[i] %d , ptr->node %d tr_0 %d, tr_1 %d, weight %d, %d-%d, status %d, rev %d\n", trace->queue[i], ptr->node, trace->traces_0[ptr->node], trace->traces_1[ptr->node],
-				//	   graph[0][trace->queue[i]].weight, graph[0][trace->queue[i]].visited, graph[0][ptr->node].visited, ptr->status, ptr->reverse->status);
-			if (ptr->status != 0 && (trace->traces_0)[(trace->queue)[i]] != ptr->node && (trace->traces_1)[(trace->queue)[i]] != ptr->node &&
-			((graph[0][(trace->queue)[i]].visited == 0 && (trace->traces_0)[ptr->node] == -1) ||
-			(graph[0][(trace->queue)[i]].visited == 1 && (trace->traces_1)[ptr->node] == -1 &&
-			((graph[0][(trace->queue)[i]].weight < 0) ||
-			(ptr->reverse->status == 0 && graph[0][ptr->node].visited == 1)))))
+			if (check_visited(graph, ptr, trace, ij[0]))
 			{
-//				if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
-		//	printf("%d(%s)(%d) ---- %d(%s)(%d)\n", graph[0][(trace->queue)[i]].visited, graph[0][(trace->queue)[i]].name, (trace->queue)[i], graph[0][ptr->node].visited, graph[0][ptr->node].name, ptr->node);
-				if (!((trace->traces_0)[ptr->node] == -1 && (trace->traces_1)[ptr->node] == -1)
-					&& find_index(info, trace, ptr->node) < i)
+				if (not_node(info, ptr, trace, ij[0]))
 				{
-//					if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
-				//	  printf("rewrite_queue\n");
-					j -= 1;
-					i = rewrite_queue(info, trace, i, ptr->node);
-//					printf("j -- %d   %d\n", j, (trace->queue)[j]);
-//					printf("%d(%s) ---- %d(%s)\nrewrite\n", (trace->queue)[i], graph[0][(trace->queue)[i]].name, ptr->node, graph[0][ptr->node].name);
+					ij[1] -= 1;
+					ij[0] = rewrite_queue(info, trace, ij[0], ptr->node);
 				}
-
-				if (ptr->status != 0 && ptr->reverse->status == 0 &&
-					graph[0][(trace->queue)[i]].visited == 1 && graph[0][ptr->node].visited == 1 && (trace->traces_1)[ptr->node] == -1)
-				{
-//					if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
-		//			printf("weigth\n");
-					if (graph[0][ptr->node].weight > 0)
-						graph[0][ptr->node].weight *= -1;
-					(trace->queue)[++j] = ptr->node;
-					(trace->traces_1)[ptr->node] = (trace->queue)[i];
-				}
-				else if ((trace->traces_0)[ptr->node] == -1)
-				{
-//					if (ft_strcmp("Hlj3", graph[0][trace->queue[i]].name) == 0 || ft_strcmp("Hlj3", graph[0][ptr->node].name) == 0)
-		//			printf("vis_0\n");
-					(trace->queue)[++j] = ptr->node;
-					(trace->traces_0)[ptr->node] = (trace->queue)[i];
-					//printf("%d -- tr_0 %d\n", ptr->node, traces_0[ptr->node]);
-				}
-
+				ij[1] = algorithm(graph, ptr, trace, ij);
 				if (ptr->node == info->ind_end)
-				{
-//						if (graph[0][queue[i]].weight < 0)
-//						{
-//							printf("333\n");
-//							graph[0][queue[i]].weight *= -1;
-//
-//						}
-			//		printf("wwww\n");
-					return (get_path(graph, info, trace,0));
-				}
+					return (get_path(graph, info, trace, 0));
 			}
 			ptr = ptr->next;
 		}
-//		if (graph[0][queue[i]].weight < 0)
-//			graph[0][queue[i]].weight *= -1;
-//		printf("\n");
 	}
-//	printf("qqq\n");
 	return (0);
 }

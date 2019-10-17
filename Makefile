@@ -21,7 +21,7 @@ SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/find_path.c ./source/error_message.c ./source/move_ant.c \
 		./source/pars_flag.c ./source/merge_sort.c ./source/stack_operations.c \
 		./source/print_move.c ./source/support_fun.c ./source/writer_base.c \
-		./source/for_flag_v.c
+		./source/for_flag_v.c ./source/FordFalkerson.c
 
 OBJS = $(SRCS:.c=.o)
 LIB = ./libft/libft.a

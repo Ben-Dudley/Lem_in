@@ -187,5 +187,18 @@ void					in_stack_add(t_graph **graph, t_info *info,
 */
 void					merge_sort(t_graph **graph, t_info *info);
 void					for_fix_stack(t_graph **graph, t_info *info);
-
+/*
+** ford_fa
+*/
+int				check_visited(t_graph **graph, t_link *ptr,
+								 t_trace *trace, int i);
+int				init_mass_and_clear_end_link_weight(t_graph **graph,
+													t_info *info, t_trace *trace);
+int				visited_on_node(t_graph **graph, t_link *ptr,
+								   t_trace *trace, int i);
+int				not_node(t_info *info, t_link *ptr, t_trace *trace, int i);
+int				algorithm(t_graph **graph, t_link *ptr,
+							 t_trace *trace, int *ij);
+int		find_index(t_info *info, t_trace *trace, int node);
+int		init_mass(t_info *info, t_trace *trace);
 #endif
