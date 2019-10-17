@@ -92,7 +92,7 @@ int					diff_stack_max(t_graph **graph, t_info *info,
 //	printf("aaaa\n"); //
 	info->count_ants *= -1;
 	info->max_flow = score_stack_path(graph, info, trace);
-	info->count_ants *= -1;
+	 info->count_ants *= -1;
 //	printf("aaaa\n");
 	return (stack);
 }
@@ -123,24 +123,22 @@ int					solution(t_graph **graph, t_info *info)
 
 	create_del_trace(&trace, 1, graph, info);
 	stack = diff_stack_max(graph, info, &trace);
-
-	//printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
-
-//	//if (info->max_flow <= 0) //error delete sluchaino
-	//print_max(graph, info);
-
+//	printf("stack 0 size %d and max_flow size %d\n", stack, info->max_flow);
 	if (stack < info->max_flow)
 	{
 ///		print_max(graph, info);
 		stack_max_flow(graph, info, info->ind_start, 1, 0);
-		//print_massiv(graph, info);
+		//printf("stack %d\n", stack);
+	//	print_massiv(graph, info);
 		get_path_numbers(graph, info);
-
+		//printf("stack %d\n", stack);
 		clear_graph(graph, info, 1);
-	//	stack = score_ants(graph, info, stack);
-//		//	printf("stack %d", stack);
+
+		stack = score_stack(graph, info, stack);
+		printf("stack %d", stack);
+
 	}
-	//for_fix_stack(graph, info);
+
 	create_del_trace(&trace, 0, graph, info);
 	score_ways(graph, info, stack);
 	return (1);

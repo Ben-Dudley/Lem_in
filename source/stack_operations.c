@@ -78,15 +78,19 @@ void		get_path_numbers(t_graph **graph, t_info *info)
 	i = 0;
 	while (++i <= info->max_flow)
 	{
+
 		temp = graph[0][info->ind_start].link;
 		path = new_path(graph, info);
 		for_add_in_stack(graph, info, path);
+
 		while (temp && temp->node != info->ind_end)
 		{
+		//	printf("!!! %d\n", temp->node);
 			if (graph[0][temp->node].visited == i)
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
 				++path->length;
+				//graph[0][temp->node].visited = 0;
 				temp = graph[0][temp->node].link;
 			}
 			else
