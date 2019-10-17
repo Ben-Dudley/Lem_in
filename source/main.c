@@ -55,7 +55,9 @@ void			init(t_graph **graph, t_info *info)
 	info->flag_way = 0;
 	info->flag_all_way = 0;
 	info->flag_print_graph = 0;
+	info->buf_size = 100;
 	info->stack = NULL;
+	(info->basic_information) = ((char*)malloc(sizeof(char) * info->buf_size));
 	ft_bzero(info->buf, BUFF);
 }
 
@@ -70,6 +72,7 @@ int				main(int ac, char **av)
 	if (!get_ants(&graph, &info))
 		error_message(&graph, &info, 4);
 	get_rooms_links(&graph, &info);
+	info.len_buf = 0;
 	check(&graph, &info);
 	if (!solution(&graph, &info))
 		ft_putstr("GGWP\n");

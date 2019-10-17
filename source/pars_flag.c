@@ -38,20 +38,6 @@ void					print_flags(t_info *info)
 	}
 }
 
-void					writer_base(t_info *info, char *line)
-{
-	char	*temp;
-	char	*temp2;
-
-	temp = info->basic_information;
-	temp2 = ft_strjoin(line, "\n");
-	info->basic_information = ft_strjoin(info->basic_information, temp2);
-	if (*temp2)
-		free(temp2);
-	if (*temp)
-		free(temp);
-}
-
 static int				pars_flag(char c, t_info *info)
 {
 	if (c == 'v')

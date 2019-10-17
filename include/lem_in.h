@@ -86,6 +86,7 @@ typedef struct			s_info
 	int					len_buf;
 	char				buf[BUFF];
 	char				*basic_information;
+	int					buf_size;
 }						t_info;
 
 /*
@@ -122,7 +123,7 @@ void					writer_base(t_info *info, char *line);
 ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-int						score_stack(t_graph **graph, t_info *info, int count);
+int						score_stack(t_graph **graph, t_info *info);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
 void					score_ways(t_graph **graph, t_info *info,
@@ -132,15 +133,15 @@ int						min_score_ants(t_info *info, int count,
 /*
 ** find max flow and stack with shortest path
 */
-int						score_stack_path(t_graph **graph, t_info *info,
+void					score_stack_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 int						find_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 void					save_path(t_graph **graph, t_info *info, t_trace *trace,
 																		int i);
 void					restoration_path(t_graph **graph, t_info *info,
-										 					t_trace *trace);
-void					clear_graph(t_graph **graph, t_info *info, int flag);
+															t_trace *trace);
+void					clear_graph(t_graph **graph, t_info *info);
 void					del_flow(t_graph **graph, t_info *info, int count);
 void					get_path_numbers(t_graph **graph, t_info *info);
 /*
