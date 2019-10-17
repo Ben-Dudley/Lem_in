@@ -57,26 +57,26 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 	i = info->ind_end;
 	while (i != info->ind_start)
 	{
-		temp = graph[0][trace->traces_0[i]].link;
+		temp = graph[0][(trace->traces_0)[i]].link;
 		while (temp)
 		{
 			if (temp->node == i)
 			{
 				temp->status = 0;
 				//printf("SSSSS %d", temp->status + temp->reverse->status);
-				if ((trace->traces_1[trace->traces_0[i]] != -1 && temp->status + temp->reverse->status == 1 && graph[0][trace->traces_0[i]].visited == 1)
+				if (((trace->traces_1)[(trace->traces_0)[i]] != -1 && temp->status + temp->reverse->status == 1 && graph[0][(trace->traces_0)[i]].visited == 1)
 				|| trace->traces_0[trace->traces_0[i]] == -1)
-					trace->traces_0[trace->traces_0[i]] = trace->traces_1[trace->traces_0[i]];
-				if (trace->traces_0[i] != info->ind_start)
-					graph[0][trace->traces_0[i]].visited = 1;
+					(trace->traces_0)[(trace->traces_0)[i]] = (trace->traces_1)[(trace->traces_0)[i]];
+				if ((trace->traces_0)[i] != info->ind_start)
+					graph[0][(trace->traces_0)[i]].visited = 1;
 				break ;
 			}
 			temp = temp->next;
 		}
-		i = trace->traces_0[i];
-//		printf("[%d] ", i);
+		i = (trace->traces_0)[i];
+	//	printf("[%d] ", i);
 //		if (i == 4512)
-//			printf("\n%d(%s) %d- tr_0 %d tr_1 %d\n", i, graph[0][i].name, graph[0][i].visited, trace->traces_0[i], trace->traces_1[i]);
+//			printf("\n!!!!!!!!!!!!!!%d(%s) %d- tr_0 %d tr_1 %d\n", i, graph[0][i].name, graph[0][i].visited, (trace->traces_0)[i], (trace->traces_1)[i]);
 	}
 //	printf("\n!!!\n");
 }

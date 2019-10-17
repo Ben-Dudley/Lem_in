@@ -39,7 +39,7 @@ void				save_path(t_graph **graph, t_info *info,
 	path = new_path(graph, info);
 	while (i != info->ind_start)
 	{
-		temp = graph[0][trace->traces_0[i]].link;
+		temp = graph[0][(trace->traces_0)[i]].link;
 		while (temp)
 		{
 			if (temp->node == i)
@@ -55,7 +55,7 @@ void				save_path(t_graph **graph, t_info *info,
 			}
 			temp = temp->next;
 		}
-		i = trace->traces_0[i];
+		i = (trace->traces_0)[i];
 	}
 	sup_add_stack(graph, info, path, i);
 	//free(path);
