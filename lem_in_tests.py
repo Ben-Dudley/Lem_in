@@ -55,7 +55,7 @@ def  test_one_map(flag):
             if ant not in ants:
                 ants[ant] = start
             ants_in_node[ants[ant]] -= 1
-            if (next_node in nodes[ants[ant]]) or next_node == end :
+            if (next_node in nodes[ants[ant]]):# or next_node == end :
                 ants[ant] = next_node
                 ants_in_node[next_node] += 1
             else:

@@ -142,13 +142,17 @@ int					solution(t_graph **graph, t_info *info)
 //	if (stack < info->max_flow)
 //	{
 ///		print_max(graph, info);
-//stack_max_flow(graph, info, info->ind_start, 1, 0);
-//printf("stack %d\n", stack);
-//print_massiv(graph, info);
-//printf("stack %d\n", stack);
-//	clear_graph(graph, info, 1);
-//	stack =
+		//stack_max_flow(graph, info, info->ind_start, 1, 0);
+		//printf("stack %d\n", stack);
+		//print_massiv(graph, info);
+
+	//printf("stack %d\n", stack);
+	//	clear_graph(graph, info, 1);
+
+	//
+	//	stack =
 //		printf("stack %d", stack);
+
 //	}
 //	for_fix_stack(graph, info);
 	create_del_trace(&trace, 0, graph, info);

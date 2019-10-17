@@ -57,7 +57,10 @@ static int			step(int *ways, t_path **ptr_path, t_info *info, int *j)
 	}
 	else
 		ptr_node->ant = 0;
+	//printf("pp %d %d\n", (*ptr_path)->length, score_ants);
 	*ptr_path = (*ptr_path)->next;
+//	if (*ptr_path)
+	//printf("pp %d %d\n", (*ptr_path)->length, score_ants);
 	return (score_ants);
 }
 
@@ -71,6 +74,7 @@ void				steps_ants(t_graph **graph, t_info *info,
 
 	j = 1;
 	score_ants = 0;
+	//for_fix_stack(graph, info);
 	print_graph(graph, info);
 	while (score_ants < info->count_ants)
 	{
@@ -81,6 +85,7 @@ void				steps_ants(t_graph **graph, t_info *info,
 			score_ants += step(&(ways[i]), &ptr_path, info, &j);
 			++i;
 		}
+	//	printf("sc %d\n", score_ants);
 		print_move(graph, info, j, count_ways);
 	}
 }
