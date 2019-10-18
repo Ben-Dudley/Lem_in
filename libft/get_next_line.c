@@ -72,6 +72,16 @@ static int	read_line(int fd, void **str, char ***line)
 	return (0);
 }
 
+void		if_copy(t_list **copy, t_list **my_list, int fd)
+{
+	if (*copy == NULL)
+	{
+		ft_lstadd(my_list, ft_lstnew("", 1));
+		(*my_list)->content_size = fd;
+		(*copy) = (*my_list);
+	}
+}
+
 int			get_next_line(const int fd, char **line)
 {
 	static t_list	*my_list = NULL;
@@ -79,17 +89,17 @@ int			get_next_line(const int fd, char **line)
 	int				result;
 	char			buf[1];
 
+	if (fd == -2)
+	{
+		free(my_list->content);
+		free(my_list);
+	}
 	if (fd < 0 || line == NULL || (*line = NULL) || read(fd, &buf, 0) < 0)
 		return (-1);
 	copy = my_list;
 	while (copy != NULL && copy->content_size != (size_t)fd)
 		copy = copy->next;
-	if (copy == NULL)
-	{
-		ft_lstadd(&my_list, ft_lstnew("", 1));
-		my_list->content_size = fd;
-		copy = my_list;
-	}
+	if_copy(&copy, &my_list, fd);
 	if ((result = read_line(fd, &copy->content, &line)))
 		return (result);
 	if (ft_strchr((const char*)copy->content, '\0') != NULL)
