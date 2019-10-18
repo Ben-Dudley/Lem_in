@@ -66,8 +66,6 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	int				score_ants;
 	int				used_path;
 
-	//reverse_list(graph, info);
-	//for_fix_stack(graph, info);
 	if (!(ways = (int *)malloc(sizeof(int) * count_ways)))
 		error_message(graph, info, 0);
 	i = 0;
@@ -82,7 +80,6 @@ void		score_ways(t_graph **graph, t_info *info, int count_ways)
 	}
 	else
 		ways[0] = info->count_ants;
-	//print_queue(graph, ways, count_ways);
 	steps_ants(graph, info, ways, count_ways);
 	free(ways);
 }
@@ -110,7 +107,6 @@ int			score_step_in_ants(t_info *info, int steps, int *length_mf)
 			ptr = temp->path;
 		}
 	}
-//	printf("step %d", steps);
 	return (steps);
 }
 
@@ -124,45 +120,8 @@ int			score_stack(t_graph **graph, t_info *info)
 	length_mf = 0;
 	steps = score_step_in_ants(info, steps, &length_mf);
 	count_ants = steps * info->max_flow - length_mf;
-	del_flow(graph, info, (info->count_ants > count_ants) ? info->max_flow : info->max_flow - 1);
-	return ((info->count_ants > count_ants) ? info->max_flow : info->max_flow - 1);
+	del_flow(graph, info, (info->count_ants > count_ants)
+	? info->max_flow : info->max_flow - 1);
+	return ((info->count_ants > count_ants)
+	? info->max_flow : info->max_flow - 1);
 }
-
-/*int			score_ants(t_graph **graph, t_info *info, int count)
-{//rename score_stack
-	int					steps;
-	int					length_mf;
-	int					count_ants;
-	t_path				*ptr;
-	t_stack				*temp;
-
-	temp = info->stack;
-	ptr = temp->path;
-	steps = 0;
-	length_mf = 0;
-	//rewrite
-	//for_fix_stack(graph, info);
-	while (ptr)
-	{
-//		printf("12\n");
-		if (temp->stack == info->max_flow)
-		{
-			length_mf += ptr->length;
-			steps += ptr->length;
-		}
-		else
-			steps -= ptr->length;
-		ptr = ptr->next;
-		if (!ptr && temp->next)
-		{
-			temp = temp->next;
-			ptr = temp->path;
-		}
-	}
-	steps = score_step_in_ants(info, steps, length_mf);
-	if (steps <= 0)
-		error_message(graph, info, 69);
-	count_ants = steps * info->max_flow - length_mf;
-	del_flow(graph, info, (info->count_ants > count_ants) ? info->max_flow : 0);
-	return ((info->count_ants > count_ants) ? info->max_flow : count);
-}*/

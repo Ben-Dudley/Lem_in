@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writer_base.c                                      :+:      :+:    :+:   */
+/*   fordfalkerson.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 int				algorithm(t_graph **graph, t_link *ptr,
-							 t_trace *trace, int *ij)
+											t_trace *trace, int *ij)
 {
 	if (visited_on_node(graph, ptr, trace, ij[0]))
 	{
@@ -33,14 +33,14 @@ int				algorithm(t_graph **graph, t_link *ptr,
 int				not_node(t_info *info, t_link *ptr, t_trace *trace, int i)
 {
 	if (!((trace->traces_0)[ptr->node] == -1
-		  && (trace->traces_1)[ptr->node] == -1)
+		&& (trace->traces_1)[ptr->node] == -1)
 		&& find_index(info, trace, ptr->node) < i)
 		return (1);
 	return (0);
 }
 
 int				visited_on_node(t_graph **graph, t_link *ptr,
-								   t_trace *trace, int i)
+											t_trace *trace, int i)
 {
 	if (ptr->status != 0
 		&& ptr->reverse->status == 0
@@ -50,19 +50,20 @@ int				visited_on_node(t_graph **graph, t_link *ptr,
 		return (1);
 	return (0);
 }
-int			init_mass_and_clear_end_link_weight(t_graph **graph,
-												   t_info *info, t_trace *trace)
+
+int				clear_end_link_weight(t_graph **graph,
+							t_info *info, t_trace *trace)
 {
 	t_link		*ptr;
-	int			ko; //rename i
+	int			i;
 	int			flag;
 
-	ko = -1;
-	while (++ko < info->count_node)
+	i = -1;
+	while (++i < info->count_node)
 	{
-		graph[0][ko].weight = 1;
+		graph[0][i].weight = 1;
 		flag = 0;
-		ptr = graph[0][ko].link;
+		ptr = graph[0][i].link;
 		while (ptr)
 		{
 			if (ptr->reverse->status == -7)
@@ -72,13 +73,13 @@ int			init_mass_and_clear_end_link_weight(t_graph **graph,
 			ptr = ptr->next;
 		}
 		if (flag == 0)
-			graph[0][ko].visited = 0;
+			graph[0][i].visited = 0;
 	}
-	return (init_mass(info, trace));
+	return (0);
 }
 
 int				check_visited(t_graph **graph, t_link *ptr,
-								 t_trace *trace, int i)
+										t_trace *trace, int i)
 {
 	if (ptr->status != 0 && (trace->traces_0)[(trace->queue)[i]]
 	!= ptr->node && (trace->traces_1)[(trace->queue)[i]]

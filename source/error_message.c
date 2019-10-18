@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void		free_path(t_stack *stack)
+void			free_path(t_stack *stack)
 {
 	t_path		*temp;
 	t_node		*ptr;

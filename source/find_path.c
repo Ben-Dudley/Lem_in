@@ -17,7 +17,7 @@
 ** Here is also counts the numbers max flow.
 */
 
-int		init_mass(t_info *info, t_trace *trace)
+int			init_mass(t_info *info, t_trace *trace)
 {
 	int			i;
 
@@ -36,7 +36,7 @@ int		init_mass(t_info *info, t_trace *trace)
 	return (-1);
 }
 
-int		find_index(t_info *info, t_trace *trace, int node)
+int			find_index(t_info *info, t_trace *trace, int node)
 {
 	int		j;
 
@@ -50,7 +50,7 @@ int		find_index(t_info *info, t_trace *trace, int node)
 	return (j);
 }
 
-static int		get_path(t_graph **graph, t_info *info, t_trace *trace,
+static int	get_path(t_graph **graph, t_info *info, t_trace *trace,
 						int flag)
 {
 	if (flag)
@@ -65,7 +65,7 @@ static int		get_path(t_graph **graph, t_info *info, t_trace *trace,
 	return (1);
 }
 
-int				rewrite_queue(t_info *info, t_trace *trace, int j, int node)
+int			rewrite_queue(t_info *info, t_trace *trace, int j, int node)
 {
 	int			i;
 
@@ -80,14 +80,13 @@ int				rewrite_queue(t_info *info, t_trace *trace, int j, int node)
 	return (j - 1);
 }
 
-int				find_path(t_graph **graph, t_info *info,
-													t_trace *trace)
+int			find_path(t_graph **graph, t_info *info, t_trace *trace)
 {
 	int			ij[2];
 	t_link		*ptr;
 
-	ij[0] = init_mass_and_clear_end_link_weight(graph, info, trace); //ohuet dlinno rename
-	ij[1] = 0;
+	ij[0] = init_mass(info, trace);
+	ij[1] = clear_end_link_weight(graph, info, trace);
 	while ((trace->queue)[++(ij[0])] != -1)
 	{
 		ptr = graph[0][(trace->queue)[ij[0]]].link;

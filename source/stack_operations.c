@@ -65,21 +65,15 @@ void		for_add_in_stack(t_graph **graph, t_info *info, t_path *path)
 	t_path *ptr;
 	if (!info->stack)
 	{
-
-		//printf("%d)New_stack %d\n", info->max_flow, path->length);
-		//printf("New_stack\n");
 		info->stack = new_stack(graph, info, info->max_flow, path);
 	}
 	else if (info->stack->stack != info->max_flow)
 	{
-		//printf("%d)Add_stack %d\n", info->max_flow, path->length);
 		add_stack(&info->stack,
 				  new_stack(graph, info, info->max_flow, path));
 	}
 	else
 	{
-
-		//printf("%d)Add_path %d\n", info->max_flow, path->length);
 		ptr = info->stack->path;
 		if (path->length < ptr->length)
 		{

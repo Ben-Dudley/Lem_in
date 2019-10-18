@@ -46,7 +46,7 @@ static void			add_str_in_buf(t_info *info, char *str)
 {
 	print_buf(info, str);
 	print_buf(info, "\n");
-	free(str); // если тут фришить str, то норм???
+	free(str);
 }
 
 void				print_graph(t_graph **gr, t_info *info)

@@ -192,7 +192,7 @@ void					for_fix_stack(t_graph **graph, t_info *info);
 */
 int				check_visited(t_graph **graph, t_link *ptr,
 								 t_trace *trace, int i);
-int				init_mass_and_clear_end_link_weight(t_graph **graph,
+int				clear_end_link_weight(t_graph **graph,
 													t_info *info, t_trace *trace);
 int				visited_on_node(t_graph **graph, t_link *ptr,
 								   t_trace *trace, int i);
