@@ -121,7 +121,8 @@ int						find_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 int						restoration_path(t_graph **graph, t_info *info,
 															t_trace *trace);
-void					del_flow(t_info *info, int count);
+void					del_flow(t_info *info, int count, t_stack *ptr,
+								t_stack *temp);
 void					get_path_numbers(t_graph **graph, t_info *info);
 int						check_visited(t_graph **graph, t_link *ptr,
 									t_trace *trace, int i);
