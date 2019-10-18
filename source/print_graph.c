@@ -78,8 +78,9 @@ void				print_flag_graph(t_graph **gr, t_info *info)
 		ft_putstr("\033[1;33m (");
 		while (link)
 		{
-			write(1, gr[0][link->node].name, 1);
-			write(1, ".", 1);
+			ft_putstr(gr[0][link->node].name);
+			if (link->next)
+				write(1, ".", 1);
 			link = link->next;
 		}
 		write(1, ")] ", 3);
