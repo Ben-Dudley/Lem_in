@@ -89,7 +89,7 @@ int			get_next_line(const int fd, char **line)
 	int				result;
 	char			buf[1];
 
-	if (fd == -2)
+	if (fd == -2 && ((my_list)))
 	{
 		free(my_list->content);
 		free(my_list);

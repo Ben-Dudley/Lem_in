@@ -109,5 +109,6 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 	else
 		help_error(code_error);
 	free_graph(graph, info);
+	get_next_line(-2, NULL);
 	exit(3);
 }
