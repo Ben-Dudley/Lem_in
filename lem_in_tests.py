@@ -82,9 +82,9 @@ def  test_one_map(flag):
           timer)
     if timer > 3:
         error_time += 1
-    print("steps:", ("\033[92m%s(%s)\033[0m" if steps_count - len(inp) >= 0 else "\033[91m%s(%s)\033[0m") %
-          (len(inp), steps_count))
-    if steps_count - len(inp) < 0:
+    print("steps:", ("\033[92m%s(%s)\033[0m" if steps_count - len(inp) + 1 >= 0 else "\033[91m%s(%s)\033[0m") %
+          (len(inp) - 1, steps_count))
+    if steps_count - len(inp) + 1 < 0:
         error_step += 1
 
 
