@@ -71,7 +71,8 @@ void				steps_ants(t_graph **graph, t_info *info,
 
 	j = 1;
 	score_ants = 0;
-	//for_fix_stack(graph, info);
+	if (info->flag_visual)
+		for_flag_v(graph, info);
 	print_graph(graph, info);
 	while (score_ants < info->count_ants)
 	{

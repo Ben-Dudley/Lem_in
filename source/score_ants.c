@@ -110,7 +110,7 @@ int			score_step_in_ants(t_info *info, int steps, int *length_mf)
 	return (steps);
 }
 
-int			score_stack(t_graph **graph, t_info *info)
+int			score_stack(t_info *info)
 {
 	int					steps;
 	int					length_mf;
@@ -120,7 +120,7 @@ int			score_stack(t_graph **graph, t_info *info)
 	length_mf = 0;
 	steps = score_step_in_ants(info, steps, &length_mf);
 	count_ants = steps * info->max_flow - length_mf;
-	del_flow(graph, info, (info->count_ants > count_ants)
+	del_flow(info, (info->count_ants > count_ants)
 	? info->max_flow : info->max_flow - 1);
 	return ((info->count_ants > count_ants)
 	? info->max_flow : info->max_flow - 1);

@@ -97,19 +97,18 @@ int						search_stack_path(t_graph **graph, t_info *info,
 int						error_message(t_graph **graph, t_info *info,
 							int code_error);
 void					reverse_path(t_graph **graph, t_info *info);
-void					print_queue(t_graph **graph, int *queue, int count);
-void					print_ways(t_info *info, int *ways, int count);
-void					ft_print_pyti(t_graph **graph, t_info *info);
-void					print_massiv(t_graph **graph, t_info *info);
 
-void					print_max(t_graph **graph, t_info *info);
-void					for_fix_stack(t_graph **graph, t_info *info);
-void					print_stack(t_graph **graph, t_info *info);
-void					print_links(t_graph **graph, t_info *info);
+
+
+
+
+
+
+
 /*
 ** print graph
 */
-void					reverse_list(t_graph **graph, t_info *info);
+void					reverse_list(t_info *info); //t_graph **graph,
 void					reverse_node(t_path **path);
 void					print_graph(t_graph **graph, t_info *info); //rename function
 void					print_move(t_graph **graph, t_info *info,
@@ -124,7 +123,7 @@ void					for_flag_v(t_graph **graph, t_info *info);
 ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-int						score_stack(t_graph **graph, t_info *info);
+int						score_stack(t_info *info);//t_graph **graph,
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
 void					score_ways(t_graph **graph, t_info *info,
@@ -143,7 +142,7 @@ void					save_path(t_graph **graph, t_info *info, t_trace *trace,
 void					restoration_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 void					clear_graph(t_graph **graph, t_info *info);
-void					del_flow(t_graph **graph, t_info *info, int count);
+void					del_flow(t_info *info, int count);//t_graph **graph,
 void					get_path_numbers(t_graph **graph, t_info *info);
 /*
 ** parse input data
@@ -190,17 +189,16 @@ void					for_fix_stack(t_graph **graph, t_info *info);
 /*
 ** ford_fa
 */
-int				check_visited(t_graph **graph, t_link *ptr,
+int						check_visited(t_graph **graph, t_link *ptr,
 								 t_trace *trace, int i);
-int				clear_end_link_weight(t_graph **graph,
-													t_info *info, t_trace *trace);
-int				visited_on_node(t_graph **graph, t_link *ptr,
+int						clear_end_link_weight(t_graph **graph, t_info *info);
+int						visited_on_node(t_graph **graph, t_link *ptr,
 								   t_trace *trace, int i);
-int				not_node(t_info *info, t_link *ptr, t_trace *trace, int i);
-int				algorithm(t_graph **graph, t_link *ptr,
+int						not_node(t_info *info, t_link *ptr, t_trace *trace, int i);
+int						algorithm(t_graph **graph, t_link *ptr,
 							 t_trace *trace, int *ij);
-int		find_index(t_info *info, t_trace *trace, int node);
-int		init_mass(t_info *info, t_trace *trace);
-void			free_graph(t_graph **graph, t_info *info);
-void			free_path(t_stack *stack);
+int						find_index(t_info *info, t_trace *trace, int node);
+int						init_mass(t_info *info, t_trace *trace);
+void					free_graph(t_graph **graph, t_info *info);
+void					free_path(t_stack *stack);
 #endif

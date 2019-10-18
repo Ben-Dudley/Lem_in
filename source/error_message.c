@@ -34,7 +34,6 @@ void			free_path(t_stack *stack)
 static void		free_stack(t_stack *stack)
 {
 	t_stack		*temp;
-	t_node		*ptr;
 
 	while (stack)
 	{
@@ -65,7 +64,7 @@ void			free_graph(t_graph **graph, t_info *info)
 	free_stack(info->stack);
 }
 
-void			help_error(t_graph **graph, t_info *info, int code_error)
+void			help_error(int code_error)
 {
 	if (code_error == 7)
 		ft_putstr("First you need to enter the number of ants\n");
@@ -108,7 +107,7 @@ int				error_message(t_graph **graph, t_info *info, int code_error)
 	else if (code_error == 6)
 		ft_putstr("The number of ants can only be positive\n");
 	else
-		help_error(graph, info, code_error);
+		help_error(code_error);
 	free_graph(graph, info);
 	exit(3);
 }

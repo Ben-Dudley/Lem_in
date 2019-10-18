@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = lem-in
-#FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 INC = ./include
 INC_2 = ./libft
 SRCS = ./source/main.c ./source/graph_operations.c \
@@ -20,7 +20,7 @@ SRCS = ./source/main.c ./source/graph_operations.c \
 		./source/search_path.c ./source/path_operations.c ./source/score_ants.c \
 		./source/find_path.c ./source/error_message.c ./source/move_ant.c \
 		./source/pars_flag.c ./source/merge_sort.c ./source/stack_operations.c \
-		./source/print_move.c ./source/support_fun.c ./source/writer_base.c \
+		./source/print_move.c ./source/writer_base.c \
 		./source/for_flag_v.c ./source/fordfalkerson.c \
 		./source/restoration_path.c
 

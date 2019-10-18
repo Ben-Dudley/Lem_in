@@ -35,8 +35,7 @@ int				get_ants(t_graph **graph, t_info *info)
 	return (0);
 }
 
-static void		ft_help_get_room(t_graph **graph, t_info *info, int flag,
-																	char *line)
+static void		ft_help_get_room(t_graph **graph, t_info *info, char *line)
 {
 	char		*name;
 	char		*name_copy;
@@ -70,7 +69,7 @@ void			get_room(t_graph **graph, t_info *info, int *flag, char *line)
 		error_message(graph, info, 77);
 	if (info->count_node >= info->count_max_node || info->count_node == 0)
 		graph[0] = new_graph(graph[0], info);
-	ft_help_get_room(graph, info, *flag, line);
+	ft_help_get_room(graph, info, line);
 	while (i < info->count_node)
 	{
 		if (!ft_strcmp(graph[0][i].name, graph[0][info->count_node].name))

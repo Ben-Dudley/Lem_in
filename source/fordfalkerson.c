@@ -52,7 +52,7 @@ int				visited_on_node(t_graph **graph, t_link *ptr,
 }
 
 int				clear_end_link_weight(t_graph **graph,
-							t_info *info, t_trace *trace)
+							t_info *info)
 {
 	t_link		*ptr;
 	int			i;

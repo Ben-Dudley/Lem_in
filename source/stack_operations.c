@@ -30,7 +30,7 @@ t_stack		*new_stack(t_graph **graph, t_info *info, int stack, t_path *path)
 	return (new);
 }
 
-void		del_flow(t_graph **graph, t_info *info, int count)
+void		del_flow(t_info *info, int count) //t_graph **graph,
 {
 	t_stack				*ptr;
 	t_stack				*temp;

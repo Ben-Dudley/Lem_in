@@ -32,7 +32,8 @@ void				score_stack_path(t_graph **graph, t_info *info,
 	{
 		info->max_flow += add_path;
 		get_path_numbers(graph, info);
-		if (score_stack(graph, info) == info->max_flow - 1 && info->max_flow > 1)
+		if (score_stack(info)
+			== info->max_flow - 1 && info->max_flow > 1)
 		{
 			info->max_flow--;
 			return ;
@@ -55,7 +56,8 @@ int					find_link_node(t_graph **graph, t_info *info, int node)
 	return (0);
 }
 
-void				create_del_trace(t_trace *temp,int configuration, t_graph **graph, t_info *info)
+void				create_del_trace(t_trace *temp,
+						int configuration, t_graph **graph, t_info *info)
 {
 	if (configuration == 0)
 	{
@@ -80,7 +82,6 @@ void				create_del_trace(t_trace *temp,int configuration, t_graph **graph, t_inf
 int					solution(t_graph **graph, t_info *info)
 {
 	t_trace			trace;
-	int				stack;
 
 	create_del_trace(&trace, 1, graph, info);
 	score_stack_path(graph, info, &trace);

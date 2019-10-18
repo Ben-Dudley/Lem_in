@@ -55,7 +55,7 @@ static int	get_path(t_graph **graph, t_info *info, t_trace *trace,
 {
 	if (flag)
 	{
-		printf("Save path\n");
+		printf("Save path\n"); //printf
 		save_path(graph, info, trace, info->ind_end);
 		--info->stack->path->length;
 		reverse_node(&info->stack->path);
@@ -65,7 +65,7 @@ static int	get_path(t_graph **graph, t_info *info, t_trace *trace,
 	return (1);
 }
 
-int			rewrite_queue(t_info *info, t_trace *trace, int j, int node)
+int			rewrite_queue(t_trace *trace, int j, int node)
 {
 	int			i;
 
@@ -86,7 +86,7 @@ int			find_path(t_graph **graph, t_info *info, t_trace *trace)
 	t_link		*ptr;
 
 	ij[0] = init_mass(info, trace);
-	ij[1] = clear_end_link_weight(graph, info, trace);
+	ij[1] = clear_end_link_weight(graph, info);
 	while ((trace->queue)[++(ij[0])] != -1)
 	{
 		ptr = graph[0][(trace->queue)[ij[0]]].link;
@@ -97,7 +97,7 @@ int			find_path(t_graph **graph, t_info *info, t_trace *trace)
 				if (not_node(info, ptr, trace, ij[0]))
 				{
 					ij[1] -= 1;
-					ij[0] = rewrite_queue(info, trace, ij[0], ptr->node);
+					ij[0] = rewrite_queue(trace, ij[0], ptr->node);
 				}
 				ij[1] = algorithm(graph, ptr, trace, ij);
 				if (ptr->node == info->ind_end)

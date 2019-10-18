@@ -33,7 +33,6 @@ void				save_path(t_graph **graph, t_info *info,
 {
 	t_link			*temp;
 	t_path			*path;
-	int				st;
 
 	path = new_path(graph, info);
 	while (i != info->ind_start)
@@ -93,7 +92,7 @@ static void			sup_rev_temp(t_path **temp, t_stack **stack, t_path **ptr)
 	(*stack)->path = *temp;
 }
 
-void				reverse_list(t_graph **graph, t_info *info)
+void				reverse_list(t_info *info)
 {
 	t_path				*ptr;
 	t_path				*temp;

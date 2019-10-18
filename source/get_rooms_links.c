@@ -28,7 +28,7 @@ static int		search_index(char *name, t_graph **graph, t_info *info)
 	return (i);
 }
 
-int				check_same_link(t_graph **graph, t_info *info, int i, int j)
+int				check_same_link(t_graph **graph, int i, int j)
 {
 	t_link		*temp;
 
@@ -57,7 +57,7 @@ static int		help_link(t_graph **graph, t_info *info, char *line)
 			line + ft_strlen(line) - ft_strrchr((const char*)(line), '-') - 1);
 	j = search_index(name, graph, info);
 	free(name);
-	if (i == -1 || j == -1 || check_same_link(graph, info, i, j))
+	if (i == -1 || j == -1 || check_same_link(graph, i, j))
 		return (-1);
 	add_link(&graph[0][i].link, new_link(graph, info));
 	add_link(&graph[0][j].link, new_link(graph, info));

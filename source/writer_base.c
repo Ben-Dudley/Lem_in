@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static void				ft_remalloc(t_info *info, int j)
+static void				ft_remalloc(t_info *info)
 {
 	char		*temp;
 	int			i;
@@ -35,12 +35,11 @@ void					writer_base(t_info *info, char *line)
 {
 	int			i;
 	int			j;
-	char		*temp;
 
 	i = 0;
 	j = ft_strlen(line);
 	while ((info->len_buf) + j + 2 > (info->buf_size))
-		ft_remalloc(info, j);
+		ft_remalloc(info);
 	while (j > i)
 	{
 		(info->basic_information)[info->len_buf++] = line[i];

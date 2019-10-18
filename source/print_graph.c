@@ -52,7 +52,6 @@ static void			add_str_in_buf(t_info *info, char *str)
 void				print_graph(t_graph **gr, t_info *info)
 {
 	int		i;
-	t_link	*temp;
 	char	*str;
 
 	i = -1;
@@ -61,8 +60,6 @@ void				print_graph(t_graph **gr, t_info *info)
 	add_str_in_buf(info, str);
 	print_buf(info, info->basic_information);
 	if (info->flag_score_in_file == 0)
-	{
 		free(info->basic_information);
-	}
 	print_buf(info, "\n");
 }

@@ -33,7 +33,7 @@ static void			send_path_to_print(int path, t_info *info)
 	print_buf(info, "\033[0;34m");
 	print_buf(info, "len path ");
 	print_buf(info, str);
-	print_buf(info, "\033[0m");
+	print_buf(info, ": \033[0m");
 	free(str);
 }
 
@@ -46,7 +46,7 @@ static void			send_node_to_print(int node, char *name, t_info *info)
 	print_buf(info, "\033[0;33m");
 	print_buf(info, " - (");
 	print_buf(info, name);
-	print_buf(info, ") ");
+	print_buf(info, "); ");
 	print_buf(info, "\033[0m");
 	free(str);
 }
