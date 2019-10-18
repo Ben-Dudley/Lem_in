@@ -54,6 +54,8 @@ static int				pars_flag(char c, t_info *info)
 		info->flag_print_graph = 1;
 	else if (c == 'S')
 		info->flag_score_in_file = 1;
+	else if (c == 'z')
+		info->flag_print_graph = 1;
 	else
 		return (0);
 	return (1);

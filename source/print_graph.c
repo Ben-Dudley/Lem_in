@@ -63,3 +63,27 @@ void				print_graph(t_graph **gr, t_info *info)
 		free(info->basic_information);
 	print_buf(info, "\n");
 }
+
+void				print_flag_graph(t_graph **gr, t_info *info)
+{
+	int		i;
+	t_link	*link;
+
+	i = 0;
+	while (i < info->count_node)
+	{
+		link = gr[0][i].link;
+		ft_putstr("\033[1;32m[");
+		ft_putstr(gr[0][i].name);
+		ft_putstr("\033[1;33m (");
+		while (link)
+		{
+			write(1, gr[0][link->node].name, 1);
+			write(1, ".", 1);
+			link = link->next;
+		}
+		write(1, ")] ", 3);
+		++i;
+	}
+	write(1, "\n", 1);
+}

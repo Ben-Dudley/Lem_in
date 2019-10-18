@@ -78,6 +78,8 @@ int				main(int ac, char **av)
 		ft_putstr("GGWP\n");
 	buf_init(&info);
 	print_flags(&info);
+	if (info.flag_print_graph == 1)
+		print_flag_graph(&graph, &info);
 	error_message(&graph, &info, -1);
 	return (0);
 }
