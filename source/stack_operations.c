@@ -63,15 +63,11 @@ void		del_flow(t_graph **graph, t_info *info, int count)
 void		for_add_in_stack(t_graph **graph, t_info *info, t_path *path)
 {
 	t_path *ptr;
+
 	if (!info->stack)
-	{
 		info->stack = new_stack(graph, info, info->max_flow, path);
-	}
 	else if (info->stack->stack != info->max_flow)
-	{
-		add_stack(&info->stack,
-				  new_stack(graph, info, info->max_flow, path));
-	}
+		add_stack(&info->stack, new_stack(graph, info, info->max_flow, path));
 	else
 	{
 		ptr = info->stack->path;
@@ -93,7 +89,7 @@ void		for_add_in_stack(t_graph **graph, t_info *info, t_path *path)
 	}
 }
 
-void get_path_numbers(t_graph **graph, t_info *info)
+void		get_path_numbers(t_graph **graph, t_info *info)
 {
 	t_link			*temp;
 	t_path			*path;
@@ -105,13 +101,10 @@ void get_path_numbers(t_graph **graph, t_info *info)
 		temp = graph[0][info->ind_start].link;
 		path = new_path(graph, info);
 		add_node(&path->node, new_node(graph, info, info->ind_start));
-//		if (info->max_flow == 11)
-//		for_fix_stack(graph, info);
-		//printf("pppp\n");
-		while (temp)// && temp->node != info->ind_end)
+		while (temp)
 		{
-			//printf("!!! %d (%d-%d)\n", temp->node, temp->status, temp->reverse->status);
-			if (temp->status == 0 && temp->reverse->status == 1 && graph[0][temp->node].weight != 0)
+			if (temp->status == 0 && temp->reverse->status == 1
+					&& graph[0][temp->node].weight != 0)
 			{
 				add_node(&path->node, new_node(graph, info, temp->node));
 				++path->length;
@@ -119,7 +112,6 @@ void get_path_numbers(t_graph **graph, t_info *info)
 					graph[0][temp->node].weight = 0;
 				else
 				{
-					//--path->length;
 					temp->status = -7;
 					break ;
 				}
@@ -128,7 +120,6 @@ void get_path_numbers(t_graph **graph, t_info *info)
 			else
 				temp = temp->next;
 		}
-	//	add_node(&path->node, new_node(graph, info, info->ind_end));
 		for_add_in_stack(graph, info, path);
 	}
 }
