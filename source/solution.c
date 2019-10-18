@@ -83,7 +83,7 @@ int					solution(t_graph **graph, t_info *info)
 	int				stack;
 
 	create_del_trace(&trace, 1, graph, info);
-	score_stack_path(graph, info, &trace);git add s
+	score_stack_path(graph, info, &trace);
 	create_del_trace(&trace, 0, graph, info);
 	if (info->max_flow > 0)
 		score_ways(graph, info, info->max_flow);
