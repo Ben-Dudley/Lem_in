@@ -29,7 +29,6 @@ typedef struct			s_node
 typedef struct			s_path
 {
 	int					length;
-	int					stack; //zachem
 	t_node				*node;
 	struct s_path		*next;
 }						t_path;
@@ -90,27 +89,9 @@ typedef struct			s_info
 }						t_info;
 
 /*
-** delete help function
-*/
-int						search_stack_path(t_graph **graph, t_info *info,
-							int *queue, int *traces);
-int						error_message(t_graph **graph, t_info *info,
-							int code_error);
-void					reverse_path(t_graph **graph, t_info *info);
-
-
-
-
-
-
-
-
-/*
 ** print graph
 */
-void					reverse_list(t_info *info); //t_graph **graph,
-void					reverse_node(t_path **path);
-void					print_graph(t_graph **graph, t_info *info); //rename function
+void					print_graph(t_graph **graph, t_info *info);
 void					print_move(t_graph **graph, t_info *info,
 							int count, int count_ways);
 void					print_buf(t_info *info, char *str);
@@ -123,13 +104,14 @@ void					for_flag_v(t_graph **graph, t_info *info);
 ** find path for ants
 */
 int						solution(t_graph **graph, t_info *info);
-int						score_stack(t_info *info);//t_graph **graph,
+int						score_stack(t_info *info);
 void					steps_ants(t_graph **graph, t_info *info,
 							int *ways, int count_ways);
 void					score_ways(t_graph **graph, t_info *info,
 										int count_ways);
 int						min_score_ants(t_info *info, int count,
 										int count_ways);
+
 /*
 ** find max flow and stack with shortest path
 */
@@ -137,67 +119,46 @@ void					score_stack_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 int						find_path(t_graph **graph, t_info *info,
 															t_trace *trace);
-void					save_path(t_graph **graph, t_info *info, t_trace *trace,
-																		int i);
-int					restoration_path(t_graph **graph, t_info *info,
+int						restoration_path(t_graph **graph, t_info *info,
 															t_trace *trace);
-void					clear_graph(t_graph **graph, t_info *info);
-void					del_flow(t_info *info, int count);//t_graph **graph,
+void					del_flow(t_info *info, int count);
 void					get_path_numbers(t_graph **graph, t_info *info);
+int						check_visited(t_graph **graph, t_link *ptr,
+									t_trace *trace, int i);
+int						clear_end_link_weight(t_graph **graph, t_info *info);
+int						not_node(t_info *info, t_link *ptr,
+								t_trace *trace, int i);
+int						algorithm(t_graph **graph, t_link *ptr,
+								t_trace *trace, int *ij);
 /*
 ** parse input data
 */
 void					init(t_graph **graph, t_info *info);
-void					error(char *str, t_graph **graph, t_info *info);
 int						put_number(char *str, t_graph **graph, t_info *info);
 int						get_ants(t_graph **graph, t_info *info);
 void					get_rooms_links(t_graph **graph, t_info *info);
 void					get_room(t_graph **graph, t_info *info, int *flag,
 							char *line);
 int						help_rooms(t_graph **graph, t_info *info, int flag,
-							char *line); //rename this function
-
+							char *line);
 int						flag_checking(int ac, char **av, t_graph **graph,
 												t_info *info);
 void					print_flags(t_info *info);
+int						error_message(t_graph **graph, t_info *info,
+										int code_error);
 /*
 ** Create and init structure
 */
 t_link					*new_link(t_graph **graph, t_info *info);
 void					add_link(t_link **link, t_link *new);
-void					free_link(t_link **link);
-
 t_graph					*new_graph(t_graph *prev_graph, t_info *info);
-size_t					*new_links(t_graph *graph, t_info *info);
-
 t_path					*new_path(t_graph **graph, t_info *info);
 void					add_path(t_path **path, t_path *new);
-
 t_node					*new_node(t_graph **graph, t_info *info, int node);
 void					add_node(t_node **node, t_node *new);
-
 t_stack					*new_stack(t_graph **graph, t_info *info,
 										int stack, t_path *path);
 void					add_stack(t_stack **stack, t_stack *new);
-void					in_stack_add(t_graph **graph, t_info *info,
-										int stack, t_path *path);
-/*
-** Sorted
-*/
-void					merge_sort(t_graph **graph, t_info *info);
-void					for_fix_stack(t_graph **graph, t_info *info);
-/*
-** ford_fa
-*/
-int						check_visited(t_graph **graph, t_link *ptr,
-								 t_trace *trace, int i);
-int						clear_end_link_weight(t_graph **graph, t_info *info);
-int						visited_on_node(t_graph **graph, t_link *ptr,
-								   t_trace *trace, int i);
-int						not_node(t_info *info, t_link *ptr, t_trace *trace, int i);
-int						algorithm(t_graph **graph, t_link *ptr,
-							 t_trace *trace, int *ij);
-int						find_index(t_info *info, t_trace *trace, int node);
 int						init_mass(t_info *info, t_trace *trace);
 void					free_graph(t_graph **graph, t_info *info);
 void					free_path(t_stack *stack);

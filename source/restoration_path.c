@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static int		was_in_room_1(t_graph **graph, t_link *temp, t_trace *trace, int i)
+static int	was_in_room_1(t_graph **graph, t_link *temp, t_trace *trace, int i)
 {
 	if (((trace->traces_1)[(trace->traces_0)[i]] != -1
 			&& temp->status + temp->reverse->status == 1
@@ -22,7 +22,7 @@ static int		was_in_room_1(t_graph **graph, t_link *temp, t_trace *trace, int i)
 	return (0);
 }
 
-int				restoration_path(t_graph **graph, t_info *info, t_trace *trace)
+int			restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 {
 	int			i;
 	t_link		*temp;
