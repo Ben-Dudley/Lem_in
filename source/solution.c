@@ -39,7 +39,7 @@ void					score_stack_path(t_graph **graph, t_info *info,
 	//		exit(0);
 		get_path_numbers(graph, info);
 	//	print_max(graph,info);
-		//for_fix_stack(graph, info);
+	//	for_fix_stack(graph, info);
 	//	printf("www\n");
 	//	clear_graph(graph, info);
 		if (score_stack(graph, info) == info->max_flow - 1 && info->max_flow > 1)

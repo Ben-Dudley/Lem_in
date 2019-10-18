@@ -86,7 +86,7 @@ int				find_path(t_graph **graph, t_info *info,
 	int			ij[2];
 	t_link		*ptr;
 
-	ij[0] = init_mass_and_clear_end_link_weight(graph, info, trace);
+	ij[0] = init_mass_and_clear_end_link_weight(graph, info, trace); //ohuet dlinno rename
 	ij[1] = 0;
 	while ((trace->queue)[++(ij[0])] != -1)
 	{

@@ -54,17 +54,25 @@ int			init_mass_and_clear_end_link_weight(t_graph **graph,
 												   t_info *info, t_trace *trace)
 {
 	t_link		*ptr;
-	int			ko;
+	int			ko; //rename i
+	int			flag;
 
 	ko = -1;
 	while (++ko < info->count_node)
-		graph[0][ko].weight = 1;
-	ptr = graph[0][info->ind_end].link;
-	while (ptr)
 	{
-		if (ptr->reverse->status == -7)
-			ptr->reverse->status = 0;
-		ptr = ptr->next;
+		graph[0][ko].weight = 1;
+		flag = 0;
+		ptr = graph[0][ko].link;
+		while (ptr)
+		{
+			if (ptr->reverse->status == -7)
+				ptr->reverse->status = 0;
+			if (ptr->status + ptr->reverse->status == 1)
+				flag = 1;
+			ptr = ptr->next;
+		}
+		if (flag == 0)
+			graph[0][ko].visited = 0;
 	}
 	return (init_mass(info, trace));
 }

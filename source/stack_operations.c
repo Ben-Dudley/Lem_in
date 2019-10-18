@@ -64,21 +64,31 @@ void		for_add_in_stack(t_graph **graph, t_info *info, t_path *path)
 	t_path *ptr;
 	if (!info->stack)
 	{
+
+		//printf("%d)New_stack %d\n", info->max_flow, path->length);
 		//printf("New_stack\n");
 		info->stack = new_stack(graph, info, info->max_flow, path);
 	}
 	else if (info->stack->stack != info->max_flow)
 	{
-		//printf("Add_stack %d\n", info->max_flow);
+		//printf("%d)Add_stack %d\n", info->max_flow, path->length);
 		add_stack(&info->stack,
 				  new_stack(graph, info, info->max_flow, path));
 	}
 	else
 	{
+
+		//printf("%d)Add_path %d\n", info->max_flow, path->length);
 		ptr = info->stack->path;
+		if (path->length < ptr->length)
+		{
+			path->next = ptr;
+			info->stack->path = path;
+			return ;
+		}
 		while (ptr->next && path->length > ptr->next->length)
 			ptr = ptr->next;
-		if (ptr->next == NULL)
+		if (ptr->next == NULL && path->length > ptr->length)
 			ptr->next = path;
 		else
 		{
@@ -100,6 +110,8 @@ void get_path_numbers(t_graph **graph, t_info *info)
 		temp = graph[0][info->ind_start].link;
 		path = new_path(graph, info);
 		add_node(&path->node, new_node(graph, info, info->ind_start));
+//		if (info->max_flow == 11)
+//		for_fix_stack(graph, info);
 		//printf("pppp\n");
 		while (temp)// && temp->node != info->ind_end)
 		{
