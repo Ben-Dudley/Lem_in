@@ -139,7 +139,7 @@ int						find_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 void					save_path(t_graph **graph, t_info *info, t_trace *trace,
 																		int i);
-void					restoration_path(t_graph **graph, t_info *info,
+int					restoration_path(t_graph **graph, t_info *info,
 															t_trace *trace);
 void					clear_graph(t_graph **graph, t_info *info);
 void					del_flow(t_info *info, int count);//t_graph **graph,

@@ -50,21 +50,6 @@ int			find_index(t_info *info, t_trace *trace, int node)
 	return (j);
 }
 
-static int	get_path(t_graph **graph, t_info *info, t_trace *trace,
-						int flag)
-{
-	if (flag)
-	{
-		printf("Save path\n"); //printf
-		save_path(graph, info, trace, info->ind_end);
-		--info->stack->path->length;
-		reverse_node(&info->stack->path);
-	}
-	else
-		restoration_path(graph, info, trace);
-	return (1);
-}
-
 int			rewrite_queue(t_trace *trace, int j, int node)
 {
 	int			i;
@@ -101,7 +86,7 @@ int			find_path(t_graph **graph, t_info *info, t_trace *trace)
 				}
 				ij[1] = algorithm(graph, ptr, trace, ij);
 				if (ptr->node == info->ind_end)
-					return (get_path(graph, info, trace, 0));
+					return (restoration_path(graph, info, trace));
 			}
 			ptr = ptr->next;
 		}

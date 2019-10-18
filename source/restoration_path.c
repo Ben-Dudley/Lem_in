@@ -22,7 +22,7 @@ static int	was_in_room_1(t_graph **graph, t_link *temp, t_trace *trace, int i)
 	return (0);
 }
 
-void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
+int		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 {
 	int			i;
 	t_link		*temp;
@@ -47,4 +47,5 @@ void		restoration_path(t_graph **graph, t_info *info, t_trace *trace)
 		}
 		i = (trace->traces_0)[i];
 	}
+	return (1);
 }
