@@ -48,6 +48,7 @@ void		del_flow(t_graph **graph, t_info *info, int count)
 			}
 			else
 				temp->next = ptr->next;
+			free_path(ptr);
 			free(ptr);
 			ptr = temp;
 		}

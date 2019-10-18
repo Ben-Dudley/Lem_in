@@ -201,4 +201,6 @@ int				algorithm(t_graph **graph, t_link *ptr,
 							 t_trace *trace, int *ij);
 int		find_index(t_info *info, t_trace *trace, int node);
 int		init_mass(t_info *info, t_trace *trace);
+void			free_graph(t_graph **graph, t_info *info);
+void			free_path(t_stack *stack);
 #endif
