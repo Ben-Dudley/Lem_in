@@ -26,7 +26,6 @@ int				get_ants(t_graph **graph, t_info *info)
 			free(line);
 			if (info->count_ants <= 0)
 			{
-
 				error_message(graph, info, 6);
 			}
 			return (1);
